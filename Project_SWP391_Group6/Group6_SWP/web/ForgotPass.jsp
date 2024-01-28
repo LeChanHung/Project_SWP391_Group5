@@ -15,15 +15,16 @@
     <body>
         <div class="main"> 
             <h1>Forgot Password</h1> 
-            <form action=""> 
+            <form action="ForgotPass" method="post"> 
                 <label for="first">Enter your email:</label> 
-                <input type="text" id="mail" 
+                <input type="text"
                        name="mail" 
                        placeholder="Email" required> 
                 <div class="wrap"> 
-                    <button type="submit" onclick="solve()"> 
+                    <input type="submit" value="Submit">
+<!--                    <button type="submit" onclick="solve()"> 
                         Submit 
-                    </button> 
+                    </button> -->
                 </div> 
             </form> 
         </div>
