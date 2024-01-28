@@ -18,7 +18,7 @@ public class lesson {
     private Date date;
     private int subject_id;
 
-    public lesson(int id, String name, int student_id, int teacher_id, Date date, int subject_id) {
+    public lesson(int id, String name, Date date) {
         this.id = id;
         this.name = name;
         this.student_id = student_id;

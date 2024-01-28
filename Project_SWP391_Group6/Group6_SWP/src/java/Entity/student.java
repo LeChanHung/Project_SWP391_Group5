@@ -105,6 +105,10 @@ public class student {
         return "student{" + "id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", msv=" + msv + ", img=" + img + ", dob=" + dob + ", gender=" + gender + ", class_id=" + class_id + '}';
     }
 
+    public String getStudent_email() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
    
     
     
