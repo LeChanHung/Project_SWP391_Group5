@@ -6,7 +6,7 @@
         <jsp:useBean id="sub" class="dao.DAO" scope="request"></jsp:useBean>
         <jsp:useBean id="s" class="dao.DAO" scope="request"></jsp:useBean>
         <jsp:useBean id="c" class="dao.DAO" scope="request"></jsp:useBean>
-
+        
             <title>Attendance Report</title>
             <link rel="stylesheet" type="text/css" href="style.css">   
             <link href= "css/attendance.css" rel="stylesheet" type="text/css" />
@@ -42,9 +42,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="attendanceReport.jsp">
                                 <i class="fas fa-chart-bar"></i>
-                                <span class="nav-item">Attendace</span>
+                                <span class="nav-item">Attendance</span>
                             </a>
                         </li>
                         <li>
@@ -67,69 +67,38 @@
                         <h1>Attendance</h1>
                         <i class="fas fa-user-cog"></i>
                     </div>
-
-                    <div class="subject">              
-                        <div class="users"> 
-                            <c:forEach items="${sub.allSubject}" var="s">
-                            <div class="card">
-                                <img src="https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg">;
-                                
-                                <h4>${s.name}</h4>
-                                
-                                <p>SE</p>
-                                <div class="per">
-                                    <table>
-                                        <tr>
-                                            <td><span>85%</span></td>
-                                            <td><span>87%</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Month</td>
-                                            <td>Year</td>
-                                        </tr>
-                                    </table>
-                                    <button><a class="view" href="detailAttendance.jsp">View</a></button>
-                                </div>
-                                
-                            </div>
-                            </c:forEach>
-                        </div>  
                     
-                </div>  
-
-
                 <section class="attendance">
                     <div class="attendance-list">
                         <h1>Student List</h1>
                         <table class="table">
                             <thead>
-
+                                
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>MSSV</th>
                                     <th>Date</th>
-                                    <th>Gender</th>
-                                    <th>Class</th>
+                                    <th>Present Percent</th>
+                                    <th>Absent Percent</th>
                                     <th>Detail</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${s.allStudent1}" var="s">
-                                    <tr class="active">
-
-                                        <td>${s.id}</td>
-                                        <td>${s.name}</td>
-                                        <td>${s.msv}</td>
-                                        <td>${s.dob}</td>
-                                        <td>${s.gender}</td>
-                                        <c:forEach items="${c.allClass}" var="c">
-                                            <td>${c.name}</td>
-                                        </c:forEach>
-                                        <td><button>View</button></td>
-                                    </tr>
-                                </c:forEach>
-
+                            <c:forEach items="${s.allStudent1}" var="s">
+                                <tr class="active">
+                               
+                                    <td>${s.id}</td>
+                                    <td>${s.name}</td>
+                                    <td>${s.msv}</td>
+                                    <td>${s.dob}</td>
+                                    <td>80%</td>
+                                    <td>20%</td>
+                                    
+                                    <td><button>View</button></td>
+                                </tr>
+                            </c:forEach>
+                                
                             </tbody>
                         </table>    
                     </div>

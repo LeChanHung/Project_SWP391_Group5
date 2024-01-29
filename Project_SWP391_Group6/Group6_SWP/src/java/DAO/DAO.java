@@ -6,8 +6,11 @@ package dao;
 
 import Context.DBContext;
 import Entity.admin;
+import Entity.clas;
 import Entity.phongdaotao;
 import Entity.student;
+import Entity.student1;
+import Entity.subject;
 import Entity.teacher;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -68,6 +71,28 @@ public class DAO {
         return null;
     }
 
+    public List<student1> getAllStudent1() {
+        List<student1> list = new ArrayList<>();
+        String query = "select * from student\n" +
+                        "where class_ID='1'";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                 student1 s1= new student1(rs.getInt(1),
+                         rs.getString(2), 
+                         rs.getString(5), 
+                         rs.getDate(8), 
+                         rs.getString(9));
+                 list.add(s1);
+            }
+            
+            return list;
+        } catch (Exception e) {
+        }
+        return null;
+    }
     
     public teacher getTeacherByEmail(String mail){
         try {
@@ -166,6 +191,45 @@ public class DAO {
         } catch (Exception e) {
         }
         return list;
+    }
+    
+    public List<subject> getAllSubject() {
+        List<subject> list = new ArrayList<>();
+        String query = "select * from subject";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                subject sub = new subject(rs.getInt(1),
+                        rs.getString(2));
+                list.add(sub);
+            }
+            
+            return list;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public List<clas> getAllClass() {
+        List<clas> list = new ArrayList<>();
+        String query = "select * from class\n" +
+                        "where class_ID='1'";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                clas c = new clas(
+                        rs.getString(2));
+                list.add(c);
+            }
+            
+            return list;
+        } catch (Exception e) {
+        }
+        return null;
     }
 
     public static void main(String[] args) {

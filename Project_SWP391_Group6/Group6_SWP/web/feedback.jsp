@@ -14,8 +14,8 @@
                 <form>
                     <h1>Write your Feedback</h1>
                     <div class="id">
-                         <input type="hidden" name="feedback_ID" value="f_id">
-                        <input name="fullName" type="text" placeholder="Full name">
+                        <input type="hidden" name="feedback_ID" value="id">
+                        <input name="Name" type="text" placeholder="Full name">
 
                     </div>
                     <div class="id">

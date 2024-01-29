@@ -12,16 +12,16 @@ import java.sql.Date;
  */
 public class clas {
     private int class_id;
-    private int name;
+    private String name;
     private Date date;
 
     public clas() {
     }
 
-    public clas(int class_id, int name, Date date) {
-        this.class_id = class_id;
+    public clas(String name) {
+        //this.class_id = class_id;
         this.name = name;
-        this.date = date;
+       // this.date = date;
     }
 
     public int getClass_id() {
@@ -32,11 +32,11 @@ public class clas {
         this.class_id = class_id;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 

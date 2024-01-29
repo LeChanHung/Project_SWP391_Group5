@@ -34,26 +34,23 @@ public class feedbackControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        //get data from dao
-        DAO dao = new DAO();
-        String idString = request.getParameter("f_ID");
-        int id;
-        if (idString != null && !idString.isEmpty()) {
-            id = Integer.parseInt(idString);
-            String fullName = request.getParameter("fullName");
-            String email = request.getParameter("email");
-            String text = request.getParameter("feedback");
-            if (text == null) {
-                request.setAttribute("mess", "Fill in the blank Feedback before send");
-            } else {
-                dao.getAllFeedback(id, text, fullName, email);
-                response.sendRedirect("complete.jsp");
-            }
-        } else {
-            
+        String idParameter = request.getParameter("id");
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String text = request.getParameter("feedback");
+
+        int id = 0; // Giá trị mặc định hoặc bất kỳ giá trị nào phù hợp
+
+        if (idParameter != null && !idParameter.isEmpty()) {
+            id = Integer.parseInt(idParameter);
         }
 
+        // Gọi phương thức để thêm dữ liệu vào cơ sở dữ liệu
+        DAO dao = new DAO();
+        dao.getAllFeedback(id, text, name, email);
+
+        // Chuyển hướng đến trang JSP khác sau khi thêm dữ liệu thành công
+        response.sendRedirect("complete.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -94,5 +91,4 @@ public class feedbackControl extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
