@@ -1,0 +1,76 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+#home {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#home h2 {
+    text-align: left;
+    margin-left: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+tr,th {
+    padding: 10px;
+    border: 1px  solid #ddd;
+}
+
+.section {
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(143, 15, 15, 0.1);
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+strong {
+    font-weight: bold;
+}
+
+#user-info, #logout {
+    color: #000;
+    display: inline-block;
+    background-color: gray;
+    padding: 10px;
+    border-radius: 5px;
+
+}
+
+#logout {
+    margin-bottom: 10px; /* Adjust the margin based on your layout */
+}
+
+h1 {
+    margin-top: center;
+}
+
+
