@@ -1,0 +1,26 @@
+.header{
+    background-color: #4CAF50;
+    padding-bottom: 15px;
+    padding-top: 10px;
+}
+.sidebar {
+            background-color: #333;
+            color: #fff;
+            
+        }
+        
+
+.sidebar a {
+            color: black;
+        }
+
+.sidebar a:hover {
+            background-color: #f00; /* Màu đỏ khi hover */
+        }
+
+.footer {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
