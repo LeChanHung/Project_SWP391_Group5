@@ -1,4 +1,5 @@
 
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -9,7 +10,7 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <section class="vh-100">
+         <section class="vh-100">
             <div class="container-fluid h-custom">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-md-9 col-lg-6 col-xl-5">
@@ -17,11 +18,11 @@
                              class="img-fluid" alt="Sample image">
                     </div>
                     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                        <form  method="post" action="login">
+                        <form  method="post" action="loginStudentTeacher">
                             
                             <!-- Email input -->
                             <div class="form-outline mb-4">
-                                <input type="text" name="officeName" id="form3Example3" class="form-control form-control-lg"
+                                <input type="text" name="email" id="form3Example3" class="form-control form-control-lg"
                                        placeholder="Enter a valid email address" />
                                 <label class="form-label" for="form3Example3">Email address</label>
                             </div>
@@ -50,6 +51,8 @@
                                 <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="Register.jsp"
                                                                                                   class="link-danger">Register</a></p>
                             </div>
+                            
+                            
 
                         </form>
                     </div>

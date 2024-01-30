@@ -1,4 +1,3 @@
-
 package dal;
 
 import java.sql.Connection;
@@ -7,25 +6,21 @@ import java.sql.SQLException;
 
 
 public class DBContext {
-    protected Connection connection;
-    public DBContext()
-    {
-        try {
-            // Edit URL , username, password to authenticate with your MS SQL Server
-            String url = "jdbc:sqlserver://localhost:1433;databaseName= SWP";
-            String username = "sa";
-            String password = "123";
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection(url, username, password);
-        } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println(ex);
-        }
-    }
-    public static void main(String[] args) {
-        try{
-            System.out.println(new DBContext().connection);
-        }catch(Exception e){
-            
-        }
-    }
+	public DBContext(){
+		super();
+	}
+	public static Connection getConnect(){
+		Connection connection = null;
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			connection=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=swp;user=sa;password=123;useUnicode=true;characterEncoding=UTF-8");
+			System.out.println("Kết nối thành công!");
+		} catch (SQLException | ClassNotFoundException e) {
+			System.out.println("Kết nối thất bại!"+e.getMessage());
+		}
+		return connection;
+	}
+	public static void main(String[] args) {
+		System.out.println(getConnect());
+	}
 }
