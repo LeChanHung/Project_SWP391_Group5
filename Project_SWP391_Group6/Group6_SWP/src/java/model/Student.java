@@ -8,70 +8,72 @@ import java.util.Date;
 
 /**
  *
- * @author minhdang
+ * @author pc acer
  */
 public class Student {
-    private int sid;
-    private String fname;
-    private String lname;
-    private String email;
-    private String pass;
+    private int id;
+    private String FirstName;
+    private String LastName;
+    private String Email;
+    private String PasswordHash;
     private String gender;
     private Date dob;
-    private String msv;
+    private String MSV;
+    private int role;
 
     public Student() {
     }
 
-    public Student(int sid, String fname, String lname, String email, String pass, String gender, Date dob, String msv) {
-        this.sid = sid;
-        this.fname = fname;
-        this.lname = lname;
-        this.email = email;
-        this.pass = pass;
+    public Student(int id, String FirstName, String LastName, String Email, String PasswordHash, String gender, Date dob, String MSV, int role) {
+        this.id = id;
+        this.FirstName = FirstName;
+        this.LastName = LastName;
+        this.Email = Email;
+        this.PasswordHash = PasswordHash;
         this.gender = gender;
         this.dob = dob;
-        this.msv = msv;
+        this.MSV = MSV;
+        this.role = role;
     }
 
-    public int getSid() {
-        return sid;
+    public int getId() {
+        return id;
     }
 
-    public void setSid(int sid) {
-        this.sid = sid;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getFname() {
-        return fname;
+    public String getFirstName() {
+        return FirstName;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
+    public void setFirstName(String FirstName) {
+        this.FirstName = FirstName;
     }
 
-    public String getLname() {
-        return lname;
+    public String getLastName() {
+        return LastName;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
+    public void setLastName(String LastName) {
+        this.LastName = LastName;
     }
 
     public String getEmail() {
-        return email;
+        return Email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String Email) {
+        this.Email = Email;
     }
 
-    public String getPass() {
-        return pass;
+    public String getPasswordHash() {
+        return PasswordHash;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setPasswordHash(String PasswordHash) {
+        this.PasswordHash = PasswordHash;
     }
 
     public String getGender() {
@@ -90,12 +92,22 @@ public class Student {
         this.dob = dob;
     }
 
-    public String getMsv() {
-        return msv;
+    public String getMSV() {
+        return MSV;
     }
 
-    public void setMsv(String msv) {
-        this.msv = msv;
+    public void setMSV(String MSV) {
+        this.MSV = MSV;
     }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+    
+  
     
 }
