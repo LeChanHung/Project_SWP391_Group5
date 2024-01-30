@@ -13,7 +13,7 @@ public class DBContext {
 		Connection connection = null;
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			connection=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=swp;user=sa;password=123;useUnicode=true;characterEncoding=UTF-8");
+			connection=DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Project;user=sa;password=123456;useUnicode=true;characterEncoding=UTF-8");
 			System.out.println("Kết nối thành công!");
 		} catch (SQLException | ClassNotFoundException e) {
 			System.out.println("Kết nối thất bại!"+e.getMessage());
