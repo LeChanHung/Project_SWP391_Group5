@@ -18,12 +18,16 @@
                     </div>
                     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                         <form  method="post" action="login">
-                            
+                            <c:if test="${error != null}">
+                                <p style="color: red;">
+                                    ${error}
+                                </p>
+                            </c:if>
                             <!-- Email input -->
                             <div class="form-outline mb-4">
-                                <input type="text" name="officeName" id="form3Example3" class="form-control form-control-lg"
-                                       placeholder="Enter a valid email address" />
-                                <label class="form-label" for="form3Example3">Email address</label>
+                                <input type="text" name="name" id="form3Example3" class="form-control form-control-lg"
+                                       placeholder="Enter username or valid email address" />
+                                <label class="form-label" for="form3Example3">Username / Email address</label>
                             </div>
 
                             <!-- Password input -->
@@ -65,7 +69,7 @@
 
                 <!-- Right -->
                 <div>
-                    
+
                 </div>
                 <!-- Right -->
             </div>

@@ -10,7 +10,7 @@
     </servlet>
     <servlet>
         <servlet-name>loginDAO</servlet-name>
-        <servlet-class>DAOO.loginDAO</servlet-class>
+        <servlet-class>DAOO.LoginDAO</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>loginSTDAO</servlet-name>

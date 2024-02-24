@@ -5,7 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,8 +22,8 @@
                         <img src="https://cdn.haitrieu.com/wp-content/uploads/2021/10/Logo-Dai-hoc-FPT.png" alt="Đại học FPT Logo" class="mr-2" style="width: 150px; height: auto;margin-right: 1250px">
                     </div>
                     <div class="col-md-4 text-right">
-                        <c:if test="${sessionScope.student != null}">
-                            <button class="btn btn-danger">${sessionScope.student.getFirstName()} ${sessionScope.student.getLastName()}</button>
+                        <c:if test="${sessionScope.office != null}">
+                            <button class="btn btn-danger">${sessionScope.office.getOfficeName()}</button>
                         </c:if>
                         <a href="logout"><button class="btn btn-danger ml-2">Log out</button></a>
                     </div>
@@ -48,7 +47,7 @@
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <div id="content">
                         <!-- Nội dung sẽ được hiển thị ở đây khi người dùng nhấp vào các phần -->
-                        
+
                     </div>
                 </main>
             </div>
