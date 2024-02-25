@@ -11,51 +11,51 @@ import java.util.Date;
  * @author minhdang
  */
 public class Student {
-    private int sid;
-    private String fname;
-    private String lname;
+    private int  studentID;
+    private String firstName;
+    private String lastName;
     private String email;
-    private String pass;
+    private String passwordHash;
     private String gender;
     private Date dob;
-    private String msv;
+    private String MSV;
 
     public Student() {
     }
 
-    public Student(int sid, String fname, String lname, String email, String pass, String gender, Date dob, String msv) {
-        this.sid = sid;
-        this.fname = fname;
-        this.lname = lname;
+    public Student(int studentID, String firstName, String lastName, String email, String passwordHash, String gender, Date dob, String MSV) {
+        this.studentID = studentID;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
-        this.pass = pass;
+        this.passwordHash = passwordHash;
         this.gender = gender;
         this.dob = dob;
-        this.msv = msv;
+        this.MSV = MSV;
     }
 
-    public int getSid() {
-        return sid;
+    public int getStudentID() {
+        return studentID;
     }
 
-    public void setSid(int sid) {
-        this.sid = sid;
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
     }
 
-    public String getFname() {
-        return fname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLname() {
-        return lname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -66,12 +66,12 @@ public class Student {
         this.email = email;
     }
 
-    public String getPass() {
-        return pass;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public String getGender() {
@@ -90,12 +90,13 @@ public class Student {
         this.dob = dob;
     }
 
-    public String getMsv() {
-        return msv;
+    public String getMSV() {
+        return MSV;
     }
 
-    public void setMsv(String msv) {
-        this.msv = msv;
+    public void setMSV(String MSV) {
+        this.MSV = MSV;
     }
+
     
 }
