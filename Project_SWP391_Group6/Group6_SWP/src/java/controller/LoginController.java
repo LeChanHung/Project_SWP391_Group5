@@ -4,7 +4,7 @@
  */
 package controller;
 
-import DAOO.LoginDAO;
+import DAOO.loginDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -68,7 +68,7 @@ public class LoginController extends HttpServlet {
         String nameOrEmail = request.getParameter("name");
         String password = request.getParameter("password");
 
-        LoginDAO ldao = new LoginDAO();
+        loginDAO ldao = new loginDAO();
         HttpSession session = request.getSession();
         Student s = null;
         Teacher t = null;
@@ -83,13 +83,13 @@ public class LoginController extends HttpServlet {
         if (s != null) {
             session.setAttribute("student", s);
             
-            response.sendRedirect("StudentHomePage.jsp");
+            response.sendRedirect("StudentHomepage.jsp");
         } else if (t != null) {
             session.setAttribute("teacher", t);
-            response.sendRedirect("TeacherHomePage.jsp");
+            response.sendRedirect("TeacherHomepage.jsp");
         } else if (o != null) {
             session.setAttribute("office", o);
-            response.sendRedirect("OfficeHomePage.jsp");
+            response.sendRedirect("OfficeHomepage.jsp");
         } else {
             request.setAttribute("error", "Sai TK or MK");
             request.getRequestDispatcher("Login.jsp").forward(request, response);

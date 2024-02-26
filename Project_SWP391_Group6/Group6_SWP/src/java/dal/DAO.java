@@ -12,20 +12,23 @@ import java.sql.SQLException;
  * @author minhdang
  */
 public class DAO extends DBContext{
-    public void Register(String fname,String lname,String email,String pass,String gender,String dob,String msv){
+    
+    public void Register(String firstName,String lastName,String email,String passwordHash,String gender,String dob,String MSV){
         String sql = "insert into Students(FirstName,LastName,Email,PasswordHash,gender,dob,MSV) values(?,?,?,?,?,?,?);";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, fname);
-            ps.setString(2, lname);
+            ps.setString(1, firstName);
+            ps.setString(2, lastName);
             ps.setString(3, email);
-            ps.setString(4, pass);
+            ps.setString(4, passwordHash);
             ps.setString(5, gender);
             ps.setString(6, dob);
-            ps.setString(7, msv);
+            ps.setString(7, MSV);
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
+    
+    
 }

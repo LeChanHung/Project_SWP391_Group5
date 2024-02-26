@@ -8,72 +8,70 @@ import java.util.Date;
 
 /**
  *
- * @author pc acer
+ * @author minhdang
  */
 public class Student {
-    private int id;
-    private String FirstName;
-    private String LastName;
-    private String Email;
-    private String PasswordHash;
+    private int  studentID;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String passwordHash;
     private String gender;
     private Date dob;
     private String MSV;
-    private int role;
 
     public Student() {
     }
 
-    public Student(int id, String FirstName, String LastName, String Email, String PasswordHash, String gender, Date dob, String MSV, int role) {
-        this.id = id;
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-        this.Email = Email;
-        this.PasswordHash = PasswordHash;
+    public Student(int studentID, String firstName, String lastName, String email, String passwordHash, String gender, Date dob, String MSV) {
+        this.studentID = studentID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.passwordHash = passwordHash;
         this.gender = gender;
         this.dob = dob;
         this.MSV = MSV;
-        this.role = role;
     }
 
-    public int getId() {
-        return id;
+    public int getStudentID() {
+        return studentID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
-    public void setFirstName(String FirstName) {
-        this.FirstName = FirstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
-    public void setLastName(String LastName) {
-        this.LastName = LastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
-    public void setEmail(String Email) {
-        this.Email = Email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPasswordHash() {
-        return PasswordHash;
+        return passwordHash;
     }
 
-    public void setPasswordHash(String PasswordHash) {
-        this.PasswordHash = PasswordHash;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public String getGender() {
@@ -100,14 +98,5 @@ public class Student {
         this.MSV = MSV;
     }
 
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
-    }
-    
-  
     
 }

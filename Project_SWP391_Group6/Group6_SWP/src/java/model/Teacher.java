@@ -4,11 +4,12 @@
  */
 package model;
 
-import java.util.logging.Logger;
-
-
+/**
+ *
+ * @author minhdang
+ */
 public class Teacher {
-    private int id;
+    private int TeacherId;
     private String firstName;
     private String lastName;
     private String email;
@@ -18,28 +19,21 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(int id, String firstName, String lastName, String email, String passwordHash, int role) {
-        this.id = id;
+    public Teacher(int TeacherId, String firstName, String lastName, String email, String passwordHash, int role) {
+        this.TeacherId = TeacherId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.passwordHash = passwordHash;
-    }
-
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
         this.role = role;
     }
 
-    public int getId() {
-        return id;
+    public int getTeacherId() {
+        return TeacherId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTeacherId(int TeacherId) {
+        this.TeacherId = TeacherId;
     }
 
     public String getFirstName() {
@@ -73,6 +67,14 @@ public class Teacher {
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
-    
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
     
 }
