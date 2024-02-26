@@ -2,38 +2,43 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model;
+package model1;
 
 /**
  *
- * @author minhdang
+ * @author admin
  */
-public class Teacher {
-    private int TeacherId;
+public class Teachers {
+    /*
+    [TeacherID] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [varchar](50) NULL,
+	[LastName] [varchar](50) NULL,
+	[Email] [varchar](255) NULL,
+	[PasswordHash] [varchar](255) NULL,
+    */
+    private int teacherID;
     private String firstName;
     private String lastName;
     private String email;
     private String passwordHash;
-    private int role;
 
-    public Teacher() {
+    public Teachers() {
     }
 
-    public Teacher(int TeacherId, String firstName, String lastName, String email, String passwordHash, int role) {
-        this.TeacherId = TeacherId;
+    public Teachers(int teacherID, String firstName, String lastName, String email, String passwordHash) {
+        this.teacherID = teacherID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.passwordHash = passwordHash;
-        this.role = role;
     }
 
-    public int getTeacherId() {
-        return TeacherId;
+    public int getTeacherID() {
+        return teacherID;
     }
 
-    public void setTeacherId(int TeacherId) {
-        this.TeacherId = TeacherId;
+    public void setTeacherID(int teacherID) {
+        this.teacherID = teacherID;
     }
 
     public String getFirstName() {
@@ -67,14 +72,5 @@ public class Teacher {
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
-
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
-    }
-
     
 }

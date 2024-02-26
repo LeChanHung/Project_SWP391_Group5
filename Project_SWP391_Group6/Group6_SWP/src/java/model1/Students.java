@@ -2,35 +2,46 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model;
+package model1;
 
 import java.util.Date;
 
 /**
  *
- * @author minhdang
+ * @author admin
  */
-public class Student {
-    private int  studentID;
+public class Students {
+    /*
+    [StudentID] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [varchar](50) NULL,
+	[LastName] [varchar](50) NULL,
+	[Email] [varchar](255) NULL,
+	[PasswordHash] [varchar](255) NULL,
+	[dob] [date] NULL,
+	[gender] [nvarchar](50) NULL,
+	[MSV] [nvarchar](20) NULL,
+    */
+    
+    private int studentID;
     private String firstName;
     private String lastName;
     private String email;
     private String passwordHash;
-    private String gender;
     private Date dob;
+    private String gender;
     private String MSV;
 
-    public Student() {
+    public Students() {
     }
 
-    public Student(int studentID, String firstName, String lastName, String email, String passwordHash, String gender, Date dob, String MSV) {
+    public Students(int studentID, String firstName, String lastName, String email, String passwordHash, Date dob, String gender, String MSV) {
         this.studentID = studentID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.passwordHash = passwordHash;
-        this.gender = gender;
         this.dob = dob;
+        this.gender = gender;
         this.MSV = MSV;
     }
 
@@ -74,20 +85,20 @@ public class Student {
         this.passwordHash = passwordHash;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
     public Date getDob() {
         return dob;
     }
 
     public void setDob(Date dob) {
         this.dob = dob;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getMSV() {
@@ -97,6 +108,6 @@ public class Student {
     public void setMSV(String MSV) {
         this.MSV = MSV;
     }
-
+    
     
 }

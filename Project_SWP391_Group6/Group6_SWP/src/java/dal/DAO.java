@@ -1,7 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
+ 
+
 package dal;
 
 import java.sql.PreparedStatement;
@@ -11,8 +10,8 @@ import java.sql.SQLException;
  *
  * @author minhdang
  */
+
 public class DAO extends DBContext{
-    
     public void Register(String firstName,String lastName,String email,String passwordHash,String gender,String dob,String MSV){
         String sql = "insert into Students(FirstName,LastName,Email,PasswordHash,gender,dob,MSV) values(?,?,?,?,?,?,?);";
         try {
@@ -29,6 +28,4 @@ public class DAO extends DBContext{
             System.out.println(e);
         }
     }
-    
-    
 }
