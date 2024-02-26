@@ -10,7 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.TrainingOffice;
+import model1.TrainingOffice;
 import DAOO.loginDAO;
 import jakarta.servlet.http.HttpSession;
 import java.util.logging.Level;
@@ -32,7 +32,7 @@ public class loginTrainingOffice extends HttpServlet {
         loginDAO loginDAO = new loginDAO();
         TrainingOffice user = null;
         try {
-            user = loginDAO.authenticateUser(officeName, password);
+            user = (TrainingOffice) loginDAO.authenticateUser(officeName, password);
         } catch (Exception ex) {
         }
         if (user != null) {

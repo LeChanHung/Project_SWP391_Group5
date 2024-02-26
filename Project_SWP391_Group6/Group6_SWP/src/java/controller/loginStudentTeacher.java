@@ -11,9 +11,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Student;
-import model.Teacher;
-import model.TrainingOffice;
+import model1.Students;
+import model1.Teachers;
+import model1.TrainingOffice;
 
 /**
  *
@@ -29,11 +29,11 @@ public class loginStudentTeacher extends HttpServlet {
         String password = request.getParameter("password");
         loginSTDAO loginSTDAO = new loginSTDAO();
          HttpSession session = request.getSession();
-        Student s = null;
-        Teacher t = null;
+        Students s = null;
+        Teachers t = null;
         try {
-            s = loginSTDAO.authenticateStudent(email, password);
-            t = loginSTDAO.authenticateTeacher(email, password);
+            s = (Students) loginSTDAO.authenticateStudent(email, password);
+            t = (Teachers) loginSTDAO.authenticateTeacher(email, password);
         } catch (Exception ex) {
         }
         if (s != null) { 

@@ -5,7 +5,7 @@ import dal.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import model.TrainingOffice;
+import model1.TrainingOffice;
 import java.sql.Connection;
 
 public class loginDAO {
