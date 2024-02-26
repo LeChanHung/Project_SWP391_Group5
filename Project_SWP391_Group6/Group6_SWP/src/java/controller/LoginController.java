@@ -4,7 +4,7 @@
  */
 package controller;
 
-import DAOO.loginDAO;
+import DAO1.LoginDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,9 +13,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Student;
-import model.Teacher;
-import model.TrainingOffice;
+import model1.Students;
+import model1.Teachers;
+import model1.TrainingOffice;
 
 /**
  *
@@ -68,10 +68,10 @@ public class LoginController extends HttpServlet {
         String nameOrEmail = request.getParameter("name");
         String password = request.getParameter("password");
 
-        loginDAO ldao = new loginDAO();
+        LoginDAO ldao = new LoginDAO();
         HttpSession session = request.getSession();
-        Student s = null;
-        Teacher t = null;
+        Students s = null;
+        Teachers t = null;
         TrainingOffice o = null;
         try {
             s = ldao.authenticateStudent(nameOrEmail, password);
@@ -79,32 +79,23 @@ public class LoginController extends HttpServlet {
             o = ldao.authenticateTrainingOffice(nameOrEmail, password);
         } catch (Exception ex) {
             ex.printStackTrace();
+            log(ex.getMessage());
+            request.setAttribute("error", "Sai TK or MK");
+            request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
         if (s != null) {
             session.setAttribute("student", s);
-            
             response.sendRedirect("StudentHomepage.jsp");
         } else if (t != null) {
             session.setAttribute("teacher", t);
-            response.sendRedirect("TeacherHomepage.jsp");
+            response.sendRedirect("TeacherHomePage.jsp");
         } else if (o != null) {
             session.setAttribute("office", o);
-            response.sendRedirect("OfficeHomepage.jsp");
+            response.sendRedirect("OfficeHomePage.jsp");
         } else {
             request.setAttribute("error", "Sai TK or MK");
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
-
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }
