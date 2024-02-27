@@ -9,6 +9,7 @@ package Entity;
  * @author Duy Anh
  */
 public class students {
+
     private int StudentID;
     private String FirstName;
     private String LastName;
@@ -29,6 +30,12 @@ public class students {
         this.PasswordHash = PasswordHash;
         this.gender = gender;
         this.dob = dob;
+        this.MSV = MSV;
+    }
+
+    public students(int StudentID, String FirstName, String MSV) {
+        this.StudentID = StudentID;
+        this.FirstName = FirstName;
         this.MSV = MSV;
     }
 
@@ -100,6 +107,5 @@ public class students {
     public String toString() {
         return "students{" + "StudentID=" + StudentID + ", FirstName=" + FirstName + ", LastName=" + LastName + ", Email=" + Email + ", PasswordHash=" + PasswordHash + ", gender=" + gender + ", dob=" + dob + ", MSV=" + MSV + '}';
     }
-    
-    
+
 }

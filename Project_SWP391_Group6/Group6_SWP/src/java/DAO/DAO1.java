@@ -267,7 +267,7 @@ public class DAO1 extends DBContext {
     public List<feedbacks> getFeedbackBySearchAndPaging(String search, int index) {
         List<feedbacks> list = new ArrayList<>();
         String query = " select * from Feedbacks f join Students s on f.StudentID = s.StudentID\n"
-                + " where s.[FirstName] like '%" + search + "%'\n " 
+                + " where s.[FirstName] like '%" + search + "%'\n "
                 + " order by f.FeedbackDate desc\n"
                 + " OFFSET ? ROWS FETCH NEXT 4  ROWS ONLY";
         try {
@@ -275,7 +275,7 @@ public class DAO1 extends DBContext {
             ps.setInt(1, (index - 1) * 4);
             rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new feedbacks(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(5),rs.getString(6),rs.getString(8),rs.getString(9),rs.getString(10)));
+                list.add(new feedbacks(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(5), rs.getString(6), rs.getString(8), rs.getString(9), rs.getString(10)));
             }
             return list;
         } catch (Exception e) {
@@ -301,12 +301,33 @@ public class DAO1 extends DBContext {
         return 0;
     }
 
+    public List<students> getStudentAttendance() {
+        List<students> list = new ArrayList<>();
+        String query = "select Students.StudentID,FirstName,MSV from StudentEnrollments\n"
+                + "inner join Students on Students.StudentID=StudentEnrollments.StudentID\n"
+                + "inner join Classes on Classes.ClassID=StudentEnrollments.ClassID";
+        try {
+            //  conn = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                students s = new students( rs.getInt(1),rs.getString(2),rs.getString(3));
+                list.add(s);
+            }
+            return list;
+        } catch (Exception e) {
+        }
+        return null;
+
+    }
+
     public static void main(String[] args) {
         DAO1 dao = new DAO1();
-       List<feedbacks> list = dao.getAllFeedback();
-     for (feedbacks s : list) {
-         System.out.println(s.getEmail() + s.getFeedbackText());
-     }
+        List<students> list = dao.getStudentAttendance();
+        for (students s : list) {
+            System.out.println(s.getStudentID()+s.getFirstName()+s.getMSV());
+        }
 //        int count = dao.countFeedbackBySearch("");
 //        System.out.println(count);
     }

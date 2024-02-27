@@ -5,6 +5,8 @@
 
 package controller;
 
+import DAO.DAO1;
+import Entity.students;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -55,7 +58,10 @@ public class attendanceControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        DAO1 dao = new DAO1();
+        List<students> list = dao.getStudentAttendance();
+        request.setAttribute("studentList", dao.getStudentAttendance());
+        request.getRequestDispatcher("attendance.jsp").forward(request, response);
     } 
 
     /** 
