@@ -79,12 +79,10 @@ public class LoginController extends HttpServlet {
             o = ldao.authenticateTrainingOffice(nameOrEmail, password);
         } catch (Exception ex) {
             ex.printStackTrace();
-            log(ex.getMessage());
-            request.setAttribute("error", "Sai TK or MK");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
         if (s != null) {
             session.setAttribute("student", s);
+            
             response.sendRedirect("StudentHomepage.jsp");
         } else if (t != null) {
             session.setAttribute("teacher", t);
@@ -96,6 +94,17 @@ public class LoginController extends HttpServlet {
             request.setAttribute("error", "Sai TK or MK");
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
+
     }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
 }

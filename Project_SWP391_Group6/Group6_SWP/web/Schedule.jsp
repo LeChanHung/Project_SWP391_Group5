@@ -1,10 +1,9 @@
 <%-- 
-    Document   : TeacherHomepage
-    Created on : Feb 26, 2024, 10:49:29 AM
+    Document   : Schedule
+    Created on : Feb 27, 2024, 8:11:57 AM
     Author     : minhdang
 --%>
 
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,7 +12,6 @@
         <title>FPT University</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/homepage.css">
-
     </head>
     <body>
         <header class="header">
@@ -31,27 +29,48 @@
                 </div>
             </div>
         </header>
+        
+        <div id="content">
+            <h2 style="padding-left: 600px;">Weekly Timetable</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Slot</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Math</td>
+                <td>History</td>
+                <td>Biology</td>
+                <td>Chemistry</td>
+                <td>Physics</td>
+                <td>English</td>
+                <td>Literature</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Science</td>
+                <td>Geography</td>
+                <td>Science</td>
+                <td>Math</td>
+                <td>History</td>
+                <td>Biology</td>
+                <td>Chemistry</td>
+            </tr>
+            
+        </tbody>
+    </table>
+</div>
 
-        <div class="container-fluid">
-            <div class="row">
-                <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="padding-bottom: 400px;">
-                    <div class="sidebar-sticky">
-                        <h5 class="my-4" style="color: black;">Menu</h5>
-                        <div class="nav flex-column">
-                            <a class="nav-link" href="Schedule.jsp">Schedule</a>
-                            <a class="nav-link" href="Report.jsp">Report</a>
-                        </div>
-                    </div>
-                </nav>
-
-                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-                    <div id="content">
-                        <!-- Nội dung sẽ được hiển thị ở đây khi người dùng nhấp vào các phần -->
-
-                    </div>
-                </main>
-            </div>
-        </div>
         <footer class="footer">
             &copy; 2024 Đại học FPT. All rights reserved.
             <p>Địa chỉ:KM29 Đại lộ Thăng Long,Thạch Hòa,Thạch Thất,Hà Nội</p>
