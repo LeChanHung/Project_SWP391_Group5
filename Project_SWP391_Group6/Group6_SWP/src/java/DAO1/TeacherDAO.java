@@ -12,10 +12,20 @@ import model1.Teachers;
  * @author admin
  */
 public class TeacherDAO extends DBContext {
-
+    
+    public Teachers toTeacher(ResultSet rs) throws SQLException {
+        Teachers teachers = new Teachers();
+        teachers.setTeacherID(rs.getInt("TeacherID"));
+        teachers.setFirstName(rs.getString("FirstName"));
+        teachers.setLastName(rs.getString("LastName"));
+        teachers.setEmail(rs.getString("Email"));
+        teachers.setPasswordHash(rs.getString("PasswordHash"));
+        return teachers;
+    }
+    
     public List<Teachers> getAllTeacher() {
         List<Teachers> teacherses = new ArrayList<>();
-
+        
         try {
             // Calculate the offset based on the page number and page size
 
@@ -49,13 +59,13 @@ public class TeacherDAO extends DBContext {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+        
         return teacherses;
     }
-
+    
     public List<Teachers> searchTeachers(String keyword) {
         List<Teachers> teachers = new ArrayList<>();
-
+        
         try {
             String query = "SELECT * FROM Teachers WHERE FirstName LIKE ? OR LastName LIKE ?";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -63,9 +73,9 @@ public class TeacherDAO extends DBContext {
             // Set parameters for the prepared statement
             statement.setString(1, "%" + keyword + "%");
             statement.setString(2, "%" + keyword + "%");
-
+            
             ResultSet resultSet = statement.executeQuery();
-
+            
             while (resultSet.next()) {
                 int teacherID = resultSet.getInt("TeacherID");
                 String firstName = resultSet.getString("FirstName");
@@ -79,16 +89,16 @@ public class TeacherDAO extends DBContext {
                 // Add the teacher to the list
                 teachers.add(teacher);
             }
-
+            
             resultSet.close();
             statement.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
+        
         return teachers;
     }
-
+    
     public boolean addTeacher(Teachers teacher) {
         try {
             // Create SQL query to insert a new teacher
@@ -113,7 +123,7 @@ public class TeacherDAO extends DBContext {
             return false;
         }
     }
-
+    
     public boolean deleteTeacher(int teacherID) {
         try {
             // Create SQL query to delete a teacher by ID
@@ -140,36 +150,55 @@ public class TeacherDAO extends DBContext {
     }
     
     public boolean editTeacher(Teachers teacher) {
-    try {
-        // Create SQL query to update a teacher's information
-        String query = "UPDATE Teachers SET FirstName = ?, LastName = ?, Email = ?, PasswordHash = ? WHERE TeacherID = ?";
+        try {
+            // Create SQL query to update a teacher's information
+            String query = "UPDATE Teachers SET FirstName = ?, LastName = ?, Email = ?, PasswordHash = ? WHERE TeacherID = ?";
 
-        // Create prepared statement with the query
-        PreparedStatement statement = connection.prepareStatement(query);
+            // Create prepared statement with the query
+            PreparedStatement statement = connection.prepareStatement(query);
 
-        // Set parameters for the prepared statement
-        statement.setString(1, teacher.getFirstName());
-        statement.setString(2, teacher.getLastName());
-        statement.setString(3, teacher.getEmail());
-        statement.setString(4, teacher.getPasswordHash());
-        statement.setInt(5, teacher.getTeacherID());
+            // Set parameters for the prepared statement
+            statement.setString(1, teacher.getFirstName());
+            statement.setString(2, teacher.getLastName());
+            statement.setString(3, teacher.getEmail());
+            statement.setString(4, teacher.getPasswordHash());
+            statement.setInt(5, teacher.getTeacherID());
 
-        // Execute the update query
-        int rowsAffected = statement.executeUpdate();
+            // Execute the update query
+            int rowsAffected = statement.executeUpdate();
 
-        // Check if the update was successful
-        return rowsAffected > 0;
-    } catch (SQLException ex) {
-        System.out.println("Error editing teacher: " + ex.getMessage());
-        return false;
+            // Check if the update was successful
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            System.out.println("Error editing teacher: " + ex.getMessage());
+            return false;
+        }
     }
-}
-
-
+    
+    public Teachers get(int id) {
+        
+        try {
+            String query = "select * from Teachers where TeacherID = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                return toTeacher(resultSet);
+            }
+            // Close the resources
+            resultSet.close();
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        return null;
+    }
+    
     public static void main(String[] args) {
         TeacherDAO teacherDAO = new TeacherDAO();
         List<Teachers> teachersList = teacherDAO.getAllTeacher();
-
+        
         if (!teachersList.isEmpty()) {
             // Print the email of the first teacher in the list
             System.out.println(teachersList.get(0).getEmail());
