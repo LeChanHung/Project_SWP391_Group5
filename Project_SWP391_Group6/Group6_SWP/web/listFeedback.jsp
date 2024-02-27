@@ -32,8 +32,6 @@
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </nav>
-
-
             <!-- Du lieu -->
             <section id="testimonials">
                 <div class="testimonial-heading">
@@ -63,8 +61,6 @@
                             </div>
 
                         </div>
-
-
                         <div class="client-comment">
                             ${f.feedbackText}
                         </div>
@@ -75,7 +71,7 @@
             </div>
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="./listFeedback?index=1&search=${param.search}">First</a></li>
+                    <li class="page-item"><a class="page-link" href="./listFeedback?index=1&search=${param.search}">First </a></li>
                         <c:forEach begin="1" end="${numberPage}" var="e">
                         <li class="page-item"><a class="page-link ${param.index==e?"active":""}"  href="./listFeedback?index=${e}&search=${param.search}">${e}</a></li>
                         </c:forEach>
