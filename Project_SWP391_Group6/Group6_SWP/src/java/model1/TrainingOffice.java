@@ -8,7 +8,7 @@ package model1;
 
 /**
  *
- * @author pc acer
+ * @author minhdang
  */
 public class TrainingOffice {
     private int officeID;
@@ -47,5 +47,4 @@ public class TrainingOffice {
     public void setRole(int role) {
         this.role = role;
     }
-    
 }

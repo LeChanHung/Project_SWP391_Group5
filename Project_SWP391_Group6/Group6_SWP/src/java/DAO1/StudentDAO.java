@@ -16,7 +16,8 @@ import java.util.Date;
  *
  * @author admin
  */
-public class StudentDAO extends DBContext{
+public class StudentDAO extends DBContext {
+
     public List<Students> getAllStudent() {
         List<Students> studentses = new ArrayList<>();
 
@@ -58,8 +59,8 @@ public class StudentDAO extends DBContext{
 
         return studentses;
     }
-    
-     public List<Students> searchStudents(String keyword) {
+
+    public List<Students> searchStudents(String keyword) {
         List<Students> studentsList = new ArrayList<>();
 
         try {
@@ -92,66 +93,80 @@ public class StudentDAO extends DBContext{
 
         return studentsList;
     }
-     
-      public boolean addStudent(String firstName, String lastName, String email, String passwordHash, String dob, String gender, String MSV) {
-    try {
-        // Create SQL query to insert a new student
-        String query = "INSERT INTO Students (FirstName, LastName, Email, PasswordHash, dob, gender, MSV) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        
-        // Create prepared statement
-        PreparedStatement statement = connection.prepareStatement(query);
-        
-        // Set parameters for the prepared statement
-        statement.setString(1, firstName);
-        statement.setString(2, lastName);
-        statement.setString(3, email);
-        statement.setString(4, passwordHash);
-        statement.setString(5, dob);
-        statement.setString(6, gender);
-        statement.setString(7, MSV);
-        
-        // Execute the query
-        int rowsInserted = statement.executeUpdate();
-        
-        // Close the resources
-        statement.close();
-        
-        // Check if the student was successfully added
-        return rowsInserted > 0;
-    } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
-        return false;
-    }
-      }
 
-      public boolean deleteStudent(int studentID) {
-    try {
-        // Create SQL query to delete a student by studentID
-        String query = "DELETE FROM Students WHERE StudentID = ?";
-        
-        // Create prepared statement
-        PreparedStatement statement = connection.prepareStatement(query);
-        
-        // Set parameter for the prepared statement
-        statement.setInt(1, studentID);
-        
-        // Execute the query
-        int rowsDeleted = statement.executeUpdate();
-        
-        // Close the resources
-        statement.close();
-        
-        // Check if the student was successfully deleted
-        return rowsDeleted > 0;
-    } catch (SQLException ex) {
-        System.out.println(ex.getMessage());
-        return false;
-    }
-}
-      
-      
+    public boolean addStudent(String firstName, String lastName, String email, String passwordHash, String dob, String gender, String MSV) {
+        try {
+            // Create SQL query to insert a new student
+            String query = "INSERT INTO Students (FirstName, LastName, Email, PasswordHash, dob, gender, MSV) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    
+            // Create prepared statement
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            // Set parameters for the prepared statement
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            statement.setString(3, email);
+            statement.setString(4, passwordHash);
+            statement.setString(5, dob);
+            statement.setString(6, gender);
+            statement.setString(7, MSV);
+
+            // Execute the query
+            int rowsInserted = statement.executeUpdate();
+
+            // Close the resources
+            statement.close();
+
+            // Check if the student was successfully added
+            return rowsInserted > 0;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+
+    public boolean deleteStudent(int studentID) {
+        try {
+            // Create SQL query to delete a student by studentID
+            String query = "DELETE FROM Students WHERE StudentID = ?";
+
+            // Create prepared statement
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            // Set parameter for the prepared statement
+            statement.setInt(1, studentID);
+
+            // Execute the query
+            int rowsDeleted = statement.executeUpdate();
+
+            // Close the resources
+            statement.close();
+
+            // Check if the student was successfully deleted
+            return rowsDeleted > 0;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+
+    public void Register(String firstName, String lastName, String email, String passwordHash, String gender, String dob, String MSV) {
+        String sql = "insert into Students(FirstName,LastName,Email,PasswordHash,gender,dob,MSV) values(?,?,?,?,?,?,?);";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, firstName);
+            ps.setString(2, lastName);
+            ps.setString(3, email);
+            ps.setString(4, passwordHash);
+            ps.setString(5, gender);
+            ps.setString(6, dob);
+            ps.setString(7, MSV);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
     public static void main(String[] args) {
         StudentDAO c = new StudentDAO();
         List<Students> list = c.getAllStudent();

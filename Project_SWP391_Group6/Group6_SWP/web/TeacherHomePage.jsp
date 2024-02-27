@@ -1,11 +1,11 @@
 <%-- 
-    Document   : HomePage
-    Created on : Jan 24, 2024, 8:12:36 AM
+    Document   : TeacherHomepage
+    Created on : Feb 26, 2024, 10:49:29 AM
     Author     : minhdang
 --%>
 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,8 +23,8 @@
                         <img src="https://cdn.haitrieu.com/wp-content/uploads/2021/10/Logo-Dai-hoc-FPT.png" alt="Đại học FPT Logo" class="mr-2" style="width: 150px; height: auto;margin-right: 1250px">
                     </div>
                     <div class="col-md-4 text-right">
-                        <c:if test="${sessionScope.student != null}">
-                            <button class="btn btn-danger">${sessionScope.student.getFirstName()} ${sessionScope.student.getLastName()}</button>
+                        <c:if test="${sessionScope.teacher != null}">
+                            <button class="btn btn-danger">${sessionScope.teacher.getFirstName()} ${sessionScope.teacher.getLastName()}</button>
                         </c:if>
                         <a href="logout"><button class="btn btn-danger ml-2">Log out</button></a>
                     </div>
@@ -38,9 +38,8 @@
                     <div class="sidebar-sticky">
                         <h5 class="my-4" style="color: black;">Menu</h5>
                         <div class="nav flex-column">
-                            <a class="nav-link" href="#" onclick="showContent('Weekly Timetable')">Weekly Timetable</a>
-                            <a class="nav-link" href="#" onclick="showContent('Attendance Report')">Attendance Report</a>
-                            <a class="nav-link" href="#" onclick="showContent('Feedback')">Feedback</a>
+                            <a class="nav-link" href="Schedule.jsp">Schedule</a>
+                            <a class="nav-link" href="Report.jsp">Report</a>
                         </div>
                     </div>
                 </nav>
@@ -48,7 +47,7 @@
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <div id="content">
                         <!-- Nội dung sẽ được hiển thị ở đây khi người dùng nhấp vào các phần -->
-                        
+
                     </div>
                 </main>
             </div>
@@ -61,15 +60,5 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-        <script>
-                                function showContent(content) {
-                                    // Lấy ra phần nội dung dựa vào tham số content và hiển thị nó
-                                    var contentDiv = document.getElementById('content');
-                                    // Simulatation - Thay thế bằng dữ liệu thực từ server
-                                    var fakeData = "Nội dung cho phần " + content;
-                                    contentDiv.innerHTML = fakeData;
-                                }
-        </script>
     </body>
 </html>
