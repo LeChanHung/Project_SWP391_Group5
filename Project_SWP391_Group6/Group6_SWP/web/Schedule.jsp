@@ -4,6 +4,8 @@
     Author     : minhdang
 --%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -29,47 +31,64 @@
                 </div>
             </div>
         </header>
-        
+
         <div id="content">
             <h2 style="padding-left: 600px;">Weekly Timetable</h2>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Slot</th>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wed</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
-                <th>Sun</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Math</td>
-                <td>History</td>
-                <td>Biology</td>
-                <td>Chemistry</td>
-                <td>Physics</td>
-                <td>English</td>
-                <td>Literature</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Science</td>
-                <td>Geography</td>
-                <td>Science</td>
-                <td>Math</td>
-                <td>History</td>
-                <td>Biology</td>
-                <td>Chemistry</td>
-            </tr>
-            
-        </tbody>
-    </table>
-</div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>
+                            <c:forEach items="${dayOfWeeks}" var="d">
+                                <c:choose>
+                                    <c:when test="${d eq 1}"><th>Monday</th></c:when>
+                                <c:when test="${d eq 2}"><th>Tuesday</th></c:when>
+                                <c:when test="${d eq 3}"><th>Wednesday</th></c:when>
+                                <c:when test="${d eq 4}"><th>Thursday</th></c:when>
+                                <c:when test="${d eq 5}"><th>Friday</th></c:when>
+                                <c:when test="${d eq 6}"><th>Saturday</th></c:when>
+                                <c:when test="${d eq 7}"><th>Sunday</th></c:when>
+                                </c:choose>
+                            </c:forEach>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${slots}" var="s">
+                        <tr>
+                            <td>Slots ${s.getSlotNumber()}
+                                <br>
+                                <fmt:formatDate value="${s.getSlotStartTime()}" pattern="HH:mm"/>
+                                -
+                                <fmt:formatDate value="${s.getSlotEndTime()}" pattern="HH:mm"/>
+                            </td>
+                            <c:forEach items="${dayOfWeeks}" var="d">
+                                <td>
+                                    <c:forEach items="${schedules}" var="sc">
+                                            <!--<p>${sc.getDayOfWeek()} - ${d},${sc.getSlot().getSlotNumber()}-${s.getSlotNumber()}</p>-->
+                                        <c:if test="${sc.getDayOfWeek() eq d and sc.getSlot().getSlotNumber() eq s.getSlotNumber()}">
+                                            <p>
+                                                ${sc.getSubjectID().getSubjectName()}
+                                                -
+                                                ${sc.getClassID().getClassName()}
+                                                <br>
+                                                <fmt:formatDate value="${s.getSlotStartTime()}" pattern="HH:mm"/>
+                                                -
+                                                <fmt:formatDate value="${s.getSlotEndTime()}" pattern="HH:mm"/>
+                                                <br>
+                                                 <c:choose>
+                                                     <c:when test="${sc.getAttendance().getStatus() eq null}"><p style="color: green">Took Attendance</p></c:when>
+                                                    <c:when test="${sc.getAttendance().getStatus() ne null}"><p><a href="#">Take Attend</a></p></c:when>
+                                                </c:choose>
+                                                
+                                            </p>
+                                        </c:if>
+                                    </c:forEach>
+                                </td>
+                            </c:forEach>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
 
         <footer class="footer">
             &copy; 2024 Đại học FPT. All rights reserved.
