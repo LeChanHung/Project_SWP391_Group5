@@ -22,9 +22,6 @@ public class Student {
 
     public Student() {
     }
-    
-    
-//    private int role;
 
     public Student(String FirstName, String LastName, String Email, String PasswordHash, String gender, Date dob, String MSV) {
         this.FirstName = FirstName;
@@ -91,6 +88,13 @@ public class Student {
     public void setMSV(String MSV) {
         this.MSV = MSV;
     }
+
+    
+
+    
+    
+    
+
     
     
 }
