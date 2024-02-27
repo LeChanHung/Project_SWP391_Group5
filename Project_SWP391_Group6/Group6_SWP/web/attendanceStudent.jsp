@@ -41,7 +41,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="attendanceReport.jsp">
+                                <a href="attendanceStudent.jsp">
                                     <i class="fas fa-chart-bar"></i>
                                     <span class="nav-item">Attendance</span>
                                 </a>
@@ -53,7 +53,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="logout">
+                                <a href="logout" class="logout">
                                     <i class="fas fa-sign-out-alt"></i>
                                     <span class="nav-item">Log out</span>
                                 </a>
