@@ -76,7 +76,7 @@
                                                 <br>
                                                  <c:choose>
                                                      <c:when test="${sc.getAttendance().getStatus() eq null}"><p style="color: green">Took Attendance</p></c:when>
-                                                    <c:when test="${sc.getAttendance().getStatus() ne null}"><p><a href="#">Take Attend</a></p></c:when>
+                                                    <c:when test="${sc.getAttendance().getStatus() ne null}"><p><a href="attendance">Take Attend</a></p></c:when>
                                                 </c:choose>
                                                 
                                             </p>
