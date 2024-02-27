@@ -38,7 +38,7 @@
                     <div class="sidebar-sticky">
                         <h5 class="my-4" style="color: black;">Menu</h5>
                         <div class="nav flex-column">
-                            <a class="nav-link" href="Schedule.jsp">Schedule</a>
+                            <a class="nav-link" href="tchTimeTable">Schedule</a>
                             <a class="nav-link" href="Report.jsp">Report</a>
                         </div>
                     </div>
