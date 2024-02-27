@@ -1,5 +1,5 @@
 
-package dal;
+package DAO1;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,3 +29,4 @@ public class DBContext {
         }
     }
 }
+
