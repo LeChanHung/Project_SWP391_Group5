@@ -21,6 +21,7 @@ public class Teachers {
     private String lastName;
     private String email;
     private String passwordHash;
+    private boolean isTeaching;
 
     public Teachers() {
     }
@@ -31,6 +32,15 @@ public class Teachers {
         this.lastName = lastName;
         this.email = email;
         this.passwordHash = passwordHash;
+    }
+    
+    public Teachers(int teacherID, String firstName, String lastName, String email, String passwordHash, boolean isTeaching) {
+        this.teacherID = teacherID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.isTeaching = isTeaching;
     }
 
     public int getTeacherID() {
@@ -71,6 +81,13 @@ public class Teachers {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+    public boolean isTeaching() {
+        return isTeaching;
+    }
+
+    public void setTeaching(boolean teaching ) {
+        this.isTeaching = teaching;
     }
     
 }

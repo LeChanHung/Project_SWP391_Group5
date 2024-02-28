@@ -43,6 +43,12 @@
                             <span>Manager Student</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="class_manager">
+                            <i class="fas fa-user-graduate"></i>
+                            <span>Manager Class</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
