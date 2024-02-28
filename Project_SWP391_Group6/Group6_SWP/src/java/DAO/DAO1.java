@@ -322,7 +322,7 @@ public class DAO1 extends DBContext {
 
     }
 
-    public static void main(String[] args) {
+   public static void main(String[] args) {
         DAO1 dao = new DAO1();
         List<students> list = dao.getStudentAttendance();
         for (students s : list) {

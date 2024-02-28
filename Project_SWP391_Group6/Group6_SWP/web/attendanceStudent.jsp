@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +13,7 @@
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
         </head>
         <body>
-            <form actioc="report" method="post">
+            <form action="report" method="post">
                 <div class="container">
                     <nav>
                         <ul>
@@ -23,7 +24,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="StudentHomepage.jsp"">
+                                <a href="StudentHomepage.jsp">
                                     <i class="fas fa-menorah"></i>
                                     <span class="nav-item">Home</span>
                                 </a>
@@ -66,40 +67,35 @@
                             <h1>Attendance</h1>
                             <i class="fas fa-user-cog"></i>
                         </div>
+                    
+                        <div class="subject">              
+                        <div class="users"> 
+                        <c:forEach items="${requestScope.listSub}" var="s">
+                            <div class="card">
+                                <img src="https://inkythuatso.com/uploads/thumbnails/800/2023/03/9-anh-dai-dien-trang-inkythuatso-03-15-27-03.jpg">
 
-                        <section class="attendance">
-                            <div class="attendance-list">
-                                <h1>Student Report</h1>
-                                <table class="table">
-                                    <thead>
+                                <h4>${s.subjectName}</h4>
 
+                                <p>SE</p>
+                                <div class="per">
+                                    <table>
                                         <tr>
-                                            <th>ID</th>
-                                            <th>Subject</th>
-                                            <th>Teacher</th>
-                                            <th>Class</th>
-                                            <th>Day Of Week</th>
-                                            <th>Detail</th>
+                                            <td><span>90%</span></td>
+                                            <td><span>15%</span></td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach items="${s.allSchedules}" var="i">
-                                        <tr class="active">
-
-                                            <td>${i.subjectID}</td>
-                                            <td>${i.subjectName}</td>
-                                            <td>${i.fullname}</td>
-                                            <td>${i.className}</td>
-                                            <td>${i.dayOfWeak}</td>
-                                            <td><button>View</button></td>
-
+                                        <tr>
+                                            <td style="color: green">Attended</td>
+                                            <td style="color: red">Absent</td>
                                         </tr>
-                                    </c:forEach>
+                                    </table>
+                                    <button><a class="view" href="StaticsReport.jsp">View</a></button>
+                                </div>
 
-                                </tbody>
-                            </table>    
-                        </div>
-                    </section>
+                            </div>
+                        </c:forEach>
+                    </div>  
+                </div>  
+
                 </section>
             </div>
         </form>
