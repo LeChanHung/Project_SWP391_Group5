@@ -5,12 +5,14 @@
 package model1;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author admin
  */
 public class Students {
+
     /*
     [StudentID] [int] IDENTITY(1,1) NOT NULL,
 	[FirstName] [varchar](50) NULL,
@@ -20,8 +22,8 @@ public class Students {
 	[dob] [date] NULL,
 	[gender] [nvarchar](50) NULL,
 	[MSV] [nvarchar](20) NULL,
-    */
-    
+     */
+
     private int studentID;
     private String firstName;
     private String lastName;
@@ -30,6 +32,8 @@ public class Students {
     private Date dob;
     private String gender;
     private String MSV;
+    private int status;
+    List<Classes> listC;
 
     public Students() {
     }
@@ -43,6 +47,43 @@ public class Students {
         this.dob = dob;
         this.gender = gender;
         this.MSV = MSV;
+    }
+
+    public Students(int studentID, String firstName, String lastName, String email, String passwordHash, java.sql.Date dob, String gender,
+            String MSV, int status) {
+        this.studentID = studentID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.dob = dob;
+        this.gender = gender;
+        this.MSV = MSV;
+        this.status = status;
+    }
+
+    public Students(int studentID, String firstName, String lastName, String MSV) {
+        this.studentID = studentID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.MSV = MSV;
+
+    }
+
+    public List<Classes> getListC() {
+        return listC;
+    }
+
+    public void setListC(List<Classes> listC) {
+        this.listC = listC;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public int getStudentID() {
@@ -108,6 +149,5 @@ public class Students {
     public void setMSV(String MSV) {
         this.MSV = MSV;
     }
-    
-    
+
 }

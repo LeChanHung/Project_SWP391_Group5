@@ -35,4 +35,12 @@
     <welcome-file-list>
         <welcome-file>Login.jsp</welcome-file>
     </welcome-file-list>
+    <servlet>
+        <servlet-name>ClassManager</servlet-name>
+        <servlet-class>controller.ClassManager</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClassManager</servlet-name>
+        <url-pattern>/class_manager</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -63,8 +63,10 @@ public class TeacherManagerController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         TeacherDAO dao = new TeacherDAO();
-        List<Teachers> list = dao.getAllTeacher();
         String searchKeyword = request.getParameter("searchKeyword");
+        String pageStr = request.getParameter("page"); // Thêm tham số trang
+        int page = pageStr != null ? Integer.parseInt(pageStr) : 1; // Mặc định là trang 1
+        int pageSize = 10; // Kích thước trang
         List<Teachers> teachers;
 
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
@@ -72,12 +74,17 @@ public class TeacherManagerController extends HttpServlet {
             teachers = dao.searchTeachers(searchKeyword);
         } else {
             // If no search keyword, get all teachers
-            teachers = dao.getAllTeacher();
+            teachers = dao.getAllTeacher(page, pageSize);
+
         }
 
         // Set the list of teachers as a request attribute
         request.setAttribute("listteacher", teachers);
-        request.setAttribute("listteacher", list);
+        request.setAttribute("currentPage", page);
+        int totalTeachers = dao.getTotalTeachersCount();
+        int totalPages = (int) Math.ceil((double) totalTeachers / pageSize);
+        request.setAttribute("totalPages", totalPages);
+
         request.getRequestDispatcher("teacher-management.jsp").forward(request, response);
     }
 
@@ -105,8 +112,9 @@ public class TeacherManagerController extends HttpServlet {
             String lastName = request.getParameter("lastName");
             String email = request.getParameter("email");
             String passwordHash = request.getParameter("passwordHash");
+            boolean isTeaching = Boolean.parseBoolean(request.getParameter("isTeaching")); // Thêm dòng này
 
-            Teachers updatedTeacher = new Teachers(teacherId, firstName, lastName, email, passwordHash);
+            Teachers updatedTeacher = new Teachers(teacherId, firstName, lastName, email, passwordHash, isTeaching); // Thêm tham số isTeaching
             TeacherDAO dao = new TeacherDAO();
             boolean isEdited = dao.editTeacher(updatedTeacher);
             response.sendRedirect(request.getContextPath() + "/teacher_manager");
@@ -115,11 +123,13 @@ public class TeacherManagerController extends HttpServlet {
             String lastName = request.getParameter("lastName");
             String email = request.getParameter("email");
             String passwordHash = request.getParameter("passwordHash");
+            boolean isTeaching = Boolean.parseBoolean(request.getParameter("isTeaching")); // Thêm dòng này
 
-            Teachers newTeacher = new Teachers(0, firstName, lastName, email, passwordHash);
+            Teachers newTeacher = new Teachers(0, firstName, lastName, email, passwordHash, isTeaching); // Thêm tham số isTeaching
             TeacherDAO dao = new TeacherDAO();
             boolean isAdded = dao.addTeacher(newTeacher);
             response.sendRedirect(request.getContextPath() + "/teacher_manager");
+
         }
     }
 

@@ -38,9 +38,9 @@
                     <div class="sidebar-sticky">
                         <h5 class="my-4" style="color: black;">Menu</h5>
                         <div class="nav flex-column">
-                            <a class="nav-link" href="StudentSchedule.jsp" >Weekly Timetable</a>
-                            <a class="nav-link" href="stuReport" >Attendance Report</a>
-                            <a class="nav-link" href="feedback.jsp" >Feedback</a>
+                            <a class="nav-link" href="stuTimeTable" onclick="showContent('Weekly Timetable')">Weekly Timetable</a>
+                            <a class="nav-link" href="attendanceStudent.jsp" onclick="showContent('Attendance Report')">Attendance Report</a>
+                            <a class="nav-link" href="feedback.jsp" onclick="showContent('Feedback')">Feedback</a>
                         </div>
                     </div>
                 </nav>

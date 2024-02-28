@@ -17,9 +17,16 @@ import model1.Subjects;
  */
 public class SubjectDAO extends DBContext {
 
+    public Subjects toSubjects(ResultSet rs) throws SQLException{
+        Subjects subjects = new Subjects();
+        subjects.setSubjectID(rs.getInt("SubjectID"));
+        subjects.setSubjectName(rs.getString("SubjectName"));
+        return subjects;
+    }
+    
     public List<Subjects> getAllSubject() {
         List<Subjects> subjectses = new ArrayList<>();
-        
+
         try {
             // Calculate the offset based on the page number and page size
 
@@ -50,10 +57,31 @@ public class SubjectDAO extends DBContext {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         return subjectses;
     }
-    
+
+    public Subjects get(int id) {
+        try {
+            String query = "select * from Subjects where SubjectID = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Iterate over the result set
+            while (resultSet.next()) {
+               return toSubjects(resultSet);
+            }
+            // Close the resources
+            resultSet.close();
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return null;
+    }
+
     public static void main(String[] args) {
         SubjectDAO c = new SubjectDAO();
         List<Subjects> list = c.getAllSubject();
