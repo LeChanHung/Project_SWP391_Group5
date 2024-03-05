@@ -33,23 +33,23 @@ public class studentReport extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String subjectIdString = request.getParameter("subjectId");
-            try {
-                int subjectId = Integer.parseInt(subjectIdString);
-
-                if (subjectId == 1) {
-                    response.sendRedirect("swp391.jsp");
-                } else if (subjectId == 2) {
-                    response.sendRedirect("fer202.jsp");
-                } else if (subjectId == 3) {
-                    response.sendRedirect("prj391.jsp");
-                } else if (subjectId == 4) {
-                    response.sendRedirect("swr302.jsp");
-                } else {
-                }
-            } catch (NumberFormatException e) {
-            }
+            
+//            String subjectIdString = request.getParameter("subjectId");
+//            try {
+//                int subjectId = Integer.parseInt(subjectIdString);
+//
+//                if (subjectId == 1) {
+//                    response.sendRedirect("swp391.jsp");
+//                } else if (subjectId == 2) {
+//                    response.sendRedirect("fer202.jsp");
+//                } else if (subjectId == 3) {
+//                    response.sendRedirect("prj391.jsp");
+//                } else if (subjectId == 4) {
+//                    response.sendRedirect("swr302.jsp");
+//                } else {
+//                }
+//            } catch (NumberFormatException e) {
+//            }
         }
     }
 
@@ -79,7 +79,22 @@ public class studentReport extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String subjectIdString = request.getParameter("subjectId");
+            try {
+                int subjectId = Integer.parseInt(subjectIdString);
+
+                if (subjectId == 1) {
+                    response.sendRedirect("swp391.jsp");
+                } else if (subjectId == 2) {
+                    response.sendRedirect("fer202.jsp");
+                } else if (subjectId == 3) {
+                    response.sendRedirect("prj391.jsp");
+                } else if (subjectId == 4) {
+                    response.sendRedirect("swr302.jsp");
+                } else {
+                }
+            } catch (NumberFormatException e) {
+            }
     }
 
     /**
