@@ -88,7 +88,7 @@
                                             <td style="color: red">Absent</td>
                                         </tr>
                                     </table>
-                                    <button><a class="view" href="StaticsReport.jsp">View</a></button>
+                                    <button><a class="view" href="statics">View</a></button>
                                 </div>
 
                             </div>

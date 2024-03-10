@@ -337,12 +337,8 @@ public class DAO1 extends DBContext {
             ps.executeUpdate();
 
         } catch (Exception e) {
-   public static void main(String[] args) {
-        DAO1 dao = new DAO1();
-        List<students> list = dao.getStudentAttendance();
-        for (students s : list) {
-            System.out.println(s.getStudentID()+s.getFirstName()+s.getMSV());
-        }
+   
+    }
     }
 
     public int getEnrollmentId(int studentId, int classId) {
