@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -301,18 +302,18 @@ public class DAO1 extends DBContext {
         return 0;
     }
 
-    public List<students> getStudentAttendance() {
+    public List<students> getStudentAttendance(int classId) {
         List<students> list = new ArrayList<>();
         String query = "select Students.StudentID,FirstName,MSV from StudentEnrollments\n"
                 + "inner join Students on Students.StudentID=StudentEnrollments.StudentID\n"
-                + "inner join Classes on Classes.ClassID=StudentEnrollments.ClassID";
+                + "inner join Classes on Classes.ClassID=StudentEnrollments.ClassID where Classes.ClassID = ?";
         try {
             //  conn = new DBContext().getConnection();
             ps = connection.prepareStatement(query);
-
+            ps.setInt(1, classId);
             rs = ps.executeQuery();
             while (rs.next()) {
-                students s = new students( rs.getInt(1),rs.getString(2),rs.getString(3));
+                students s = new students(rs.getInt(1), rs.getString(2), rs.getString(3));
                 list.add(s);
             }
             return list;
@@ -322,12 +323,46 @@ public class DAO1 extends DBContext {
 
     }
 
-   public static void main(String[] args) {
-        DAO1 dao = new DAO1();
-        List<students> list = dao.getStudentAttendance();
-        for (students s : list) {
-            System.out.println(s.getStudentID()+s.getFirstName()+s.getMSV());
+    public void takeAttendanceStudent(int enrolmentID, int scheduleId, String status) {
+        String query = "insert into Attendance([EnrollmentID],[ScheduleID],[AttendanceDate],[Status])\n"
+                + "values(?,?,?,?);";
+        try {
+            //  conn = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, enrolmentID);
+            ps.setInt(2, scheduleId);
+            Date today = new Date();
+            ps.setDate(3, new java.sql.Date(today.getTime()));
+            ps.setString(4, status);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+   
+    }
+    }
+
+    public int getEnrollmentId(int studentId, int classId) {
+        String query = "SELECT [EnrollmentID] FROM [StudentEnrollments] WHERE StudentID = ? and ClassID = ?";
+        try {
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, studentId);
+            ps.setInt(2, classId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("EnrollmentID");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return 0;
+    }
+
+    public static void main(String[] args) {
+//        DAO1 dao = new DAO1();
+//        List<students> list = dao.getStudentAttendance();
+//        for (students s : list) {
+//            System.out.println(s.getStudentID()+s.getFirstName()+s.getMSV());
+//        }
 //        int count = dao.countFeedbackBySearch("");
 //        System.out.println(count);
     }

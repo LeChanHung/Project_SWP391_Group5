@@ -73,46 +73,49 @@
                     <section class="attendance">
                         <div class="attendance-list">
                             <h1>Check Attendance</h1>
-                            <table class="table">
-                                <thead>
-
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>MSSV</th>
-                                        <th>Present</th>
-                                        <th>Absent</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach items="${studentList}" var="e">
-                                    <tr>
-                                        <td>${e.studentID}</td>
-                                        <td>${e.firstName}</td>
-                                        <td>${e.MSV}</td>
-                                        <td>
-                                            <input type="checkbox" class="btn-check" id="btn-check-2" checked autocomplete="off">
-                                            <label class="btn btn-primary" for="btn-check-2">Present</label>
-                                        </td>
-                                        <td>
-                                            <input type="checkbox" class="btn-check" id="btn-check-2" checked autocomplete="off">
-                                            <label class="btn btn-primary" for="btn-check-2">Absent</label>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-
-
-                            </tbody>
-
-                        </table>    
-                        <div class="button">
                             <form action="check" method="post">
+
+                                <table class="table">
+                                    <thead>
+
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>MSSV</th>
+                                            <th>Present</th>
+                                            <th>Absent</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${studentList}" var="e" varStatus="i">
+                                        <tr>
+                                            <td>${e.studentID}</td>
+                                            <td>${e.firstName}</td>
+                                            <td>${e.MSV}</td>
+                                            <td>
+                                                <input type="radio" class="btn-check" id="btn-check-2" checked autocomplete="off" name="${e.studentID}" value="Attend">
+                                                <label class="btn btn-primary" for="btn-check-2">Present</label>
+                                            </td>
+                                            <td>
+                                                <input type="radio" class="btn-check" id="btn-check-2" autocomplete="off" name="${e.studentID}" value="Absent">
+                                                <label class="btn btn-primary" for="btn-check-2">Absent</label>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+
+                                </tbody>
+
+                            </table>    
+                            <div class="button">
                                 <div style="text-align: center;">
                                     <button type="submit" class="btn btn-primary" style="background-color: steelblue; color: white; border-radius: 3px; font-size: 20px; cursor: pointer; width: 150px;">Submit</button>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                                <input type="hidden" value="${scId}" name="scId">
+                                <input type="hidden" value="${classId}" name="classId">
+                        </form>
+
                     </div>
                 </section>
             </section>

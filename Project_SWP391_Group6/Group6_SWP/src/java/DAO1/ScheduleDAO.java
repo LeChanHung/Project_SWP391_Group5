@@ -63,7 +63,7 @@ public class ScheduleDAO extends DBContext {
         SubjectDAO dbSubject = new SubjectDAO();
         Subjects subjects = dbSubject.get(rs.getInt("SubjectID"));
         schedule.setSubjectID(subjects);
-        
+
         Attendance attendance = new Attendance();
         attendance.setStatus(rs.getString("Status"));
         schedule.setAttendance(attendance);
@@ -129,17 +129,24 @@ public class ScheduleDAO extends DBContext {
         ArrayList<Schedule> schedules = new ArrayList<>();
         try {
             String query = """
-                           SELECT  ws.[ScheduleID]
-                                 ,[ClassID]
-                                 ,ws.[TeacherID]
-                                 ,[SubjectID]
-                                 ,[DayOfWeek]
-                                 ,[SlotID],
-                                 a.[Status]
-                             FROM [swp].[dbo].[WeeklySchedules] ws
-                             inner join Teachers t on ws.TeacherID = t.TeacherID
-                           left join Attendance a on a.ScheduleID = ws.ScheduleID
-                             where ws.TeacherID = ?""";
+                           SELECT  distinct ws.[ScheduleID]
+                                                            ,ws.[ClassID]
+                                                            ,ws.[TeacherID]
+                                                            ,[SubjectID]
+                                                            ,[DayOfWeek]
+                                                            ,[SlotID],
+                           								 'Attend' as 'Status'
+                                                        FROM [swp].[dbo].[WeeklySchedules] ws
+                                                        inner join Teachers t on ws.TeacherID = t.TeacherID
+                                                      left join Attendance a on a.ScheduleID = ws.ScheduleID
+                                                        where ws.[ScheduleID] in (
+                           							 SELECT  distinct ws.[ScheduleID]
+                                                        FROM [swp].[dbo].[WeeklySchedules] ws
+                                                        inner join Teachers t on ws.TeacherID = t.TeacherID
+                                                      left join Attendance a on a.ScheduleID = ws.ScheduleID
+                                                        where ws.TeacherID = ?)
+                           
+                           """;
 //            conn = DBContext.getConnect();
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, teacherID);
