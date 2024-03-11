@@ -51,7 +51,7 @@ public class DAO extends DBContext {
             if(status==1) {
                 sql+="AND a.Status='attend'";
             } else if(status==2) {
-                sql+="AND a.Status='asbent'";
+                sql+="AND a.Status='absent'";
             }
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, StudentID);           
