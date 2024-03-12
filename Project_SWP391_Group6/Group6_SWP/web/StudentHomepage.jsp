@@ -41,6 +41,8 @@
                             <a class="nav-link" href="stuTimeTable" onclick="showContent('Weekly Timetable')">Weekly Timetable</a>
                             <a class="nav-link" href="stuReport " onclick="showContent('Attendance Report')">Attendance Report</a>
                             <a class="nav-link" href="feedback.jsp" onclick="showContent('Feedback')">Feedback</a>
+                            <a class="nav-link" href="viewApplication">View Application</a>
+                            <a class="nav-link" href="sendApplication">Send Application</a>
                         </div>
                     </div>
                 </nav>
@@ -48,7 +50,7 @@
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <div id="content">
                         <!-- Nội dung sẽ được hiển thị ở đây khi người dùng nhấp vào các phần -->
-                        
+
                     </div>
                 </main>
             </div>
@@ -62,6 +64,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-        
+
     </body>
 </html>

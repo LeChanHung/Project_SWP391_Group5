@@ -75,18 +75,34 @@
                 <p><strong>Content:</strong>${app.content}</p>
                 <!-- Thêm các phần tử khác cho chi tiết đơn hàng tại đây -->
             </div>
-            <c:if test="${app.status eq 0}">
-                <a href="updateStatus?id=${app.id}&status=1" class="button" style="background-color: #45a049">Accept</a>
-                <a href="updateStatus?id=${app.id}&status=0" class="button" style="background-color: red">Deny</a>
-            </c:if>
-            <c:if test="${app.status ne 0}">
-                <c:if test="${app.status eq 1}">
-                    <p>Status: Accepted</p>
+            <c:if test="${sessionScope.teacher ne null}">
+                <c:if test="${app.status eq 0}">
+                    <a href="updateStatus?id=${app.id}&status=1" class="button" style="background-color: #45a049">Accept</a>
+                    <a href="updateStatus?id=${app.id}&status=0" class="button" style="background-color: red">Deny</a>
                 </c:if>
-                <c:if test="${app.status ne -1}">
-                    <p>Status: Denied</p>
+                <c:if test="${app.status ne 0}">
+                    <c:if test="${app.status eq 1}">
+                        <p>Status: Accepted</p>
+                    </c:if>
+                    <c:if test="${app.status ne -1}">
+                        <p>Status: Denied</p>
+                    </c:if>
                 </c:if>
             </c:if>
+            <c:if test="${sessionScope.teacher eq null}">
+                <c:if test="${app.status eq 0}">
+                    <p>Status: Not Yet</p>
+                </c:if>
+                <c:if test="${app.status ne 0}">
+                    <c:if test="${app.status eq 1}">
+                        <p>Status: Accepted</p>
+                    </c:if>
+                    <c:if test="${app.status ne -1}">
+                        <p>Status: Denied</p>
+                    </c:if>
+                </c:if>
+            </c:if>
+            <a class="nav-link" href="viewApplication">View Application</a>
         </div>
     </body>
 </body>

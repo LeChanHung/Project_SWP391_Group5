@@ -40,6 +40,7 @@
                         <div class="nav flex-column">
                             <a class="nav-link" href="tchTimeTable">Schedule</a>
                             <a class="nav-link" href="Report.jsp">Report</a>
+                            <a class="nav-link" href="viewApplication">View Application</a>
                         </div>
                     </div>
                 </nav>

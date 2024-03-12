@@ -78,25 +78,42 @@
                             </c:forEach>
                         </td>
                         <td>
-                            <c:if test="${a.status eq 0}">
-                                <a href="updateStatus?id=${a.id}&status=1" class="button" style="background-color: #45a049">Accept</a>
-                                <a href="updateStatus?id=${a.id}&status=0" class="button" style="background-color: red">Deny</a>
-                            </c:if>
-                            <c:if test="${a.status ne 0}">
-                                <c:if test="${a.status eq 1}">
-                                    <p>Status: Accepted</p>
+                            <c:if test="${sessionScope.teacher ne null}">
+                                <c:if test="${a.status eq 0}">
+                                    <a href="updateStatus?id=${a.id}&status=1" class="button" style="background-color: #45a049">Accept</a>
+                                    <a href="updateStatus?id=${a.id}&status=0" class="button" style="background-color: red">Deny</a>
                                 </c:if>
-                                <c:if test="${a.status eq -1}">
-                                    <p>Status: Denied</p>
+                                <c:if test="${a.status ne 0}">
+                                    <c:if test="${a.status eq 1}">
+                                        <p>Status: Accepted</p>
+                                    </c:if>
+                                    <c:if test="${a.status eq -1}">
+                                        <p>Status: Denied</p>
+                                    </c:if>
                                 </c:if>
                             </c:if>
+                            <c:if test="${sessionScope.teacher eq null}">
+                                <c:if test="${a.status eq 0}">
+                                    <p>Status: Not Yet</p>
+                                </c:if>
+                                <c:if test="${a.status ne 0}">
+                                    <c:if test="${a.status eq 1}">
+                                        <p>Status: Accepted</p>
+                                    </c:if>
+                                    <c:if test="${a.status eq -1}">
+                                        <p>Status: Denied</p>
+                                    </c:if>
+                                </c:if>
+                            </c:if>
+
                         </td>
                         <td><a href="detailAppli?id=${a.id}">Detail</a></td>
                     </tr>
                 </c:forEach>
                 <!-- Thêm các hàng dữ liệu khác tại đây nếu cần -->
-            </tbody>
-        </table>
-    </body>
+            <a class="nav-link" href="TeacherHomePage.jsp">Homepage</a>
+        </tbody>
+    </table>
+</body>
 </html>
 

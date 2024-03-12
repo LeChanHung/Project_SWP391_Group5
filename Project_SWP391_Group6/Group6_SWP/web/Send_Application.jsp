@@ -166,8 +166,7 @@
                 <p>${msg}</p>
             </form>
         </div>
-
-
+        <a class="nav-link" href="viewApplication">View Application</a>
         <script>
             document.getElementById("diemdanhForm").style.display = "none";
             document.getElementById("thoihocForm").style.display = "none";
