@@ -46,6 +46,8 @@ public class AttendReportSubjectController extends HttpServlet {
         }
         req.setAttribute("listAllStu", listAllStu);
         req.setAttribute("students", students);
+        req.setAttribute("classId", classId);
+        req.setAttribute("subjectId", subjectId);
         req.getRequestDispatcher("listAttendReportSubject.jsp").forward(req, resp);
     }
 

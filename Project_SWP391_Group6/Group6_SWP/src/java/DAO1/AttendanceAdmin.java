@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model1.AttendanceReport;
 import model1.Classes;
+import model1.Schedule;
 import model1.Students;
 import model1.Subjects;
 import model1.Teachers;
@@ -66,7 +67,7 @@ public class AttendanceAdmin extends DBContext {
                 String status = resultSet.getString("Status");
                 int total = resultSet.getInt("total");
                 float percent = (float) 0.0;
-                if (status.equals("0")) {
+                if (status.equals("Absent")) {
                     percent = (float) ((total / 20.0) * 100);
                 }
                 // 
@@ -87,6 +88,22 @@ public class AttendanceAdmin extends DBContext {
         }
         return list;
     }
+    
+        public void updateStatus(int id, String status) {
+        try {
+            String query = "UPDATE Attendance SET Status = ? where AttendanceID = ?";
+//            conn = DBContext.getConnect();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, status);
+            ps.setInt(2, id);
+             ps.executeUpdate();
+           
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     public static void main(String[] args) {
         AttendanceAdmin a = new AttendanceAdmin();
