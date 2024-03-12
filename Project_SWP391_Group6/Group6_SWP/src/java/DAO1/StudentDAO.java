@@ -45,9 +45,9 @@ public class StudentDAO extends DBContext {
                 Date dob = resultSet.getDate("dob");
                 String gender = resultSet.getString("gender");
                 String MSV = resultSet.getString("MSV");
-                int status  = resultSet.getInt("status");
+                int status = resultSet.getInt("status");
                 // Create a Product object with the retrieved data
-                Students student = new Students(studentID, firstName, lastName, email, passwordHash, dob, gender, MSV,status);
+                Students student = new Students(studentID, firstName, lastName, email, passwordHash, dob, gender, MSV, status);
 
                 // Add the product to the list
                 studentses.add(student);
@@ -83,9 +83,9 @@ public class StudentDAO extends DBContext {
                 Date dob = resultSet.getDate("dob");
                 String gender = resultSet.getString("gender");
                 String MSV = resultSet.getString("MSV");
-                int status  = resultSet.getInt("status");
+                int status = resultSet.getInt("status");
                 // Create a Product object with the retrieved data
-                Students student = new Students(studentID, firstName, lastName, email, passwordHash, dob, gender, MSV,status);
+                Students student = new Students(studentID, firstName, lastName, email, passwordHash, dob, gender, MSV, status);
                 studentsList.add(student);
             }
 
@@ -98,7 +98,7 @@ public class StudentDAO extends DBContext {
         return studentsList;
     }
 
-    public boolean addStudent(String firstName, String lastName, String email, String passwordHash, Date dob, String gender, String MSV,int status) {
+    public boolean addStudent(String firstName, String lastName, String email, String passwordHash, Date dob, String gender, String MSV, int status) {
         try {
             // Create SQL query to insert a new student
             String query = "INSERT INTO Students (FirstName, LastName, Email, PasswordHash, dob, gender, MSV, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -114,7 +114,7 @@ public class StudentDAO extends DBContext {
             statement.setDate(5, dob);
             statement.setString(6, gender);
             statement.setString(7, MSV);
-            statement.setInt(8,status);
+            statement.setInt(8, status);
             // Execute the query
             int rowsInserted = statement.executeUpdate();
 
@@ -172,7 +172,7 @@ public class StudentDAO extends DBContext {
             statement.setString(7, MSV);
             statement.setInt(8, status);
             statement.setInt(9, studentID);
-             
+
             // Thực thi truy vấn
             int rowsUpdated = statement.executeUpdate();
 
@@ -211,7 +211,7 @@ public class StudentDAO extends DBContext {
                 String gender = resultSet.getString("gender");
                 int status = resultSet.getInt("status");
                 // Tạo đối tượng Students từ thông tin lấy được
-                student = new Students(studentID, firstName, lastName, email, passwordHash, dob, gender, MSV,status);
+                student = new Students(studentID, firstName, lastName, email, passwordHash, dob, gender, MSV, status);
             }
 
             // Đóng các tài nguyên
@@ -223,6 +223,7 @@ public class StudentDAO extends DBContext {
 
         return student;
     }
+
     public int getTotalStudentsCount() {
         int total = 0;
         try {
@@ -246,7 +247,7 @@ public class StudentDAO extends DBContext {
         }
         return list.subList((pageParam - 1) * size, size * pageParam >= list.size() ? list.size() : size * pageParam);
     }
-    
+
     public void Register(String firstName, String lastName, String email, String passwordHash, String gender, String dob, String MSV) {
         String sql = "insert into Students(FirstName,LastName,Email,PasswordHash,gender,dob,MSV) values(?,?,?,?,?,?,?);";
         try {
@@ -263,11 +264,49 @@ public class StudentDAO extends DBContext {
             System.out.println(e);
         }
     }
+
     /*
     public static void main(String[] args) {
         StudentDAO c = new StudentDAO();
         List<Students> list = c.getAllStudent();
         System.out.println(list.get(0).getMSV());
     }
-    */
+     */
+
+    public Students getStudentByStudentID(int studentId) {
+        Students student = null;
+        try {
+            // Tạo câu truy vấn SQL để lấy thông tin của một sinh viên bằng MSV
+            String query = "SELECT * FROM Students WHERE StudentID=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, studentId);
+
+            // Thực thi truy vấn
+            ResultSet resultSet = statement.executeQuery();
+
+            // Kiểm tra xem có sinh viên nào được tìm thấy hay không
+            if (resultSet.next()) {
+                // Lấy thông tin của sinh viên từ kết quả truy vấn
+                int studentID = resultSet.getInt("StudentID");
+                String firstName = resultSet.getString("FirstName");
+                String lastName = resultSet.getString("LastName");
+                String email = resultSet.getString("Email");
+                String passwordHash = resultSet.getString("PasswordHash");
+                String MSV = resultSet.getString("MSV");
+                Date dob = resultSet.getDate("dob");
+                String gender = resultSet.getString("gender");
+//                int status = resultSet.getInt("status");
+                // Tạo đối tượng Students từ thông tin lấy được
+                student = new Students(studentID, firstName, lastName, email, passwordHash, dob, gender, MSV);
+            }
+
+            // Đóng các tài nguyên
+            resultSet.close();
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return student;
+    }
 }
