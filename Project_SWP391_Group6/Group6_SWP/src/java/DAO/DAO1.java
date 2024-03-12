@@ -337,13 +337,8 @@ public class DAO1 extends DBContext {
             ps.executeUpdate();
 
         } catch (Exception e) {
-<<<<<<< Updated upstream
-   
-    }
-=======
             e.printStackTrace();
         }
->>>>>>> Stashed changes
     }
 
     public int getEnrollmentId(int studentId, int classId) {
