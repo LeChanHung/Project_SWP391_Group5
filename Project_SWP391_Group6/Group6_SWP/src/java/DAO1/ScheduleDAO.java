@@ -72,6 +72,35 @@ public class ScheduleDAO extends DBContext {
 
         return schedule;
     }
+    
+    public Schedule toScheduleAttendID(ResultSet rs) throws SQLException {
+        Schedule schedule = new Schedule();
+        schedule.setScheduleID(rs.getInt("ScheduleID"));
+        ClassDAO dbClass = new ClassDAO();
+        Classes classes = dbClass.get(rs.getInt("ClassID"));
+        schedule.setClassID(classes);
+
+        TeacherDAO dbTeacher = new TeacherDAO();
+        Teachers tc = dbTeacher.get(rs.getInt("TeacherID"));
+        schedule.setTeacherID(tc);
+
+        SlotDAO dbSlot = new SlotDAO();
+        timeSlots ts = dbSlot.get(rs.getInt("SlotID"));
+        schedule.setSlot(ts);
+
+        SubjectDAO dbSubject = new SubjectDAO();
+        Subjects subjects = dbSubject.get(rs.getInt("SubjectID"));
+        schedule.setSubjectID(subjects);
+
+        Attendance attendance = new Attendance();
+        attendance.setStatus(rs.getString("Status"));
+        attendance.setAttendanceID(rs.getInt("AttendanceID"));
+        schedule.setAttendance(attendance);
+
+        schedule.setDayOfWeek(rs.getInt("DayOfWeek"));
+
+        return schedule;
+    }
 
     public ArrayList<Schedule> list() {
         ArrayList<Schedule> schedules = new ArrayList<>();
@@ -172,6 +201,7 @@ public class ScheduleDAO extends DBContext {
                     + "      ,[SubjectID]\n"
                     + "      ,[DayOfWeek]\n"
                     + "      ,[SlotID],\n"
+                    +" [AttendanceID],\n"
                     + "	  a.Status\n"
                     + "  FROM [swp].[dbo].[WeeklySchedules] ws\n"
                     + "  inner join Classes c on ws.ClassID = c.ClassID\n"
@@ -187,7 +217,7 @@ public class ScheduleDAO extends DBContext {
             ps.setInt(4, subjectId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Schedule schedule = toScheduleAttend(rs);
+                Schedule schedule = toScheduleAttendID(rs);
                 schedules.add(schedule);
             }
             return schedules;

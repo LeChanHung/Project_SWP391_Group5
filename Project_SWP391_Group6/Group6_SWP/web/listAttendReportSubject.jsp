@@ -50,7 +50,9 @@
                                 <c:forEach items="${listAllStu.get(loop.index)}" var="sc">
                                     <td>
                                         <c:if test="${sc.attendance.status eq null}">NOT YET</c:if>
-                                        <c:if test="${sc.attendance.status ne null}">${sc.attendance.status}</c:if>
+                                        <c:if test="${sc.attendance.status ne null}"><a href="updateAttend?id=${sc.attendance.attendanceID}&status=${sc.attendance.status}&subjectId=${subjectId}&classId=${classId}">
+                                                ${sc.attendance.status}</a>
+                                        </c:if>
                                         </td>
                                 </c:forEach>
                             </tr>
