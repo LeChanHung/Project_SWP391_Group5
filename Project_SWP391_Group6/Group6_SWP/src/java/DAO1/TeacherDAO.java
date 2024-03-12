@@ -195,6 +195,42 @@ public class TeacherDAO extends DBContext {
         }
         return total;
     }
+    public Teachers getTeacherByID(int id) {
+        Teachers teacher = null;
+        try {
+            // Tạo câu truy vấn SQL để lấy thông tin của một sinh viên bằng MSV
+            String query = "SELECT * FROM Teachers WHERE TeacherID=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+
+            // Thực thi truy vấn
+            ResultSet resultSet = statement.executeQuery();
+
+            // Kiểm tra xem có sinh viên nào được tìm thấy hay không
+            if (resultSet.next()) {
+                // Lấy thông tin của sinh viên từ kết quả truy vấn
+                int teacherID = resultSet.getInt("TeacherID");
+                String firstName = resultSet.getString("FirstName");
+                String lastName = resultSet.getString("LastName");
+                String email = resultSet.getString("Email");
+                String passwordHash = resultSet.getString("PasswordHash");
+                boolean isTeaching = resultSet.getBoolean("isTeaching");
+                // Create a Product object with the retrieved data
+                 teacher = new Teachers(teacherID, firstName, lastName, email, passwordHash, isTeaching);
+
+                
+                
+            }
+
+            // Đóng các tài nguyên
+            resultSet.close();
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return teacher;
+    }
 
     public List<Teachers> Paging(List<Teachers> list, int pageParam, int size) {
         if (list.isEmpty()) {

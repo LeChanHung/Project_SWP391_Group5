@@ -62,6 +62,37 @@ public class SubjectDAO extends DBContext {
 
         return subjectses;
     }
+    public Subjects getSubjectByID(int id) {
+        Subjects subject = null;
+        try {
+            // Tạo câu truy vấn SQL để lấy thông tin của một sinh viên bằng MSV
+            String query = "SELECT * FROM Subjects WHERE SubjectID=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+
+            // Thực thi truy vấn
+            ResultSet resultSet = statement.executeQuery();
+
+            // Kiểm tra xem có sinh viên nào được tìm thấy hay không
+            if (resultSet.next()) {
+                // Lấy thông tin của sinh viên từ kết quả truy vấn
+                int subjectID = resultSet.getInt("SubjectID");
+                String subjectName = resultSet.getString("SubjectName");
+
+                // Create a Product object with the retrieved data
+                subject = new Subjects(subjectID, subjectName);
+
+            }
+
+            // Đóng các tài nguyên
+            resultSet.close();
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return subject;
+    }
 
     public Subjects get(int id) {
         try {
@@ -119,6 +150,7 @@ public class SubjectDAO extends DBContext {
 
         return subjectses;
     }
+     
 
     public static void main(String[] args) {
         SubjectDAO c = new SubjectDAO();

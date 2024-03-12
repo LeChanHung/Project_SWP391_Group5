@@ -223,6 +223,42 @@ public class StudentDAO extends DBContext {
 
         return student;
     }
+    public Students getStudentByID(int id) {
+        Students student = null;
+        try {
+            // Tạo câu truy vấn SQL để lấy thông tin của một sinh viên bằng MSV
+            String query = "SELECT * FROM Students WHERE StudentID=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+
+            // Thực thi truy vấn
+            ResultSet resultSet = statement.executeQuery();
+
+            // Kiểm tra xem có sinh viên nào được tìm thấy hay không
+            if (resultSet.next()) {
+                // Lấy thông tin của sinh viên từ kết quả truy vấn
+                
+                String firstName = resultSet.getString("FirstName");
+                String lastName = resultSet.getString("LastName");
+                String email = resultSet.getString("Email");
+                String passwordHash = resultSet.getString("PasswordHash");
+                String MSV = resultSet.getString("MSV");
+                Date dob = resultSet.getDate("dob");
+                String gender = resultSet.getString("gender");
+                int status = resultSet.getInt("status");
+                // Tạo đối tượng Students từ thông tin lấy được
+                student = new Students(id, firstName, lastName, email, passwordHash, dob, gender, MSV,status);
+            }
+
+            // Đóng các tài nguyên
+            resultSet.close();
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return student;
+    }
 
     public int getTotalStudentsCount() {
         int total = 0;

@@ -59,7 +59,7 @@
                 </a>    
             </li>
             <li>
-                <a href="#">
+                <a href="AttendanceAdmin">
                     <i class="fas fa-calendar-check"></i>
                     <span>Attendance</span>
                 </a>    
