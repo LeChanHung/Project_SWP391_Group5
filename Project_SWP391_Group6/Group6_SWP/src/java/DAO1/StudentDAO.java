@@ -309,4 +309,49 @@ public class StudentDAO extends DBContext {
 
         return student;
     }
+    
+    public ArrayList<Students> getAllStudentByClassId(int classId) {
+        ArrayList<Students> studentses = new ArrayList<>();
+
+        try {
+            // Calculate the offset based on the page number and page size
+
+            // Create SQL query with LIMIT and OFFSET clauses
+            String query = "SELECT * FROM Students s\n"
+                    + "  inner join StudentEnrollments se on s.StudentID = se.StudentID\n"
+                    + "  where ClassID = ?";
+
+            // Create prepared statement
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, classId);
+            // Execute the query
+            ResultSet resultSet = statement.executeQuery();
+
+            // Iterate over the result set
+            while (resultSet.next()) {
+                // Retrieve product details from each row
+                int studentID = resultSet.getInt("StudentID");
+                String firstName = resultSet.getString("FirstName");
+                String lastName = resultSet.getString("LastName");
+                String email = resultSet.getString("Email");
+                String passwordHash = resultSet.getString("PasswordHash");
+                java.util.Date dob = resultSet.getDate("dob");
+                String gender = resultSet.getString("gender");
+                String MSV = resultSet.getString("MSV");
+                // Create a Product object with the retrieved data
+                Students student = new Students(studentID, firstName, lastName, email, passwordHash, dob, gender, MSV);
+
+                // Add the product to the list
+                studentses.add(student);
+            }
+
+            // Close the resources
+            resultSet.close();
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return studentses;
+    }
 }

@@ -162,4 +162,39 @@ public class ScheduleDAO extends DBContext {
 
         return schedules;
     }
+
+    public ArrayList<Schedule> listSchedulesStuSub(int teacherID, int classId, int studentId, int subjectId) {
+        ArrayList<Schedule> schedules = new ArrayList<>();
+        try {
+            String query = "SELECT ws.[ScheduleID]\n"
+                    + "      ,ws.[ClassID]\n"
+                    + "      ,[TeacherID]\n"
+                    + "      ,[SubjectID]\n"
+                    + "      ,[DayOfWeek]\n"
+                    + "      ,[SlotID],\n"
+                    + "	  a.Status\n"
+                    + "  FROM [swp].[dbo].[WeeklySchedules] ws\n"
+                    + "  inner join Classes c on ws.ClassID = c.ClassID\n"
+                    + "  inner join StudentEnrollments se on se.ClassID = c.ClassID\n"
+                    + "  inner join Students s on s.StudentID = se.StudentID\n"
+                    + "  left join Attendance a on a.ScheduleID = ws.ScheduleID and a.EnrollmentID = se.EnrollmentID\n"
+                    + "  where se.StudentID = ? and se.ClassID = ? and TeacherID = ? and SubjectID = ?";
+//            conn = DBContext.getConnect();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, studentId);
+            ps.setInt(2, classId);
+            ps.setInt(3, teacherID);
+            ps.setInt(4, subjectId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Schedule schedule = toScheduleAttend(rs);
+                schedules.add(schedule);
+            }
+            return schedules;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return schedules;
+    }
 }

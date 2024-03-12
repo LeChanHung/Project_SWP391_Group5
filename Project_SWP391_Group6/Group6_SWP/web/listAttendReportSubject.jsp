@@ -34,17 +34,29 @@
 
         <div class="container-fluid">
             <div class="row">
-                <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="padding-bottom: 400px;">
-                    <div class="sidebar-sticky">
-                        <h5 class="my-4" style="color: black;">Menu</h5>
-                        <div class="nav flex-column">
-                            <a class="nav-link" href="tchTimeTable">Schedule</a>
-                            <a class="nav-link" href="Report.jsp">Report</a>
-                            <a class="nav-link" href="viewApplication">View Application</a>
-                            <a class="nav-link" href="attendReportdd">Attendance Report</a>
-                        </div>
-                    </div>
-                </nav>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>MSV</th>
+                                <c:forEach begin="1" step="1" end="30" varStatus="i">
+                                <th>${i.index}</th>
+                                </c:forEach>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${students}" var="s" varStatus="loop">
+                            <tr>
+                                <td>${s.MSV}</td>
+                                <c:forEach items="${listAllStu.get(loop.index)}" var="sc">
+                                    <td>
+                                        <c:if test="${sc.attendance.status eq null}">NOT YET</c:if>
+                                        <c:if test="${sc.attendance.status ne null}">${sc.attendance.status}</c:if>
+                                        </td>
+                                </c:forEach>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
 
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <div id="content">

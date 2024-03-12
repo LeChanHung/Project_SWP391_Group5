@@ -8,7 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import model1.Subjects;
 
 /**
@@ -80,6 +82,42 @@ public class SubjectDAO extends DBContext {
         }
 
         return null;
+    }
+    
+     public ArrayList<Subjects> getAllSubjectTeacher(int teacherId, int classId) {
+        ArrayList<Subjects> subjectses = new ArrayList<>();
+        try {
+            Set<Integer> disSubject = new HashSet<>();
+            String query = "SELECT [ScheduleID]\n"
+                    + "      ,[ClassID]\n"
+                    + "      ,[TeacherID]\n"
+                    + "      ,[SubjectID]\n"
+                    + "      ,[DayOfWeek]\n"
+                    + "      ,[SlotID]\n"
+                    + "  FROM [swp].[dbo].[WeeklySchedules] where TeacherID = ? and ClassID = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, teacherId);
+            statement.setInt(2, classId);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Iterate over the result set
+            while (resultSet.next()) {
+                int subjectID = resultSet.getInt("SubjectID");
+                disSubject.add(subjectID);
+            }
+
+            for (Integer integer : disSubject) {
+                subjectses.add(get(integer));
+            }
+            // Close the resources
+            resultSet.close();
+            statement.close();
+            return subjectses;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return subjectses;
     }
 
     public static void main(String[] args) {

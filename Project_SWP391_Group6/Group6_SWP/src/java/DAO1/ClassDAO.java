@@ -10,7 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import model1.Classes;
 import model1.Students;
 
@@ -391,5 +393,35 @@ public class ClassDAO extends DBContext {
             System.out.println(ex.getMessage());
         }
         return n;
+    }
+    
+        public ArrayList<Classes> getClassTeacher(int teacherId) {
+        ArrayList<Classes> classes = new ArrayList<>();
+        Set<Integer> disClass = new HashSet<>();
+        try {
+            String query = "SELECT [ScheduleID]\n"
+                    + "      ,[ClassID]\n"
+                    + "      ,[TeacherID]\n"
+                    + "      ,[SubjectID]\n"
+                    + "      ,[DayOfWeek]\n"
+                    + "      ,[SlotID]\n"
+                    + "  FROM [swp].[dbo].[WeeklySchedules] where TeacherID = ?";
+//            conn = DBContext.getConnect();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, teacherId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                disClass.add(rs.getInt("ClassID"));
+            }
+
+            for (Integer iClass : disClass) {
+                classes.add(get(iClass));
+            }
+            return classes;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return classes;
     }
 }

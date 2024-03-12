@@ -38,10 +38,9 @@
                     <div class="sidebar-sticky">
                         <h5 class="my-4" style="color: black;">Menu</h5>
                         <div class="nav flex-column">
-                            <a class="nav-link" href="tchTimeTable">Schedule</a>
-                            <a class="nav-link" href="Report.jsp">Report</a>
-                            <a class="nav-link" href="viewApplication">View Application</a>
-                            <a class="nav-link" href="attendReportdd">Attendance Report</a>
+                            <c:forEach items="${classes}" var="c">
+                                <a class="nav-link" href="attendClass?classId=${c.classID}">${c.className}</a>
+                            </c:forEach>
                         </div>
                     </div>
                 </nav>
