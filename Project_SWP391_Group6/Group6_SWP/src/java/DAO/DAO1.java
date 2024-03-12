@@ -7,6 +7,7 @@ package DAO;
 import DAO1.DBContext;
 import Entity.classes;
 import Entity.feedbacks;
+import Entity.news;
 import Entity.schedules;
 import Entity.students;
 import Entity.subjects;
@@ -353,6 +354,108 @@ public class DAO1 extends DBContext {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return 0;
+    }
+    
+    public List<news> getAllNews() {
+        List<news> list = new ArrayList<>();
+
+        String query = "select news_id,img,tilte,content,date from news";
+        try {
+            //  conn = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                news n = new news(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                list.add(n);
+            }
+            return list;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public void insertNews(String title, String content, String date, String img) {
+        String query = "insert into news(tilte,content,date,OfficeID,img)\n"
+                + "values(?,?,?,'1',?);";
+        try {
+            // conn = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setString(1, title);
+            ps.setString(2, content);
+            ps.setString(3, date);
+            ps.setString(4, img);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+        }
+    }
+
+    public void editNews(String id,String title, String content, String date, String img) {
+        String query = "UPDATE news\n"
+                + "SET tilte=?, content = ?, img=?,date=?\n"
+                + "WHERE news_id = ?;";
+        try {
+            // conn = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setString(1, title);
+            ps.setString(2, content);
+            ps.setString(3, date);
+            ps.setString(4, img);
+            ps.setString(5, id);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+        }
+    }
+    
+    public void deleteNew(String id){
+        String query = "delete from news where news_id=?";
+        try {
+            // conn = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setString(1, id);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+        }
+    }
+    
+    public news getNewsById(String id){
+        String query = "select * from news where news_id =?";
+        try {
+            // conn = new DBContext().getConnection();
+            ps = connection.prepareStatement(query);
+            ps.setString(1, id);
+            rs=ps.executeQuery();
+            while (rs.next()) {                
+               return new news(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(6));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public List<news> getListbByPage (List<news> list,int start,int end ){
+        ArrayList<news> arr = new ArrayList<>();
+        for(int i=start;i<end;i++){
+            arr.add(list.get(i));
+        }
+        return arr;
+    }
+    
+    
+    public int getTotalNews(){
+        String query="select count(*) from news";
+        try {
+            ps = connection.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {                
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
         }
         return 0;
     }

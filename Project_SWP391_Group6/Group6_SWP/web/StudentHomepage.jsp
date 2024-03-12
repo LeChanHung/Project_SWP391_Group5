@@ -43,6 +43,7 @@
                             <a class="nav-link" href="feedback.jsp" onclick="showContent('Feedback')">Feedback</a>
                             <a class="nav-link" href="viewApplication">View Application</a>
                             <a class="nav-link" href="sendApplication">Send Application</a>
+                            <a class="nav-link" href="news">News</a>
                         </div>
                     </div>
                 </nav>

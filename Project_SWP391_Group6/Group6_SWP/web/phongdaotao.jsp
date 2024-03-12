@@ -73,9 +73,9 @@
 
 
             <li>
-                <a href="#">
+                <a href="manage_news">
                     <i class="fas fa-question-circle"></i>
-                    <span>FAQ</span>
+                    <span>Management News</span>
                 </a>    
             </li>
 
