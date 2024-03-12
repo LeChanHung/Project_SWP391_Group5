@@ -76,18 +76,7 @@
 
                                 <h4>${s.subjectName}</h4>
 
-                                <p>SE</p>
-                                <div class="per">
-                                    <table>
-                                        <tr>
-                                            <td><span>90%</span></td>
-                                            <td><span>15%</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="color: green">Attended</td>
-                                            <td style="color: red">Absent</td>
-                                        </tr>
-                                    </table>
+                                <div class="per">      
                                     <button><a class="view" href="statics">View</a></button>
                                 </div>
 
@@ -103,4 +92,3 @@
 
     </body>
 </html>
-

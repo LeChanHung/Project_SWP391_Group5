@@ -93,21 +93,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${requestScope.listSta}" var="s">
-                                    <tr class="active">
-
-                                        <td>${s.slot.slotNumber}</td>
-                                        <td>${s.attendance.attendanceDate}</td>
-                                        <td><fmt:formatDate value="${s.slot.getSlotStartTime()}" pattern="HH:mm"/></td>
-                                        <td><fmt:formatDate value="${s.slot.getSlotEndTime()}" pattern="HH:mm"/></td>
-                                        <td>${s.attendance.status}</td>
-
-
-
-                                    </tr>
-                                </c:forEach>
-
-                            </tbody>
+                    <%-- Initialize counters for attended and absent sessions --%>
+                    <c:set var="attendedCount" value="0"/>
+                    <c:set var="absentCount" value="0"/>
+                    <c:forEach items="${requestScope.listSta}" var="s">
+                        <tr class="active">
+                            <td>${s.slot.slotNumber}</td>
+                            <td>${s.attendance.attendanceDate}</td>
+                            <td><fmt:formatDate value="${s.slot.getSlotStartTime()}" pattern="HH:mm"/></td>
+                            <td><fmt:formatDate value="${s.slot.getSlotEndTime()}" pattern="HH:mm"/></td>
+                            <td>${s.attendance.status}</td>
+                            
+                            <c:choose>
+                                <c:when test="${s.attendance.status == 'attend'}">
+                                    <c:set var="attendedCount" value="${attendedCount + 1}"/>
+                                </c:when>
+                                <c:when test="${s.attendance.status == 'absent'}">
+                                    <c:set var="absentCount" value="${absentCount + 1}"/>
+                                </c:when>
+                            </c:choose>
+                        </tr>
+                    </c:forEach>
+                    <tr>
+                        <td colspan="5" style="color : green">Number of attended sessions: ${attendedCount}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="color : red">Number of absent sessions: ${absentCount}</td>
+                    </tr>
+                </tbody>
                         </table>    
                     </div>
                 </section>

@@ -5,6 +5,7 @@
 package dal;
 
 import DAO1.DBContext;
+import Entity.classes;
 import Entity.timeSlots;
 import java.sql.Timestamp;
 import java.sql.PreparedStatement;
@@ -15,8 +16,11 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import model1.Attendance;
+import model1.DetailClass;
 import model1.Report;
 import model1.Schedule;
+import model1.Subjects;
+import model1.Teachers;
 
 /**
  *
@@ -43,18 +47,18 @@ public class DAO extends DBContext {
 
     public List<Report> stuReport(int StudentID, int status) {
         List<Report> list = new ArrayList<>();
-        String sql = "select ts.SlotNumber, a.AttendanceDate,ts.SlotStartTime,ts.SlotEndTime, a.Status from WeeklySchedules ws\n" +
-"                inner join Attendance a on ws.ScheduleID = a.ScheduleID\n" +
-"                inner join TimeSlots ts on ws.SlotID = ts.SlotID\n" +
-"				where ws.StudentID = ? ";
+        String sql = "select ts.SlotNumber, a.AttendanceDate,ts.SlotStartTime,ts.SlotEndTime, a.Status from WeeklySchedules ws\n"
+                + "                inner join Attendance a on ws.ScheduleID = a.ScheduleID\n"
+                + "                inner join TimeSlots ts on ws.SlotID = ts.SlotID\n"
+                + "				where ws.StudentID = ? ";
         try {
-            if(status==1) {
-                sql+="AND a.Status='attend'";
-            } else if(status==2) {
-                sql+="AND a.Status='absent'";
+            if (status == 1) {
+                sql += "AND a.Status='attend'";
+            } else if (status == 2) {
+                sql += "AND a.Status='absent'";
             }
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, StudentID);           
+            ps.setInt(1, StudentID);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Report r = new Report();
@@ -75,20 +79,66 @@ public class DAO extends DBContext {
         return list;
     }
 
-    public static void main(String[] args) {        
+    public DetailClass detailSlot(String ScheduleID) {
         
-      DAO dao = new DAO();
-
-        
-        List<Report> resultList = dao.stuReport(15,0);
-        
-        for (Report r : resultList) {
-            System.out.println("Slot Number: " + r.getSlot().getSlotNumber());
-            System.out.println("Attendance Date: " + r.getAttendance().getAttendanceDate());
-            System.out.println("Slot Start Time: " + r.getSlot().getSlotStartTime());
-            System.out.println("Slot End Time: " + r.getSlot().getSlotEndTime());
-            System.out.println("Status: " + r.getAttendance().getStatus());
-            System.out.println();
+        String sql = "select ws.ScheduleID, ts.SlotNumber,ts.SlotStartTime,ts.SlotEndTime,t.FirstName,t.LastName,sub.SubjectName,c.ClassName from WeeklySchedules ws \n" +
+"                join TimeSlots ts on ws.SlotID = ts.SlotID\n" +
+"                join Teachers t on ws.TeacherID = t.TeacherID\n" +
+"                join Subjects sub on ws.SubjectID = sub.SubjectID\n" +
+"                join Classes c on ws.ClassID = c.ClassID\n" +
+"                where ws.ScheduleID = ?";
+        try {
+            
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, ScheduleID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                DetailClass dc = new DetailClass();
+                timeSlots ts = new timeSlots();
+                Teachers t = new Teachers();
+                Subjects sub = new Subjects();
+                classes c = new classes();
+                ts.setSlotNumber(rs.getInt("SlotNumber"));
+                ts.setSlotStartTime(rs.getTimestamp("SlotStartTime"));
+                ts.setSlotEndTime(rs.getTimestamp("SlotEndTime"));
+                t.setFirstName(rs.getString("FirstName"));
+                t.setLastName(rs.getString("LastName"));
+                sub.setSubjectName(rs.getString("SubjectName"));
+                c.setClassName(rs.getString("ClassName"));
+                dc.setSlot(ts);
+                dc.setTeacher(t);
+                dc.setSubjects(sub);
+                dc.setClasses(c);
+                return dc;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
         }
+        return null;
+
+    }
+
+    public static void main(String[] args) {
+
+        DAO dao = new DAO();
+        
+        DetailClass dc = dao.detailSlot("1");
+        
+            System.out.println("Slot Number: " + dc.getSlot().getSlotNumber());  
+            System.out.println("Slot Start Time: " + dc.getSlot().getSlotStartTime());
+            System.out.println("Slot End Time: " + dc.getSlot().getSlotEndTime());
+            System.out.println();
+        
+
+//        List<Report> resultList = dao.stuReport(16, 0);
+//
+//        for (Report r : resultList) {
+//            System.out.println("Slot Number: " + r.getSlot().getSlotNumber());
+//            System.out.println("Attendance Date: " + r.getAttendance().getAttendanceDate());
+//            System.out.println("Slot Start Time: " + r.getSlot().getSlotStartTime());
+//            System.out.println("Slot End Time: " + r.getSlot().getSlotEndTime());
+//            System.out.println("Status: " + r.getAttendance().getStatus());
+//            System.out.println();
+//        }
     }
 }

@@ -73,6 +73,9 @@
                                                 <fmt:formatDate value="${s.getSlotStartTime()}" pattern="HH:mm"/>
                                                 -
                                                 <fmt:formatDate value="${s.getSlotEndTime()}" pattern="HH:mm"/>
+                                                
+                                                <a href="detailslot?id=${sc.scheduleID}">View</a>
+                                                
                                                 <c:choose>
                                                     <c:when test="${sc.getAttendance().getStatus() eq null}"><p>Not Yet</p></c:when>
                                                     <c:when test="${sc.getAttendance().getStatus() == 'absent'}"><p style="color: red">Absent</p></c:when>
