@@ -75,8 +75,8 @@
                                                 <fmt:formatDate value="${s.getSlotEndTime()}" pattern="HH:mm"/>
                                                 <br>
                                                  <c:choose>
-                                                     <c:when test="${sc.getAttendance().getStatus() ne null}"><p style="color: green">Took Attendance</p></c:when>
-                                                    <c:when test="${sc.getAttendance().getStatus() eq null}"><p><a href="attendance?classId=${sc.getClassID().getClassID()}&scId=${sc.getScheduleID()}">Take Attend</a></p></c:when>
+                                                     <c:when test="${sc.getAttendance().getStatus() eq null}"><p style="color: green">Took Attendance</p></c:when>
+                                                    <c:when test="${sc.getAttendance().getStatus() ne null}"><p><a href="attendance?classId=${sc.getClassID().getClassID()}&scId=${sc.getScheduleID()}">Take Attend</a></p></c:when>
                                                 </c:choose>
                                                 
                                             </p>

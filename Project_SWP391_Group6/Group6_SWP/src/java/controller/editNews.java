@@ -88,7 +88,7 @@ public class editNews extends HttpServlet {
         String date = request.getParameter("date");
         
         DAO1 dao = new DAO1();
-        dao.editNews(nid, title, content, date, img);
+        dao.editNews(nid, title, content, img, date);
         response.sendRedirect("manage_news");
     }
 

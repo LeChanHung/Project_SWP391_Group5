@@ -53,9 +53,9 @@
             </li>
 
             <li>
-                <a href="#">
+                <a href="viewApplication">
                     <i class="fas fa-chart-line"></i>
-                    <span>Statistics</span>
+                    <span>View Application</span>
                 </a>    
             </li>
             <li>

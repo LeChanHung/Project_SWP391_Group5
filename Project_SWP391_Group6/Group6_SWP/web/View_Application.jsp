@@ -111,7 +111,7 @@
                     </tr>
                 </c:forEach>
                 <!-- Thêm các hàng dữ liệu khác tại đây nếu cần -->
-            <a class="nav-link" href="TeacherHomePage.jsp">Homepage</a>
+            <a class="nav-link" href="StudentHomepage.jsp">Homepage</a>
         </tbody>
     </table>
 </body>

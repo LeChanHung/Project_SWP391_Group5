@@ -105,10 +105,10 @@
                             <td>${s.attendance.status}</td>
                             
                             <c:choose>
-                                <c:when test="${s.attendance.status == 'attend'}">
+                                <c:when test="${s.attendance.status == 'Attend'}">
                                     <c:set var="attendedCount" value="${attendedCount + 1}"/>
                                 </c:when>
-                                <c:when test="${s.attendance.status == 'absent'}">
+                                <c:when test="${s.attendance.status == 'Absent'}">
                                     <c:set var="absentCount" value="${absentCount + 1}"/>
                                 </c:when>
                             </c:choose>

@@ -295,8 +295,9 @@
                             </th>
                             <th>Title</th>
                             <th>Content</th>
-                            <th>Date</th>
+                           
                             <th>Image Link</th>
+                             <th>Date</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -309,8 +310,9 @@
                                 <td>${n.newID}</td>
                                 <td>${n.title}</td>
                                 <td>${n.content}</td>
-                                <td>${n.date}</td>
                                 <td>${n.img}</td>
+                                <td>${n.date}</td>
+                                
 
                                 <td>
 				<a href="edit?nid=${n.newID}" class="edit" ><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
@@ -357,12 +359,12 @@
                             <input type="text" class="form-control" required name="title">
                         </div>
                         <div class="form-group">
-                            <label>Content</label>
-                            <input type="text" class="form-control" required name="content">
+                            <label>Date</label>
+                            <input type="text" class="form-control" required name="date">
                         </div>
                         <div class="form-group">
-                            <label>Date</label>
-                            <textarea name="date" class="form-control" required></textarea>
+                            <label>Content</label>
+                            <textarea name="content" class="form-control" required></textarea>
                         </div>
                         <div class="form-group">
                             <label>Image link</label>

@@ -78,8 +78,8 @@
                                                 
                                                 <c:choose>
                                                     <c:when test="${sc.getAttendance().getStatus() eq null}"><p>Not Yet</p></c:when>
-                                                    <c:when test="${sc.getAttendance().getStatus() == 'absent'}"><p style="color: red">Absent</p></c:when>
-                                                    <c:when test="${sc.getAttendance().getStatus() == 'attend'}"><p style="color: green">Attend</p></c:when>
+                                                    <c:when test="${sc.getAttendance().getStatus() == 'Absent'}"><p style="color: red">Absent</p></c:when>
+                                                    <c:when test="${sc.getAttendance().getStatus() == 'Attend'}"><p style="color: green">Attend</p></c:when>
                                                 </c:choose>
 
                                             </p>
