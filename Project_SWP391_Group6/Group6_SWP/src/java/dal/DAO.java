@@ -45,12 +45,12 @@ public class DAO extends DBContext {
         }
     }
 
-    public List<Report> stuReport(int StudentID, int status) {
+    public List<Report> stuReport(int StudentID, int status, int SubjectID) {
         List<Report> list = new ArrayList<>();
-        String sql = "select ts.SlotNumber, a.AttendanceDate,ts.SlotStartTime,ts.SlotEndTime, a.Status from WeeklySchedules ws\n"
-                + "                inner join Attendance a on ws.ScheduleID = a.ScheduleID\n"
-                + "                inner join TimeSlots ts on ws.SlotID = ts.SlotID\n"
-                + "				where ws.StudentID = ? ";
+        String sql = "select ts.SlotNumber, a.AttendanceDate,ts.SlotStartTime,ts.SlotEndTime, a.Status from WeeklySchedules ws\n" +
+"                                inner join Attendance a on ws.ScheduleID = a.ScheduleID\n" +
+"                                inner join TimeSlots ts on ws.SlotID = ts.SlotID\n" +
+"                			where ws.StudentID = ? AND ws.SubjectID = ? ";
         try {
             if (status == 1) {
                 sql += "AND a.Status='attend'";
@@ -59,6 +59,7 @@ public class DAO extends DBContext {
             }
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, StudentID);
+            ps.setInt(2, SubjectID);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Report r = new Report();

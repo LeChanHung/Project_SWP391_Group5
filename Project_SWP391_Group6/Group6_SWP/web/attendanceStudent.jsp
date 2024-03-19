@@ -77,7 +77,7 @@
                                 <h4>${s.subjectName}</h4>
 
                                 <div class="per">      
-                                    <button><a class="view" href="statics">View</a></button>
+                                    <button><a class="view" href="statics?id=${s.subjectID}">View</a></button>
                                 </div>
 
                             </div>

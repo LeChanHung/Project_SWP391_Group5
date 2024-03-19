@@ -64,6 +64,8 @@ public class StaticsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String id_raw = request.getParameter("id");
+        int id = Integer.parseInt(id_raw);
         HttpSession session = request.getSession();
         Students s = (Students) session.getAttribute("student");
         String statusFilter = request.getParameter("statusFilter");
@@ -74,7 +76,7 @@ public class StaticsController extends HttpServlet {
             status = Integer.parseInt(statusFilter);
         }
         DAO dao = new DAO();
-        List<Report> list = dao.stuReport(s.getStudentID(), status);
+        List<Report> list = dao.stuReport(s.getStudentID(), status, id);
         request.setAttribute("listSta", list);
         request.getRequestDispatcher("StaticsReport.jsp").forward(request, response);
     }
