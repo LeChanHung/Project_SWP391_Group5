@@ -357,7 +357,7 @@ public class DAO1 extends DBContext {
         }
         return 0;
     }
-    
+
     public List<news> getAllNews() {
         List<news> list = new ArrayList<>();
 
@@ -368,7 +368,7 @@ public class DAO1 extends DBContext {
 
             rs = ps.executeQuery();
             while (rs.next()) {
-                news n = new news(rs.getInt(1),rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                news n = new news(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
                 list.add(n);
             }
             return list;
@@ -393,7 +393,7 @@ public class DAO1 extends DBContext {
         }
     }
 
-    public void editNews(String id,String title, String content, String date, String img) {
+    public void editNews(String id, String title, String content, String date, String img) {
         String query = "UPDATE news\n"
                 + "SET tilte=?, content = ?, img=?,date=?\n"
                 + "WHERE news_id = ?;";
@@ -410,8 +410,8 @@ public class DAO1 extends DBContext {
         } catch (Exception e) {
         }
     }
-    
-    public void deleteNew(String id){
+
+    public void deleteNew(String id) {
         String query = "delete from news where news_id=?";
         try {
             // conn = new DBContext().getConnection();
@@ -422,42 +422,75 @@ public class DAO1 extends DBContext {
         } catch (Exception e) {
         }
     }
-    
-    public news getNewsById(String id){
+
+    public news getNewsById(String id) {
         String query = "select * from news where news_id =?";
         try {
             // conn = new DBContext().getConnection();
             ps = connection.prepareStatement(query);
             ps.setString(1, id);
-            rs=ps.executeQuery();
-            while (rs.next()) {                
-               return new news(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getString(6));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new news(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(6));
             }
         } catch (Exception e) {
         }
         return null;
     }
-    
-    public List<news> getListbByPage (List<news> list,int start,int end ){
+
+    public List<news> getListbByPage(List<news> list, int start, int end) {
         ArrayList<news> arr = new ArrayList<>();
-        for(int i=start;i<end;i++){
+        for (int i = start; i < end; i++) {
             arr.add(list.get(i));
         }
         return arr;
     }
-    
-    
-    public int getTotalNews(){
-        String query="select count(*) from news";
+
+    public int getTotalNews() {
+        String query = "select count(*) from news";
         try {
             ps = connection.prepareStatement(query);
             rs = ps.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (Exception e) {
         }
         return 0;
+    }
+
+    public boolean checkStudenTAttend(int enrollmentId, int scId) {
+        String query = "SELECT [AttendanceID]\n"
+                + "      ,[EnrollmentID]\n"
+                + "      ,[ScheduleID]\n"
+                + "      ,[AttendanceDate]\n"
+                + "      ,[Status]\n"
+                + "  FROM Attendance where [EnrollmentID] =  ? and ScheduleID = ?";
+        try {
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, enrollmentId);
+            ps.setInt(2, scId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+    
+    public void updateStudenTAttend(String status,int enrollmentId, int scId) {
+        String query = """
+                       Update Attendance set Status = ? where [EnrollmentID] =  ? and ScheduleID = ?""";
+        try {
+            ps = connection.prepareStatement(query);
+            ps.setString(1, status);
+            ps.setInt(2, enrollmentId);
+            ps.setInt(3, scId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
     }
 
     public static void main(String[] args) {

@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import model1.Attendance;
 import model1.Classes;
 import model1.Schedule;
@@ -65,14 +66,14 @@ public class ScheduleDAO extends DBContext {
         schedule.setSubjectID(subjects);
 
         Attendance attendance = new Attendance();
-        attendance.setStatus(rs.getString("Status"));
+        attendance.setStatus(rs.getString("status"));
+
         schedule.setAttendance(attendance);
 
         schedule.setDayOfWeek(rs.getInt("DayOfWeek"));
-
         return schedule;
     }
-    
+
     public Schedule toScheduleAttendID(ResultSet rs) throws SQLException {
         Schedule schedule = new Schedule();
         schedule.setScheduleID(rs.getInt("ScheduleID"));
@@ -125,24 +126,32 @@ public class ScheduleDAO extends DBContext {
         ArrayList<Schedule> schedules = new ArrayList<>();
         try {
             String query = """
-                           SELECT ws.[ScheduleID]
-                                 ,ws.[ClassID]
-                                 ,[TeacherID]
-                                 ,[SubjectID]
-                                 ,[DayOfWeek]
-                                 ,[SlotID],
-                                 a.[Status] 
-                             FROM [swp].[dbo].[WeeklySchedules] ws
-                             inner join Classes c on c.ClassID = ws.ClassID
-                             inner join StudentEnrollments se on se.ClassID = c.ClassID
-                             inner join Students s on s.StudentID = se.StudentID
-                             left join Attendance a on a.ScheduleID = ws.ScheduleID
-                             where s.StudentID = ?""";
+                          SELECT distinct ws.[ScheduleID]
+                                                              ,ws.[ClassID]
+                                                              ,[TeacherID]
+                                                              ,[SubjectID]
+                                                              ,[DayOfWeek]
+                                                              ,[SlotID],
+                                                              a.[Status] 
+                                                          FROM [WeeklySchedules] ws
+                                                          inner join Classes c on c.ClassID = ws.ClassID
+                                                          inner join StudentEnrollments se on se.ClassID = c.ClassID
+                                                          inner join Students s on s.StudentID = se.StudentID
+                                                          left join Attendance a on a.ScheduleID = ws.ScheduleID
+                                                          where ws.ScheduleID in (
+                                                        							 SELECT  distinct ws.[ScheduleID]
+                                                                                     FROM [swp].[dbo].[WeeklySchedules] ws
+                                                                                     inner join Classes c on c.ClassID = ws.ClassID
+                                                          inner join StudentEnrollments se on se.ClassID = c.ClassID
+                                                          inner join Students s on s.StudentID = se.StudentID
+                                                          left join Attendance a on a.ScheduleID = ws.ScheduleID
+                                                                                     where s.StudentID= ?) """;
 //            conn = DBContext.getConnect();
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, studentID);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                System.out.println("count");
                 Schedule schedule = toScheduleAttend(rs);
                 schedules.add(schedule);
             }
@@ -158,23 +167,15 @@ public class ScheduleDAO extends DBContext {
         ArrayList<Schedule> schedules = new ArrayList<>();
         try {
             String query = """
-                           SELECT  distinct ws.[ScheduleID]
-                                                            ,ws.[ClassID]
-                                                            ,ws.[TeacherID]
-                                                            ,[SubjectID]
-                                                            ,[DayOfWeek]
-                                                            ,[SlotID],
-                           								 'Attend' as 'Status'
-                                                        FROM [swp].[dbo].[WeeklySchedules] ws
-                                                        inner join Teachers t on ws.TeacherID = t.TeacherID
-                                                      left join Attendance a on a.ScheduleID = ws.ScheduleID
-                                                        where ws.[ScheduleID] in (
-                           							 SELECT  distinct ws.[ScheduleID]
-                                                        FROM [swp].[dbo].[WeeklySchedules] ws
-                                                        inner join Teachers t on ws.TeacherID = t.TeacherID
-                                                      left join Attendance a on a.ScheduleID = ws.ScheduleID
-                                                        where ws.TeacherID = ?)
-                           
+ SELECT [ScheduleID]
+                      ,[ClassID]
+                      ,[TeacherID]
+                      ,[SubjectID]
+                      ,[DayOfWeek]
+                      ,[SlotID]
+                      ,[StudentID]
+                      ,[status]
+                  FROM [WeeklySchedules]   where TeacherID = ?
                            """;
 //            conn = DBContext.getConnect();
             PreparedStatement ps = connection.prepareStatement(query);
@@ -201,9 +202,9 @@ public class ScheduleDAO extends DBContext {
                     + "      ,[SubjectID]\n"
                     + "      ,[DayOfWeek]\n"
                     + "      ,[SlotID],\n"
-                    +" [AttendanceID],\n"
+                    + " [AttendanceID],\n"
                     + "	  a.Status\n"
-                    + "  FROM [swp].[dbo].[WeeklySchedules] ws\n"
+                    + "  FROM [WeeklySchedules] ws\n"
                     + "  inner join Classes c on ws.ClassID = c.ClassID\n"
                     + "  inner join StudentEnrollments se on se.ClassID = c.ClassID\n"
                     + "  inner join Students s on s.StudentID = se.StudentID\n"
@@ -227,4 +228,94 @@ public class ScheduleDAO extends DBContext {
 
         return schedules;
     }
+
+    public void updateSchedule(int scId, int status) {
+        try {
+            String query = "UPDATE [WeeklySchedules] set [status] = ? where ScheduleID = ?";
+//            conn = DBContext.getConnect();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, status);
+            ps.setInt(2, scId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public ArrayList<Schedule> listSchedulesTeacher(int teacherID, java.sql.Date from, java.sql.Date to) {
+        ArrayList<Schedule> schedules = new ArrayList<>();
+        try {
+            String query = """
+ SELECT [ScheduleID]
+                      ,[ClassID]
+                      ,[TeacherID]
+                      ,[SubjectID]
+                      ,[DayOfWeek]
+                      ,[SlotID]
+                      ,[StudentID]
+                      ,[status]
+                  FROM [WeeklySchedules]   where TeacherID = ? and dateCreated between ? and ?
+                           """;
+//            conn = DBContext.getConnect();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, teacherID);
+            ps.setDate(2, from);
+            ps.setDate(3, to);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Schedule schedule = toScheduleAttend(rs);
+                schedules.add(schedule);
+            }
+            return schedules;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return schedules;
+    }
+
+    public ArrayList<Schedule> listSchedulesStudent(int studentID, java.sql.Date from, java.sql.Date to) {
+        ArrayList<Schedule> schedules = new ArrayList<>();
+        try {
+            String query = """
+                          SELECT distinct ws.[ScheduleID]
+                                                              ,ws.[ClassID]
+                                                              ,[TeacherID]
+                                                              ,[SubjectID]
+                                                              ,[DayOfWeek]
+                                                              ,[SlotID],
+                                                              a.[Status] 
+                                                          FROM [WeeklySchedules] ws
+                                                          inner join Classes c on c.ClassID = ws.ClassID
+                                                          inner join StudentEnrollments se on se.ClassID = c.ClassID
+                                                          inner join Students s on s.StudentID = se.StudentID
+                                                          left join Attendance a on a.ScheduleID = ws.ScheduleID
+                                                          where ws.ScheduleID in (
+                                                        							 SELECT  distinct ws.[ScheduleID]
+                                                                                     FROM [swp].[dbo].[WeeklySchedules] ws
+                                                                                     inner join Classes c on c.ClassID = ws.ClassID
+                                                          inner join StudentEnrollments se on se.ClassID = c.ClassID
+                                                          inner join Students s on s.StudentID = se.StudentID
+                                                          left join Attendance a on a.ScheduleID = ws.ScheduleID
+                                                                                     where s.StudentID= ?) and dateCreated between ? and ?""";
+//            conn = DBContext.getConnect();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, studentID);
+            ps.setDate(2, from);
+            ps.setDate(3, to);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                System.out.println("count");
+                Schedule schedule = toScheduleAttend(rs);
+                schedules.add(schedule);
+            }
+            return schedules;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return schedules;
+    }
+
 }

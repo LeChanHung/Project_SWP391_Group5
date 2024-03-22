@@ -34,6 +34,17 @@
 
         <div id="content">
             <h2 style="padding-left: 600px;">Weekly Timetable</h2>
+            <form method="get" action="tchTimeTable">
+                YEAR:
+                <select id="yearSelect" name="year" onchange="this.form.submit()" onchange="">
+                    <option value="2024" <c:if test="${requestScope.year eq 2024}">selected</c:if>>2024</option>
+                    </select>
+                    <select id="weekSelect" name="week" onchange="this.form.submit()">
+                        /*<c:forEach items="${requestScope.weeks}" var="w" varStatus="loop">
+                        <option value="${w}" <c:if test="${requestScope.fromandto eq w}">selected</c:if>>${requestScope.weeksto[loop.index]}</option>
+                    </c:forEach>
+                </select>
+            </form>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -74,11 +85,10 @@
                                                 -
                                                 <fmt:formatDate value="${s.getSlotEndTime()}" pattern="HH:mm"/>
                                                 <br>
-                                                 <c:choose>
-                                                     <c:when test="${sc.getAttendance().getStatus() ne null}"><p style="color: green">Took Attendance</p></c:when>
-                                                    <c:when test="${sc.getAttendance().getStatus() eq null}"><p><a href="attendance?classId=${sc.getClassID().getClassID()}&scId=${sc.getScheduleID()}">Take Attend</a></p></c:when>
-                                                </c:choose>
-                                                
+                                                <c:choose>
+                                                    <c:when test="${sc.getAttendance().getStatus() ne null}"><p style="color: green">Took Attendance</p></c:when>
+                                                <c:when test="${sc.getAttendance().getStatus() eq null}"><p><a href="attendance?classId=${sc.getClassID().getClassID()}&scId=${sc.getScheduleID()}">Take Attend</a></p></c:when>
+                                            </c:choose>
                                             </p>
                                         </c:if>
                                     </c:forEach>
@@ -88,9 +98,10 @@
                     </c:forEach>
                 </tbody>
             </table>
+            <div style="padding-bottom: 3em"></div>
         </div>
-
-        <footer class="footer">
+        <div style="padding-bottom: 3em"></div>
+        <footer class="footer" style="margin-top: 1em">
             &copy; 2024 Đại học FPT. All rights reserved.
             <p>Địa chỉ:KM29 Đại lộ Thăng Long,Thạch Hòa,Thạch Thất,Hà Nội</p>
         </footer>

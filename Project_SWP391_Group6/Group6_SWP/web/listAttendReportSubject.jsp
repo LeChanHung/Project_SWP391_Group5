@@ -39,8 +39,11 @@
                         <tr>
                             <th>MSV</th>
                                 <c:forEach begin="1" step="1" end="30" varStatus="i">
-                                <th>${i.index}</th>
-                                </c:forEach>
+                                <th>${i.index}
+                                    <br>
+                                    <a href="attendance?classId=${sc.getClassID().getClassID()}&scId=${sc.getScheduleID()}"></a>
+                                </th>
+                            </c:forEach>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,10 +53,14 @@
                                 <c:forEach items="${listAllStu.get(loop.index)}" var="sc">
                                     <td>
                                         <c:if test="${sc.attendance.status eq null}">NOT YET</c:if>
-                                        <c:if test="${sc.attendance.status ne null}"><a href="updateAttend?id=${sc.attendance.attendanceID}&status=${sc.attendance.status}&subjectId=${subjectId}&classId=${classId}">
-                                                ${sc.attendance.status}</a>
-                                        </c:if>
-                                        </td>
+                                        <c:if test="${sc.attendance.status ne null}">
+                                            <a href="attendance?scId=${sc.scheduleID}&classId=${classId}">
+                                                ${sc.attendance.status}
+                                            </a>
+                                            </c:if>
+                                        <br>
+                                        <!--<a href="attendance?classId=${sc.getClassID().getClassID()}&scId=${sc.getScheduleID()}">Update</a>-->
+                                    </td>
                                 </c:forEach>
                             </tr>
                         </c:forEach>

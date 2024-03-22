@@ -4,9 +4,8 @@
  */
 package controller;
 
-import DAO.DAO1;
-import DAO1.ScheduleDAO;
-import Entity.students;
+import DAO.ChangePasss;
+import Entity.Student;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,14 +13,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
- * @author Duy Anh
+ * @author lecha
  */
-@WebServlet(name = "checkAttendance", urlPatterns = {"/check"})
-public class checkAttendance extends HttpServlet {
+@WebServlet(name = "ChangePass", urlPatterns = {"/changepass"})
+public class ChangePass extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +38,10 @@ public class checkAttendance extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet checkAttendance</title>");
+            out.println("<title>Servlet ChangePass</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet checkAttendance at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChangePass at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +59,38 @@ public class checkAttendance extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String m = request.getParameter("mail");
+        String op = request.getParameter("opass");
+        String p = request.getParameter("pass");
+        String rp = request.getParameter("rpass");
+        ChangePasss dao = new ChangePasss();
+
+        Student a = dao.check(m, op);
+        if (a == null) {
+            String msg = "Old password is incorrect";
+            request.setAttribute("msg", msg);
+            request.getRequestDispatcher("ChangePass.jsp").forward(request, response);
+        } else {
+//            Student ac = new Student(
+//                    a.getFirstName(), 
+//                    a.getLastName(), 
+//                    m, 
+//                    p, 
+//                    a.getGender(), 
+//                    a.getDob(), 
+//                    a.getMSV());
+
+            if (!p.equals(rp)) {
+                String msg = "RePassword is not same as new password";
+                request.setAttribute("msg", msg);
+                request.getRequestDispatcher("ChangePass.jsp").forward(request, response);
+            }
+            dao.changePass(m, p);
+            response.sendRedirect("index.html");
+//            HttpSession session = request.getSession();
+//            session.setAttribute("student", ac);
+//            response.sendRedirect("index.html");
+        }
     }
 
     /**
@@ -75,40 +104,7 @@ public class checkAttendance extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String raw_classID = request.getParameter("classId");
-        String raw_scId = request.getParameter("scId");
-        int classId = 1;
-        int scId = 1;
-        try {
-            classId = Integer.parseInt(raw_classID);
-            scId = Integer.parseInt(raw_scId);
-        } catch (Exception e) {
-            response.sendRedirect("tchTimeTable");
-        }
-
-        DAO1 dao = new DAO1();
-        List<students> list = dao.getStudentAttendance(classId);
-        ScheduleDAO dbSchedule = new ScheduleDAO();
-        for (students s : list) {
-            int enrollmentId = dao.getEnrollmentId(s.getStudentID(), classId);
-
-            if (enrollmentId == 0) {
-                continue;
-            }
-            boolean checkStudentAttend = dao.checkStudenTAttend(enrollmentId, scId);
-            String studentId_string = s.getStudentID() + "";
-            String status = request.getParameter(studentId_string);
-            if (checkStudentAttend) {
-                dao.updateStudenTAttend(status, enrollmentId, scId);
-            } else {
-                dao.takeAttendanceStudent(enrollmentId, scId, status);
-                dbSchedule.updateSchedule(scId, 1);
-            }
-
-        }
-
-        response.sendRedirect("submit.jsp");
+        processRequest(request, response);
     }
 
     /**

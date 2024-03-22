@@ -34,6 +34,17 @@
 
         <div id="content">
             <h2 style="padding-left: 600px;">Weekly Timetable</h2>
+            <form method="get" action="stuTimeTable">
+                YEAR:
+                <select id="yearSelect" name="year" onchange="this.form.submit()" onchange="">
+                    <option value="2024" <c:if test="${requestScope.year eq 2024}">selected</c:if>>2024</option>
+                    </select>
+                    <select id="weekSelect" name="week" onchange="this.form.submit()">
+                        /*<c:forEach items="${requestScope.weeks}" var="w" varStatus="loop">
+                        <option value="${w}" <c:if test="${requestScope.fromandto eq w}">selected</c:if>>${requestScope.weeksto[loop.index]}</option>
+                    </c:forEach>
+                </select>
+            </form>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -73,14 +84,14 @@
                                                 <fmt:formatDate value="${s.getSlotStartTime()}" pattern="HH:mm"/>
                                                 -
                                                 <fmt:formatDate value="${s.getSlotEndTime()}" pattern="HH:mm"/>
-                                                
+
                                                 <a href="detailslot?id=${sc.scheduleID}">View</a>
-                                                
+
                                                 <c:choose>
                                                     <c:when test="${sc.getAttendance().getStatus() eq null}"><p>Not Yet</p></c:when>
-                                                    <c:when test="${sc.getAttendance().getStatus() == 'Absent'}"><p style="color: red">Absent</p></c:when>
-                                                    <c:when test="${sc.getAttendance().getStatus() == 'Attend'}"><p style="color: green">Attend</p></c:when>
-                                                </c:choose>
+                                                <c:when test="${sc.getAttendance().getStatus() == 'Absent'}"><p style="color: red">Absent</p></c:when>
+                                                <c:when test="${sc.getAttendance().getStatus() == 'Attend'}"><p style="color: green">Attend</p></c:when>
+                                            </c:choose>
 
                                             </p>
                                         </c:if>

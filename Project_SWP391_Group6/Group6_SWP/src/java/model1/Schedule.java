@@ -19,6 +19,15 @@ public class Schedule {
     private int dayOfWeek;
     private timeSlots slot;
     private Attendance attendance;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public Schedule() {
     }
