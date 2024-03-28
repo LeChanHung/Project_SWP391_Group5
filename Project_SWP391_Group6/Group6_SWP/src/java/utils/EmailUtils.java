@@ -21,8 +21,8 @@ import java.util.Random;
  * @author lecha
  */
 public class EmailUtils {
-    private static final String EMAIL_USERNAME = "giangbeobeo18@gmail.com";
-    private static final String EMAIL_PASSWORD = "cols dpti mutw haec";
+    private static final String EMAIL_USERNAME = "hunglche160179@fpt.edu.vn";
+    private static final String EMAIL_PASSWORD = "glvg oqmq lhcf lxjh";
 
     public static void sendEmail(String recipientEmail, String subject, String body) {
         // Set up mail server properties

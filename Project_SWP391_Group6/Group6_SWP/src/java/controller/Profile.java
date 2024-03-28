@@ -4,7 +4,7 @@
  */
 package controller;
 
-import Context.DBContext;
+import DAO1.DBContext;
 import DAO.ProfileDAO;
 import Entity.Student;
 import java.io.IOException;
@@ -13,7 +13,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 
 /**
  *
@@ -27,12 +26,12 @@ public class Profile extends HttpServlet {
             throws ServletException, IOException {
         ProfileDAO dbProfile = new ProfileDAO();
         //TODO: add session to display user logged
-        Student profile = dbProfile.checkInfo("hunglche160179@fpt.edu.vn");
+        model1.Students student = (model1.Students) request.getSession().getAttribute("student");
+        Entity.Student profile = dbProfile.checkInfo(student.getEmail());
         request.setAttribute("user", profile);
-        System.out.println(profile.getEmail());
         request.getRequestDispatcher("Profile.jsp").forward(request, response);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

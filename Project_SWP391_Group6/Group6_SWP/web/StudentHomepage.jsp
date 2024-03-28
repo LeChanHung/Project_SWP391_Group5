@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-md-4 text-right">
                         <c:if test="${sessionScope.student != null}">
-                            <button class="btn btn-danger">${sessionScope.student.getFirstName()} ${sessionScope.student.getLastName()}</button>
+                            <a href="profile"> <button class="btn btn-danger">${sessionScope.student.getFirstName()} ${sessionScope.student.getLastName()}</button></a>
                         </c:if>
                         <a href="logout"><button class="btn btn-danger ml-2">Log out</button></a>
                     </div>

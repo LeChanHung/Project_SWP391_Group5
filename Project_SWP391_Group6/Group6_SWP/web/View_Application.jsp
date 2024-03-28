@@ -78,7 +78,7 @@
                             </c:forEach>
                         </td>
                         <td>
-                            <c:if test="${sessionScope.teacher ne null}">
+                            <c:if test="${sessionScope.office ne null}">
                                 <c:if test="${a.status eq 0}">
                                     <a href="updateStatus?id=${a.id}&status=1" class="button" style="background-color: #45a049">Accept</a>
                                     <a href="updateStatus?id=${a.id}&status=0" class="button" style="background-color: red">Deny</a>
@@ -92,7 +92,7 @@
                                     </c:if>
                                 </c:if>
                             </c:if>
-                            <c:if test="${sessionScope.teacher eq null}">
+                            <c:if test="${sessionScope.student eq null}">
                                 <c:if test="${a.status eq 0}">
                                     <p>Status: Not Yet</p>
                                 </c:if>
@@ -111,7 +111,12 @@
                     </tr>
                 </c:forEach>
                 <!-- Thêm các hàng dữ liệu khác tại đây nếu cần -->
-            <a class="nav-link" href="StudentHomepage.jsp">Homepage</a>
+                <c:if test="${sessionScope.student ne null}">
+                <a class="nav-link" href="StudentHomepage.jsp">Homepage</a>
+            </c:if>
+                <c:if test="${sessionScope.office ne null}">
+                <a class="nav-link" href="phongdaotao.jsp">Homepage</a>
+            </c:if>
         </tbody>
     </table>
 </body>

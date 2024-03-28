@@ -28,4 +28,8 @@ public class DBContext {
             
         }
     }
+    public Connection getConnection()throws Exception {
+       
+        return connection;
+    }
 }

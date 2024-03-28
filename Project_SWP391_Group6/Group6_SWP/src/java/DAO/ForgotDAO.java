@@ -4,11 +4,15 @@
  */
 package DAO;
 
-import Context.DBContext;
+
+import DAO1.DBContext;
 import Entity.Student;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,6 +49,24 @@ public class ForgotDAO {
 
         } catch (Exception e) {
             System.out.println(e);
+        }finally{
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ForgotDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }finally{
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ForgotDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }finally{
+                    try {
+                        conn.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ForgotDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
         }
         return false;
     }

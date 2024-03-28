@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model1.Students;
 
 /**
  *
@@ -60,7 +61,7 @@ public class ChangePass extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        String m = request.getParameter("mail");
-        Student student = (Student) request.getSession().getAttribute("student");
+        Students student = (Students) request.getSession().getAttribute("student");
         String op = request.getParameter("opass");
         String m = student.getEmail();
         String p = request.getParameter("pass");
