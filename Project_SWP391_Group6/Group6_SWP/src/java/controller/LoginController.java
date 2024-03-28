@@ -88,7 +88,7 @@ public class LoginController extends HttpServlet {
             response.sendRedirect("TeacherHomePage.jsp");
         } else if (o != null) {
             session.setAttribute("office", o);
-            response.sendRedirect("phongdaotao.jsp");
+            response.sendRedirect("index");
         } else {
             request.setAttribute("error", "Account or password is incorrect");
             request.getRequestDispatcher("Login.jsp").forward(request, response);

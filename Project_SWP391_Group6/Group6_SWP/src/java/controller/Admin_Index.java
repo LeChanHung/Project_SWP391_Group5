@@ -5,8 +5,9 @@
 
 package controller;
 
-import DAO1.AttendanceAdmin;
-import DAO1.ClassDAO;
+import DAO1.StudentDAO;
+import DAO1.SubjectDAO;
+import DAO1.TeacherDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,18 +15,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
-import model1.AttendanceReport;
-import model1.Classes;
-import model1.Students;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name="AttendanceAdmin", urlPatterns={"/AttendanceAdmin"})
-public class AttendanceAdminController extends HttpServlet {
+@WebServlet(name="Admin_Index", urlPatterns={"/index"})
+public class Admin_Index extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -42,10 +38,10 @@ public class AttendanceAdminController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AttendanceAdmin</title>");  
+            out.println("<title>Servlet Admin_Index</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AttendanceAdmin at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet Admin_Index at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,44 +58,19 @@ public class AttendanceAdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-         AttendanceAdmin dao = new  AttendanceAdmin();
-        List<AttendanceReport> list = new ArrayList<>();
-        String searchKeyword = request.getParameter("searchKeyword");
-        String cid = request.getParameter("cid");
-        String classID_raw = request.getParameter("class");
-        String pageStr = request.getParameter("page"); // Thêm tham số trang
-        int page = pageStr != null ? Integer.parseInt(pageStr) : 1; // Mặc định là trang 1
-        int pageSize = 9; // Kích thước trang
-        ClassDAO cDao = new ClassDAO();
-        int classID;
-        if(cid=="") {
-                classID = 0;
-            }
-       else if (cid!=null) { 
-            
-            classID = Integer.parseInt(cid); 
-        } else if(classID_raw == null) 
-        {
-            classID = 0;
-        } 
-        else {
-            classID = Integer.parseInt(classID_raw);           
-        }
-      
-        List<Classes> listC = cDao.getAllClass();
-        Classes c = cDao.getClassByID(classID); 
-        list = dao.getAttendanceReport(classID, searchKeyword, page, pageSize);
+        StudentDAO stDao = new StudentDAO();
+        TeacherDAO tDao = new TeacherDAO();
+        SubjectDAO sDAO = new SubjectDAO();
         
-        request.setAttribute("listclass", listC);
-        request.setAttribute("name", c);
-        request.setAttribute("currentPage", page);
-        int totalTeachers = dao.getTotalWeeklySchedulesCount(classID);
-        int totalPages = (int) Math.ceil((double) totalTeachers / pageSize);
-        request.setAttribute("totalPages", totalPages);
-
-       
-        request.setAttribute("listReport", list);
-        request.getRequestDispatcher("AttendanceReportAdmin.jsp").forward(request, response);
+        int studentCount = stDao.getTotalStudentsCount();
+        int teacherCount = tDao.getTotalTeachersCount();
+        int subjectCount = sDAO.getTotalSubjetcsCount();
+        
+        request.setAttribute("countS", studentCount);
+        request.setAttribute("countT", teacherCount);
+        request.setAttribute("countSj", subjectCount);
+        
+        request.getRequestDispatcher("phongdaotao.jsp").forward(request, response);
     } 
 
     /** 

@@ -93,6 +93,22 @@ public class SubjectDAO extends DBContext {
 
         return subject;
     }
+    public int getTotalSubjetcsCount() {
+        int total = 0;
+        try {
+            String query = "SELECT COUNT(*) AS total FROM Subjects";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                total = resultSet.getInt("total");
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return total;
+    }
 
     public Subjects get(int id) {
         try {

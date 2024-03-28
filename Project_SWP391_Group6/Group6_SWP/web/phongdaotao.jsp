@@ -112,7 +112,7 @@
                             <span class="title">
                                 Student View
                             </span>
-                            <span class="amount-value">7000</span>
+                            <span class="amount-value">${countS}</span>
                         </div>
                         <i class="fas fa-eye icon"></i>
                     </div>
@@ -125,7 +125,7 @@
                             <span class="title">
                                 Teacher View
                             </span>
-                            <span class="amount-value">500</span>
+                            <span class="amount-value">${countT}</span>
                         </div>
                         <i class="fas fa-eye icon"></i>
                     </div>
@@ -136,9 +136,9 @@
                     <div class="card--header">
                         <div class="amount">
                             <span class="title">
-                                Student View
+                                Subjects View
                             </span>
-                            <span class="amount-value">7000</span>
+                            <span class="amount-value">${countSj}</span>
                         </div>
                         <i class="fas fa-eye icon"></i>
                     </div>

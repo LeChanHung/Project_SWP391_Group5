@@ -35,7 +35,7 @@
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCateModal">Add Subject</button>
 
                         <!-- Button to open the modal for adding a new student -->
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add Student</button>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStudentModal">Add Student</button>
                     </div>
 
                     <table class="table">
@@ -75,9 +75,7 @@
                                             </c:choose></td>
                                         <td>
                                             <!-- Add buttons or links for edit and delete actions -->
-                                            <a class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editStudentModal-${s.studentID}">Edit</a>
-
-                                            <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('${pageContext.request.contextPath}', ${s.studentID})">Delete</button>
+                                            <a class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editStudentModal-${s.studentID}">Edit</a> 
                                         </td>
                                     </tr>
                                 </c:if>

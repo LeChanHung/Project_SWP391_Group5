@@ -25,8 +25,9 @@ public class AttendanceAdmin extends DBContext {
 
     DecimalFormat df = new DecimalFormat("#.0");
 
-    public List<AttendanceReport> getAttendanceReport(int id, String searchKeyword) {
+    public List<AttendanceReport> getAttendanceReport(int id, String searchKeyword, int page, int pageSize) {
         List<AttendanceReport> list = new ArrayList<>();
+        int offset = (page - 1) * pageSize;
         ClassDAO cDao = new ClassDAO();
         StudentDAO sDao = new StudentDAO();
         SubjectDAO sjDAO = new SubjectDAO();
@@ -36,24 +37,30 @@ public class AttendanceAdmin extends DBContext {
             // Calculate the offset based on the page number and page size
 
             // Create SQL query with LIMIT and OFFSET clauses
-            String query = "SELECT w.SubjectID, w.TeacherID, w.ClassID, s.StudentID, st.FirstName, st.LastName, a.Status, COUNT(a.Status) AS total\n"
-                    + "FROM WeeklySchedules w \n"
-                    + "JOIN Attendance a ON w.ScheduleID = a.ScheduleID \n"
-                    + "JOIN StudentEnrollments s ON a.EnrollmentID = s.EnrollmentID \n"
-                    + "join Students st on st.StudentID = s.StudentID\n"
-                    + "GROUP BY w.SubjectID, st.FirstName, st.LastName,w.TeacherID, w.ClassID, s.StudentID, a.Status\n"
-                    + "HAVING 1=1 ";
-            if(searchKeyword!=null) {
-                query += "and (st.FirstName like '%"+searchKeyword+"%'or st.LastName LIKE '%"+searchKeyword+"%')";
+            String query1 = "SELECT w.SubjectID, w.TeacherID, w.ClassID, s.StudentID, st.FirstName, st.LastName, a.Status, COUNT(a.Status) AS total\n"
+                    + "                     FROM WeeklySchedules w \n"
+                    + "                    JOIN Attendance a ON w.ScheduleID = a.ScheduleID\n"
+                    + "                    JOIN StudentEnrollments s ON a.EnrollmentID = s.EnrollmentID \n"
+                    + "                    join Students st on st.StudentID = s.StudentID\n"
+                    + "                   GROUP BY w.SubjectID, st.FirstName, st.LastName,w.TeacherID, w.ClassID, s.StudentID, a.Status   				   \n"
+                    + "				  Having 1=1";
+            if (searchKeyword != null) {
+                query1 += "and (st.FirstName like '%" + searchKeyword + "%'or st.LastName LIKE '%" + searchKeyword + "%')";
+            }
+
+            if (id != 0) {
+                query1 += "and w.ClassID = " + id;
             }
             
-            if(id!= 0) {
-                query += "and w.ClassID = " +id;
-            }
- 
+            String query2 = "   ORDER BY w.SubjectID\n" +
+"				   OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+            
+            String query = query1+ query2;
+
             // Create prepared statement
             PreparedStatement statement = connection.prepareStatement(query);
-          
+            statement.setInt(1, offset);
+            statement.setInt(2, pageSize);
             // Execute the query
             ResultSet resultSet = statement.executeQuery();
 
@@ -67,7 +74,7 @@ public class AttendanceAdmin extends DBContext {
                 String status = resultSet.getString("Status");
                 int total = resultSet.getInt("total");
                 float percent = (float) 0.0;
-                if (status.equals("Absent")) {
+                if (status.equals("0")) {
                     percent = (float) ((total / 20.0) * 100);
                 }
                 // 
@@ -88,6 +95,34 @@ public class AttendanceAdmin extends DBContext {
         }
         return list;
     }
+    public int getTotalWeeklySchedulesCount(int classID) {
+        
+        int total = 0;
+        try {
+            String query = "SELECT count(*) as total\n" +
+"                     FROM WeeklySchedules w \n" +
+"                    JOIN Attendance a ON w.ScheduleID = a.ScheduleID\n" +
+"                    JOIN StudentEnrollments s ON a.EnrollmentID = s.EnrollmentID \n" +
+"                    join Students st on st.StudentID = s.StudentID\n" +
+"					where 1=1";
+            
+            if(classID!=0) {
+                query += "and w.ClassID =" + classID;
+            }
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                total = resultSet.getInt("total");
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return total;
+    }
+
     
         public void updateStatus(int id, String status) {
         try {
@@ -104,11 +139,11 @@ public class AttendanceAdmin extends DBContext {
 
     }
 
-
+/*
     public static void main(String[] args) {
         AttendanceAdmin a = new AttendanceAdmin();
         List<AttendanceReport> list = a.getAttendanceReport(1,"t");
         System.out.println(list.get(1).getStudent().getLastName());
     }
-
+*/
 }

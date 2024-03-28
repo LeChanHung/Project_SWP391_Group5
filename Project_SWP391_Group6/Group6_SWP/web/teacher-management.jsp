@@ -35,7 +35,7 @@
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCateModal">Add Subject</button>
 
                         <!-- Button to open the modal for adding a new teacher -->
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTeacherModal">Add Teacher</button>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTeacherModal">Add Teacher</button>
                     </div>
 
                     <table class="table">
@@ -65,9 +65,7 @@
 
                                         <td>
                                             <!-- Add buttons or links for edit and delete actions -->
-                                            <a class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editTeacherModal-${t.teacherID}">Edit</a>
-                                            <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('${pageContext.request.contextPath}', ${t.teacherID})">Delete</button>
-
+                                            <a class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editTeacherModal-${t.teacherID}">Edit</a>
 
                                         </td>
                                     </tr>
