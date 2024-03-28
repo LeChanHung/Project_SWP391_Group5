@@ -405,17 +405,19 @@ public class ClassDAO extends DBContext {
                     + "      ,[SubjectID]\n"
                     + "      ,[DayOfWeek]\n"
                     + "      ,[SlotID]\n"
-                    + "  FROM [swp].[dbo].[WeeklySchedules] where TeacherID = ?";
+                    + "  FROM [WeeklySchedules] where TeacherID = ?";
 //            conn = DBContext.getConnect();
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, teacherId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 disClass.add(rs.getInt("ClassID"));
+                System.out.println(rs.getInt("ClassID"));
             }
-
             for (Integer iClass : disClass) {
                 classes.add(get(iClass));
+                System.out.println("In set");
+                System.out.println(iClass);
             }
             return classes;
         } catch (SQLException e) {
