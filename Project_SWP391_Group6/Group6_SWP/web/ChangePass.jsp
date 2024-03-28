@@ -17,8 +17,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <label for="first">Enter your old Password</label> 
                 <input type="password"  
                        name="opass" 
-                       placeholder="Old password" requirea
-                <!--<input type="hidden" name="mail" value="hunglche160179@fpt.edu.vn">--> 
+                       placeholder="Old password" requirea> 
                 <label for="first">Enter your new Password</label> 
                 <input type="password" 
                        name="pass" 

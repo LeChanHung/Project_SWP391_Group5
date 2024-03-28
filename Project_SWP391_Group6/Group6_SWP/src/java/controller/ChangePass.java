@@ -89,7 +89,7 @@ public class ChangePass extends HttpServlet {
                 request.getRequestDispatcher("ChangePass.jsp").forward(request, response);
             }
             dao.changePass(m, p);
-            response.sendRedirect("index.html");
+            response.sendRedirect("StudentHomepage.jsp");
 //            HttpSession session = request.getSession();
 //            session.setAttribute("student", ac);
 //            response.sendRedirect("index.html");
