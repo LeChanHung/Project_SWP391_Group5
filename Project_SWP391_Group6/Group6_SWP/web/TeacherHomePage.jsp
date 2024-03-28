@@ -39,7 +39,6 @@
                         <h5 class="my-4" style="color: black;">Menu</h5>
                         <div class="nav flex-column">
                             <a class="nav-link" href="tchTimeTable">Schedule</a>
-                            <a class="nav-link" href="Report.jsp">Report</a>
                             <a class="nav-link" href="viewApplication">View Application</a>
                             <a class="nav-link" href="attendReportdd">Attendance Report</a>
                         </div>

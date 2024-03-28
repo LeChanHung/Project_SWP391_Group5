@@ -81,7 +81,7 @@
 
 
             <li>
-                <a href="logout.jsp">
+                <a href="logout">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
                 </a>    

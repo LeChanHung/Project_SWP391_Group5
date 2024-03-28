@@ -59,8 +59,10 @@ public class ChangePass extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String m = request.getParameter("mail");
+//        String m = request.getParameter("mail");
+        Student student = (Student) request.getSession().getAttribute("student");
         String op = request.getParameter("opass");
+        String m = student.getEmail();
         String p = request.getParameter("pass");
         String rp = request.getParameter("rpass");
         ChangePasss dao = new ChangePasss();

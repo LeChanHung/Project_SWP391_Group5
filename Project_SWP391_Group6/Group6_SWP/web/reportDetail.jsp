@@ -46,12 +46,7 @@
                                     <span class="nav-item">Attendance</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fas fa-cog"></i>
-                                    <span class="nav-item">Setting</span>
-                                </a>
-                            </li>
+                       
                             <li>
                                 <a href="#" class="logout">
                                     <i class="fas fa-sign-out-alt"></i>

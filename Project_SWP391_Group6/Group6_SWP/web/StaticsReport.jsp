@@ -42,17 +42,12 @@
                             </a>
                         </li>
                         <li>
-                            <a href="attendanceReport.jsp">
+                            <a href="stuReport">
                                 <i class="fas fa-chart-bar"></i>
                                 <span class="nav-item">Attendance</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas fa-cog"></i>
-                                <span class="nav-item">Setting</span>
-                            </a>
-                        </li>
+                       
                         <li>
                             <a href="logout" class="logout">
                                 <i class="fas fa-sign-out-alt"></i>
