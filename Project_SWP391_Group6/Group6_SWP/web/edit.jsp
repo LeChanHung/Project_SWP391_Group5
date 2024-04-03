@@ -27,7 +27,7 @@
                         </p>
                     </div>
                     <div class="m-7">
-                      
+                        
                         <form action="edit" method="POST" id="form">
                             <input type="hidden" readonly name="id" value="${news.newID}" />
                             <input type="checkbox" name="botcheck" id="" style="display: none;" />
@@ -46,7 +46,7 @@
                             <div class="mb-6">
                                 <label for="message" class="block mb-2 font-medium text-sm text-gray-600 dark:text-gray-400">Content</label>
 
-                                <textarea  rows="5" name="content" id="message" placeholder="New Content" class="w-full px-3 py-2 placeholder-gray-300 border border-gray-400 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-500 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" required>${news.content}</textarea>
+                                <textarea  rows="5" name="content" id="message" placeholder="New Content(<200 Chars)" class="w-full px-3 py-2 placeholder-gray-300 border border-gray-400 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-500 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500" required>${news.content}</textarea>
                             </div>
                             <div class="mb-6">
                                 <button type="submit" class="w-full px-3 py-4 text-white bg-indigo-700 rounded-md focus:bg-indigo-600 focus:outline-none">

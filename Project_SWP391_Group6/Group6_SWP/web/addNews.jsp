@@ -265,7 +265,7 @@
         </script>
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="phongdaotao.jsp">
+            <a class="navbar-brand" href="index">
                 <img src="https://cdn.haitrieu.com/wp-content/uploads/2021/10/Logo-Dai-hoc-FPT.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
                 Home
             </a>

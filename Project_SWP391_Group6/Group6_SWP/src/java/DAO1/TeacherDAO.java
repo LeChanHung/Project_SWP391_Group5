@@ -249,7 +249,7 @@ public class TeacherDAO extends DBContext {
             while (resultSet.next()) {
                 return toTeacher(resultSet);
             }
-            // Close the resources
+            
             resultSet.close();
             statement.close();
         } catch (SQLException ex) {

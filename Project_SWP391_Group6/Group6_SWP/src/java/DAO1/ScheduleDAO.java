@@ -66,10 +66,10 @@ public class ScheduleDAO extends DBContext {
         schedule.setSubjectID(subjects);
 
         Attendance attendance = new Attendance();
-        attendance.setStatus(rs.getString("status"));
+        attendance.setStatus(rs.getString("Status"));
 
         schedule.setAttendance(attendance);
-
+        schedule.setStatus(rs.getInt("status"));
         schedule.setDayOfWeek(rs.getInt("DayOfWeek"));
         return schedule;
     }
@@ -139,9 +139,9 @@ public class ScheduleDAO extends DBContext {
                                                           inner join Students s on s.StudentID = se.StudentID
                                                           left join Attendance a on a.ScheduleID = ws.ScheduleID
                                                           where ws.ScheduleID in (
-                                                        							 SELECT  distinct ws.[ScheduleID]
-                                                                                     FROM [swp].[dbo].[WeeklySchedules] ws
-                                                                                     inner join Classes c on c.ClassID = ws.ClassID
+                            SELECT  distinct ws.[ScheduleID]
+                                                            FROM [swp].[dbo].[WeeklySchedules] ws
+                                                            inner join Classes c on c.ClassID = ws.ClassID
                                                           inner join StudentEnrollments se on se.ClassID = c.ClassID
                                                           inner join Students s on s.StudentID = se.StudentID
                                                           left join Attendance a on a.ScheduleID = ws.ScheduleID
@@ -279,26 +279,16 @@ public class ScheduleDAO extends DBContext {
         ArrayList<Schedule> schedules = new ArrayList<>();
         try {
             String query = """
-                          SELECT distinct ws.[ScheduleID]
-                                                              ,ws.[ClassID]
-                                                              ,[TeacherID]
-                                                              ,[SubjectID]
-                                                              ,[DayOfWeek]
-                                                              ,[SlotID],
-                                                              a.[Status] 
-                                                          FROM [WeeklySchedules] ws
-                                                          inner join Classes c on c.ClassID = ws.ClassID
-                                                          inner join StudentEnrollments se on se.ClassID = c.ClassID
-                                                          inner join Students s on s.StudentID = se.StudentID
-                                                          left join Attendance a on a.ScheduleID = ws.ScheduleID
-                                                          where ws.ScheduleID in (
-                                                        							 SELECT  distinct ws.[ScheduleID]
-                                                                                     FROM [swp].[dbo].[WeeklySchedules] ws
-                                                                                     inner join Classes c on c.ClassID = ws.ClassID
-                                                          inner join StudentEnrollments se on se.ClassID = c.ClassID
-                                                          inner join Students s on s.StudentID = se.StudentID
-                                                          left join Attendance a on a.ScheduleID = ws.ScheduleID
-                                                                                     where s.StudentID= ?) and dateCreated between ? and ?""";
+                         SELECT  [ScheduleID]
+                                ,ws.[ClassID]
+                                ,[TeacherID]
+                                ,[SubjectID]
+                                ,[DayOfWeek]
+                                ,[SlotID]
+                                ,[status]
+                                ,[dateCreated]
+                            FROM [WeeklySchedules] ws
+                            where ws.StudentID = ? and dateCreated between ? and ?""";
 //            conn = DBContext.getConnect();
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, studentID);
@@ -310,7 +300,41 @@ public class ScheduleDAO extends DBContext {
                 Schedule schedule = toScheduleAttend(rs);
                 schedules.add(schedule);
             }
-            return schedules;
+
+            query = "SELECT [AttendanceID]\n"
+                    + "      ,a.[EnrollmentID]\n"
+                    + "      ,a.[ScheduleID]\n"
+                    + "      ,[AttendanceDate]\n"
+                    + "      ,a.[Status]\n"
+                    + "  FROM [Attendance] a\n"
+                    + "  right join WeeklySchedules ws on ws.ScheduleID = a.ScheduleID\n"
+                    + "  inner join StudentEnrollments se on se.EnrollmentID = a.EnrollmentID\n"
+                    + "  where se.StudentID = ?";
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, studentID);
+            rs = ps.executeQuery();
+            ArrayList<Attendance> attendances = new ArrayList<>();
+            while(rs.next()){
+                Attendance attendance = new Attendance();
+                Schedule schedule = new Schedule();
+                schedule.setScheduleID(rs.getInt("ScheduleID"));
+                attendance.setSchedule(schedule);
+                attendance.setStatus(rs.getString("Status"));
+                attendances.add(attendance);
+            }
+            ArrayList<Schedule> newSchedules = new ArrayList<>();
+            for (Schedule loopSchedule : schedules) {
+                loopSchedule.setAttendance(new Attendance());
+                for (Attendance loopAttendance : attendances) {
+                   if(loopSchedule.getScheduleID() == 
+                           loopAttendance.getSchedule().getScheduleID()){
+                       loopSchedule.setAttendance(loopAttendance);
+                       break;
+                   }
+                }
+                newSchedules.add(loopSchedule);
+            }
+            return newSchedules;
         } catch (SQLException e) {
             e.printStackTrace();
         }

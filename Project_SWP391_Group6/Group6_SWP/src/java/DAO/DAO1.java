@@ -5,6 +5,7 @@
 package DAO;
 
 import DAO1.DBContext;
+import DAO1.*;
 import Entity.classes;
 import Entity.feedbacks;
 import Entity.news;
@@ -332,6 +333,7 @@ public class DAO1 extends DBContext {
             ps = connection.prepareStatement(query);
             ps.setInt(1, enrolmentID);
             ps.setInt(2, scheduleId);
+            ScheduleDAO dbSchedule = new ScheduleDAO();
             Date today = new Date();
             ps.setDate(3, new java.sql.Date(today.getTime()));
             ps.setString(4, status);
@@ -361,7 +363,7 @@ public class DAO1 extends DBContext {
     public List<news> getAllNews() {
         List<news> list = new ArrayList<>();
 
-        String query = "select news_id,img,tilte,content,date from news";
+        String query = "select news_id,img,tilte,content,date from news order by news_id desc";
         try {
             //  conn = new DBContext().getConnection();
             ps = connection.prepareStatement(query);

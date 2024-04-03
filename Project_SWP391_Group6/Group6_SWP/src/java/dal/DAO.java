@@ -47,15 +47,16 @@ public class DAO extends DBContext {
 
     public List<Report> stuReport(int StudentID, int status, int SubjectID) {
         List<Report> list = new ArrayList<>();
-        String sql = "select distinct ts.SlotNumber, a.AttendanceDate,ts.SlotStartTime,ts.SlotEndTime, a.Status from WeeklySchedules ws\n" +
-"                                inner join Attendance a on ws.ScheduleID = a.ScheduleID\n" +
-"                                inner join TimeSlots ts on ws.SlotID = ts.SlotID\n" +
-"                			where ws.StudentID = ? AND ws.SubjectID = ? ";
+        String sql = """
+                     select distinct ts.SlotNumber, a.AttendanceDate,ts.SlotStartTime,ts.SlotEndTime, a.Status from WeeklySchedules ws
+                                                     inner join Attendance a on ws.ScheduleID = a.ScheduleID
+                                                     inner join TimeSlots ts on ws.SlotID = ts.SlotID
+                                     \t\t\twhere ws.StudentID = ? AND ws.SubjectID = ? """;
         try {
             if (status == 1) {
-                sql += "AND a.Status='attend'";
+                sql += "AND a.Status='Attend'";
             } else if (status == 2) {
-                sql += "AND a.Status='absent'";
+                sql += "AND a.Status='Absent'";
             }
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, StudentID);

@@ -31,7 +31,6 @@ public class ForgotPassController extends HttpServlet {
         String raw_email = req.getParameter("mail");
         boolean checkValid = StringUtils.isValidEmail(raw_email);
         if (!checkValid) {
-            System.out.println("WTFEmailEmpty");
             req.setAttribute("message", "WRONG EMAIL BECAUSE INVALID");
             req.getRequestDispatcher("ForgotPass.jsp").forward(req, resp);
         }
@@ -39,7 +38,6 @@ public class ForgotPassController extends HttpServlet {
         ForgotDAO dbForgot = new ForgotDAO();
         boolean checkinDb = dbForgot.checkEmailExists(raw_email);
         if (!checkinDb) {
-            System.out.println("WTFCheckEmail");
             req.setAttribute("message", "WRONG EMAIL BECAUSE IS NOT EXIST IN DATABASE");
             req.getRequestDispatcher("ForgotPass.jsp").forward(req, resp);
         }
@@ -48,7 +46,6 @@ public class ForgotPassController extends HttpServlet {
         EmailUtils.sendEmail(raw_email,
                 "FPT UNIVERSITY ATTEND",
                 "IT IS YOUR OTP CODE:" + OTP);
-        System.out.println("WTF");
         req.getSession().setAttribute("otp", OTP);
         req.getSession().setAttribute("email", raw_email);
         req.getRequestDispatcher("ForgotPass_OTP.jsp").forward(req, resp);

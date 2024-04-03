@@ -81,15 +81,19 @@ public class editNews extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nid =request.getParameter("id");
+        String nid = request.getParameter("id");
         String title = request.getParameter("title");
-        String content=request.getParameter("content");
+        String content = request.getParameter("content");
         String img = request.getParameter("img");
         String date = request.getParameter("date");
+
         
-        DAO1 dao = new DAO1();
-        dao.editNews(nid, title, content, img, date);
-        response.sendRedirect("manage_news");
+            DAO1 dao = new DAO1();
+            dao.editNews(nid, title, content, img, date);
+            response.sendRedirect("manage_news");
+        
+
+      
     }
 
     /**

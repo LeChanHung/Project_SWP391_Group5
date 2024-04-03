@@ -141,7 +141,7 @@ public class SubjectDAO extends DBContext {
                     + "      ,[SubjectID]\n"
                     + "      ,[DayOfWeek]\n"
                     + "      ,[SlotID]\n"
-                    + "  FROM [swp].[dbo].[WeeklySchedules] where TeacherID = ? and ClassID = ?";
+                    + "  FROM [WeeklySchedules] where TeacherID = ? and ClassID = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, teacherId);
             statement.setInt(2, classId);

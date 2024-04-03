@@ -103,10 +103,11 @@ public class checkAttendance extends HttpServlet {
                 dao.updateStudenTAttend(status, enrollmentId, scId);
             } else {
                 dao.takeAttendanceStudent(enrollmentId, scId, status);
-                dbSchedule.updateSchedule(scId, 1);
             }
 
         }
+         dbSchedule.updateSchedule(scId, 1);
+        
 
         response.sendRedirect("submit.jsp");
     }

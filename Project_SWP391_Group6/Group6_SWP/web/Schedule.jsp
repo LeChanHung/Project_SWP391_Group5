@@ -86,8 +86,8 @@
                                                 <fmt:formatDate value="${s.getSlotEndTime()}" pattern="HH:mm"/>
                                                 <br>
                                                 <c:choose>
-                                                    <c:when test="${sc.getAttendance().getStatus() ne null}"><p style="color: green">Took Attendance</p></c:when>
-                                                <c:when test="${sc.getAttendance().getStatus() eq null}"><p><a href="attendance?classId=${sc.getClassID().getClassID()}&scId=${sc.getScheduleID()}">Take Attend</a></p></c:when>
+                                                    <c:when test="${sc.getStatus() ne 0}"><p style="color: green">Took Attendance</p></c:when>
+                                                <c:when test="${sc.getStatus() eq 0}"><p><a href="attendance?classId=${sc.getClassID().getClassID()}&scId=${sc.getScheduleID()}">Take Attend</a></p></c:when>
                                             </c:choose>
                                             </p>
                                         </c:if>
@@ -101,10 +101,7 @@
             <div style="padding-bottom: 3em"></div>
         </div>
         <div style="padding-bottom: 3em"></div>
-        <footer class="footer" style="margin-top: 1em">
-            &copy; 2024 Đại học FPT. All rights reserved.
-            <p>Địa chỉ:KM29 Đại lộ Thăng Long,Thạch Hòa,Thạch Thất,Hà Nội</p>
-        </footer>
+       
         <!-- Bootstrap JS, Popper.js, and jQuery -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

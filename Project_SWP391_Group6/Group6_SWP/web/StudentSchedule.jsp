@@ -86,9 +86,10 @@
                                                 <fmt:formatDate value="${s.getSlotEndTime()}" pattern="HH:mm"/>
 
                                                 <a href="detailslot?id=${sc.scheduleID}">View</a>
-
+                                                <!--${sc.getAttendance().getStatus()}-->
                                                 <c:choose>
                                                     <c:when test="${sc.getAttendance().getStatus() eq null}"><p>Not Yet</p></c:when>
+                                                
                                                 <c:when test="${sc.getAttendance().getStatus() == 'Absent'}"><p style="color: red">Absent</p></c:when>
                                                 <c:when test="${sc.getAttendance().getStatus() == 'Attend'}"><p style="color: green">Attend</p></c:when>
                                             </c:choose>
@@ -104,10 +105,7 @@
             </table>
         </div>
 
-        <footer class="footer">
-            &copy; 2024 Đại học FPT. All rights reserved.
-            <p>Địa chỉ:KM29 Đại lộ Thăng Long,Thạch Hòa,Thạch Thất,Hà Nội</p>
-        </footer>
+        
         <!-- Bootstrap JS, Popper.js, and jQuery -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

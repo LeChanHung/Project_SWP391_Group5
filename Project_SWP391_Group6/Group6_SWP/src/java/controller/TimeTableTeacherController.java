@@ -78,7 +78,7 @@ public class TimeTableTeacherController extends HttpServlet {
         ScheduleDAO dbSchedule = new ScheduleDAO();
 //        ArrayList<Schedule> schedules = dbSchedule.listSchedulesTeacher(teachers.getTeacherID());
         ArrayList<Schedule> schedules = dbSchedule.listSchedulesTeacher(teachers.getTeacherID(), from, to);
-
+        
         req.setAttribute("schedules", schedules);
         System.out.println("Teacher");
         System.out.println(schedules.toString());

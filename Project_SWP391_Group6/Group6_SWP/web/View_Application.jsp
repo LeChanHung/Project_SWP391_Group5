@@ -52,7 +52,7 @@
     </head>
     <body>
         <header style="background-color: #45a049">
-            <h1>Page Title</h1>
+            <h1>View Application</h1>
         </header>
 
         <table>
@@ -92,7 +92,7 @@
                                     </c:if>
                                 </c:if>
                             </c:if>
-                            <c:if test="${sessionScope.student eq null}">
+                            <c:if test="${sessionScope.student ne null}">
                                 <c:if test="${a.status eq 0}">
                                     <p>Status: Not Yet</p>
                                 </c:if>
@@ -115,7 +115,7 @@
                 <a class="nav-link" href="StudentHomepage.jsp">Homepage</a>
             </c:if>
                 <c:if test="${sessionScope.office ne null}">
-                <a class="nav-link" href="phongdaotao.jsp">Homepage</a>
+                <a class="nav-link" href="index">Homepage</a>
             </c:if>
         </tbody>
     </table>
