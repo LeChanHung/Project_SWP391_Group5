@@ -1,0 +1,348 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+}
+
+/* Container styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Flex container styles */
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Items center styles */
+.items-center {
+  align-items: center;
+}
+
+/* Minimum height screen styles */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+/* Background styles */
+.bg-gray-100 {
+  background-color: #f3f4f6;
+}
+
+.dark-bg-gray-900 {
+  background-color: #1f2937;
+}
+
+/* Max width styles */
+.max-w-md {
+  max-width: 28rem; /* Adjust based on your design */
+}
+
+/* Margin and padding styles */
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.my-10 {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.m-7 {
+  margin: 1.75rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+/* Background color styles */
+.bg-white {
+  background-color: #ffffff;
+}
+
+/* Padding styles */
+.p-5 {
+  padding: 1.25rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* Rounded corners styles */
+.rounded-md {
+  border-radius: 0.375rem; /* Adjust based on your design */
+}
+
+/* Shadow styles */
+.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Text styles */
+.text-center {
+  text-align: center;
+}
+
+.text-black {
+  color: #000000;
+}
+
+.dark:text-gray-200 {
+  color: #edf2f7;
+}
+
+.text-gray-600 {
+  color: #4b5563;
+}
+
+.dark:text-gray-400 {
+  color: #9ca3af;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+.dark:text-gray-500 {
+  color: #6b7280;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.dark:text-white {
+  color: #ffffff;
+}
+
+.text-indigo-700 {
+  color: #4f46e5;
+}
+
+/* Font styles */
+.font-semibold {
+  font-weight: 600;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-base {
+  font-size: 1rem;
+}
+
+/* Form styles */
+input[type='text'],
+input[type='email'],
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  background-color: #ffffff;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input[type='text']:focus,
+input[type='email']:focus,
+textarea:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+}
+
+/* Button styles */
+button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+}
+
+button:focus {
+  outline: none;
+}
+
+.bg-indigo-700 {
+  background-color: #4f46e5;
+}
+
+.bg-indigo-700:hover {
+  background-color: #4338ca;
+}
+
+/* Checkbox styles */
+input[type='checkbox'] {
+  display: none;
+}
+
+/* Dark mode styles */
+.dark {
+  background-color: #1a202c;
+  color: #cbd5e0;
+}
+
+.dark input[type='text'],
+.dark input[type='email'],
+.dark textarea {
+  background-color: #2d3748;
+  border-color: #4a5568;
+  color: #cbd5e0;
+}
+
+.dark input[type='text']:focus,
+.dark input[type='email']:focus,
+.dark textarea:focus {
+  border-color: #cbd5e0;
+  box-shadow: 0 0 0 3px rgba(203, 213, 224, 0.5);
+}
+
+.dark button {
+  background-color: #4a5568;
+  color: #cbd5e0;
+}
+
+.dark button:hover {
+  background-color: #2d3748;
+}
+
+/* Dark mode toggle styles */
+.toggle-checkbox {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.toggle-checkbox:focus {
+  outline: none;
+}
+
+.toggle-checkbox:checked + .dark-mode-label:before {
+  transform: translateX(-100%);
+}
+
+.dark-mode-label {
+  position: relative;
+  display: inline-block;
+  width: 2.5rem;
+  height: 1.25rem;
+  background-color: #4a5568;
+  border-radius: 0.625rem;
+  cursor: pointer;
+}
+
+.dark-mode-label:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.25s ease-in-out;
+}
+
+/* Tooltip styles */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #000000;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Table styles */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-top: 1.5rem;
+}
+
+/* Table header styles */
+.table thead th {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 2px solid #e2e8f0;
+  background-color: #edf2f7;
+  color: #4a5568;
+}
+
+/* Table row styles */
+.table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Table cell styles */
+.table td {
+  padding: 0.75rem;
+}
+
+/* Table hover styles */
+.table tbody tr:hover {
+  background-color: #f7fafc;
+}
