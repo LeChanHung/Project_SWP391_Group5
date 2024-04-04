@@ -341,5 +341,37 @@ public class ScheduleDAO extends DBContext {
 
         return schedules;
     }
+    
+     public boolean addWeeklySchedule(int classID, int teacherID, int subjectID, int studentID, int slotID, int dayofWeek, Date dateCreated) {
+        try {
+            // Create SQL query to insert a new student
+            String query = "INSERT INTO WeeklySchedules(ClassID,TeacherID,SubjectID,DayOfWeek,SlotID,StudentID,dateCreated) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            // Create prepared statement
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            // Set parameters for the prepared statement
+            statement.setInt(1, classID);
+            statement.setInt(2, teacherID);
+            statement.setInt(3, subjectID);
+            statement.setInt(4, dayofWeek);
+            statement.setInt(5, slotID);
+            statement.setInt(6, studentID);
+            statement.setDate(7, (java.sql.Date) dateCreated);
+       
+            // Execute the query
+            int rowsInserted = statement.executeUpdate();
+
+            // Close the resources
+            statement.close();
+
+            // Check if the student was successfully added
+            return rowsInserted > 0;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+    
 
 }

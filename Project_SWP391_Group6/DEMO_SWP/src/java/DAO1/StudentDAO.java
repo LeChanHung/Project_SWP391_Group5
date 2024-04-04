@@ -428,5 +428,44 @@ public class StudentDAO extends DBContext {
 
         return student;
     }
+    
+    public List<Students> getAllStudent1() {
+        List<Students> student = new ArrayList<>();
+        try {
+            // Tạo câu truy vấn SQL để lấy thông tin của một sinh viên bằng MSV
+            String query = "SELECT * FROM Students";
+            PreparedStatement statement = connection.prepareStatement(query);
+           
+            // Thực thi truy vấn
+            ResultSet resultSet = statement.executeQuery();
+
+            // Kiểm tra xem có sinh viên nào được tìm thấy hay không
+            while (resultSet.next()) {
+                // Lấy thông tin của sinh viên từ kết quả truy vấn
+               
+                // Tạo đối tượng Students từ thông tin lấy được
+                int studentID = resultSet.getInt("StudentID");
+                String firstName = resultSet.getString("FirstName");
+                String lastName = resultSet.getString("LastName");
+                String email = resultSet.getString("Email");
+                String passwordHash = resultSet.getString("PasswordHash");
+                java.util.Date dob = resultSet.getDate("dob");
+                String gender = resultSet.getString("gender");
+                String MSV = resultSet.getString("MSV");
+                // Create a Product object with the retrieved data
+                Students students = new Students(studentID, firstName, lastName, email, passwordHash, dob, gender, MSV);
+                // Add the product to the list
+                student.add(students);
+            }
+            // Đóng các tài nguyên
+            resultSet.close();
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return student;
+    }
+     
 
 }

@@ -276,6 +276,38 @@ public class TeacherDAO extends DBContext {
 
         return teachers;
     }
+    
+    public List<Teachers> getAllTeacher1() {
+         List<Teachers> teachers = new ArrayList<>();
+
+        try {
+            String query = "SELECT * FROM Teachers";
+            PreparedStatement statement = connection.prepareStatement(query);         
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int teacherID = resultSet.getInt("TeacherID");
+                String firstName = resultSet.getString("FirstName");
+                String lastName = resultSet.getString("LastName");
+                String email = resultSet.getString("Email");
+                String passwordHash = resultSet.getString("PasswordHash");
+                boolean isTeaching = resultSet.getBoolean("isTeaching");
+                // Create a Teacher object with the retrieved data
+                Teachers teacher = new Teachers(teacherID, firstName, lastName, email, passwordHash, isTeaching);
+
+                // Add the teacher to the list
+                teachers.add(teacher);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return teachers;
+    }
     /* 
     public static void main(String[] args) {
         TeacherDAO teacherDAO = new TeacherDAO();

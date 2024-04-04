@@ -6,6 +6,7 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -101,10 +102,10 @@
                                         <c:set var="percent" value="${(countAbsent*100)/size}"></c:set>
                                             <td>
                                             <c:if test="${percent <= 20}">
-                                                <p style="color: green">${percent} %</p>
+                                                <p style="color: green"><fmt:formatNumber value="${percent}" pattern="#"/> %</p>
                                             </c:if>
                                             <c:if test="${percent > 20}">
-                                                <p style="color: red">${percent} %</p>
+                                                <p style="color: red"><fmt:formatNumber value="${percent}" pattern="#"/> %</p>
                                             </c:if>
                                         </td>
                                     </tr>

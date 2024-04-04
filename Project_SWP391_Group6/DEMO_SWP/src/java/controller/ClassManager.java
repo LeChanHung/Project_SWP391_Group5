@@ -5,7 +5,11 @@
 package controller;
 
 import DAO1.ClassDAO;
+import DAO1.SlotDAO;
 import DAO1.StudentDAO;
+import DAO1.SubjectDAO;
+import DAO1.TeacherDAO;
+import Entity.timeSlots;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,9 +17,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import model1.Classes;
 import model1.Students;
+import model1.Subjects;
+import model1.Teachers;
 
 /**
  *
@@ -81,6 +88,23 @@ public class ClassManager extends HttpServlet {
              studentsList = dao.getCLassforStudent(classID);
         }
         List<Students> studentStudying = sDao.getStudentStudying(classID);
+        
+        
+        SubjectDAO subDao = new SubjectDAO();
+        TeacherDAO tDao = new TeacherDAO();
+        SlotDAO slDao = new SlotDAO();
+        
+        ArrayList<timeSlots> slot = slDao.list();
+        List<Teachers> listT = tDao.getAllTeacher1();
+        List<Classes> listC1 = dao.getAllClass();               
+        List<Students> studentStudying1 = sDao.getAllStudent1();
+        List<Subjects> listS = subDao.getAllSubject();
+        
+        request.setAttribute("listStudent1",studentStudying1);
+        request.setAttribute("listClass", listC1);
+        request.setAttribute("listSubject", listS);
+        request.setAttribute("listTeacher", listT);
+        request.setAttribute("listSlot", slot);
         
         request.setAttribute("listStudying",studentStudying);
         request.setAttribute("liststudent", studentsList);
