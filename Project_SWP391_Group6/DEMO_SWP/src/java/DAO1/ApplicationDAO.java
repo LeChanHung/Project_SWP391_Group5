@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import model1.Application;
 import model1.Students;
+import model1.Teachers;
 import model1.TrainingOffice;
 
 /**
@@ -31,6 +32,14 @@ public class ApplicationDAO extends DBContext {
         System.out.println(rs.getString("comment"));
         StudentDAO dbStudent = new StudentDAO();
         Students students = dbStudent.getStudentByStudentID(rs.getInt("studentId"));
+
+        TeacherDAO dbTeacher = new TeacherDAO();
+        if (rs.getInt("TeacherID") != 0) {
+            Teachers teacher = dbTeacher.get(rs.getInt("TeacherID"));
+            application.setTeacherId(teacher);
+        }else{
+            application.setTeacherId(null);
+        }
         System.out.println(students.getStudentID());
         application.setStudentId(students);
         return application;
@@ -54,7 +63,27 @@ public class ApplicationDAO extends DBContext {
 
         return applications;
     }
-    
+
+    public ArrayList<Application> listByTeacherId(int teacherId) {
+        ArrayList<Application> applications = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM [Application] where TeacherID = ? order by createdAt desc";
+//            conn = DBContext.getConnect();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, teacherId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                applications.add(toApplication(rs));
+            }
+            return applications;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return applications;
+    }
+
     public ArrayList<Application> listByStudentId(int studentId) {
         ArrayList<Application> applications = new ArrayList<>();
         try {
@@ -106,7 +135,7 @@ public class ApplicationDAO extends DBContext {
             ps.setDate(3, dateSql);
             ps.setString(4, model.getFilePath());
             ps.executeUpdate();
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -120,6 +149,19 @@ public class ApplicationDAO extends DBContext {
             ps.setInt(1, model.getStatus());
             ps.setString(2, model.getComment());
             ps.setInt(3, model.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateTeacherId(int teacherId, int appId) {
+        try {
+            String query = "update Application set TeacherID = ? where id = ?";
+//            conn = DBContext.getConnect();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, teacherId);
+            ps.setInt(2, appId);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

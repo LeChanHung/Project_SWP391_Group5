@@ -87,10 +87,10 @@
                                 </c:if>
                                 <c:if test="${a.status ne 0}">
                                     <c:if test="${a.status eq 1}">
-                                        <p>Status: Accepted</p>
+                                        <p style="color: green">Status: Accepted</p>
                                     </c:if>
                                     <c:if test="${a.status eq -1}">
-                                        <p>Status: Denied</p>
+                                        <p style="color: red">Status: Denied</p>
                                     </c:if>
                                 </c:if>
                             </c:if>

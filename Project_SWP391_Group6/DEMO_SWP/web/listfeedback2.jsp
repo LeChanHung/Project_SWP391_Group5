@@ -42,7 +42,12 @@
                             <td>${fbt.teacherId.firstName} ${fbt.teacherId.lastName}</td>
                             <td>${fbt.subjectId.subjectName}</td>
                             <td>
-                                <a href="feedBackTeacher?teacherId=${fbt.teacherId.teacherID}&subjectId=${fbt.subjectId.subjectID}">Do feedback</a>
+                                <c:if test="${fbt.proRate != 0}">
+                                    <a href="editFeedBack?id=${fbt.id}">Edit feedback</a>
+                                </c:if>
+                                <c:if test="${fbt.proRate == 0}">
+                                    <a href="feedBackTeacher?teacherId=${fbt.teacherId.teacherID}&subjectId=${fbt.subjectId.subjectID}">Do feedback</a>
+                                </c:if>
                                 <!--<a href="#">See feedback details</a>-->
                             </td>
                         </tr>

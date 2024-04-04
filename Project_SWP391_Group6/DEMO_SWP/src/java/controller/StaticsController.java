@@ -77,6 +77,8 @@ public class StaticsController extends HttpServlet {
         }
         DAO dao = new DAO();
         List<Report> list = dao.stuReport(s.getStudentID(), status, id);
+        request.setAttribute("totalSlot", dao.countSlots(s.getStudentID(), id));
+        request.setAttribute("id", id);
         request.setAttribute("listSta", list);
         request.getRequestDispatcher("StaticsReport.jsp").forward(request, response);
     }

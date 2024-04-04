@@ -5,38 +5,36 @@
 package controller;
 
 import DAO1.ApplicationDAO;
-import DAO1.TeacherDAO;
+import DAO1.FeedbackTeacherDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import model1.Application;
 
 /**
  *
- * @author lecha
+ * @author minhdang
  */
-@WebServlet(name = "ViewApplicationController", urlPatterns = {"/viewApplication"})
-public class ViewApplicationController extends HttpServlet {
+@WebServlet(name = "SendAppTeacherController", urlPatterns = {"/sendAppTeacher"})
+public class SendAppTeacherController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ApplicationDAO dbAppli = new ApplicationDAO();
-        TeacherDAO dbTeacher = new TeacherDAO();
-        String x = "abc-";
-        ArrayList<Application> applications = dbAppli.list();
-        
-        req.setAttribute("applications", applications);
-        req.setAttribute("teachers", dbTeacher.list());
-        req.getRequestDispatcher("View_Application.jsp").forward(req, resp);
+    
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        String raw_teacherId = req.getParameter("teacherId");
+        int teacherId = Integer.parseInt(raw_teacherId);
+        String raw_Id = req.getParameter("id");
+        int id = Integer.parseInt(raw_Id);
+        
+        ApplicationDAO dbApp = new ApplicationDAO();
+        dbApp.updateTeacherId(teacherId, id);
+        resp.sendRedirect("viewApplication");
     }
 
 }

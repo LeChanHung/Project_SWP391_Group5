@@ -47,7 +47,7 @@
                                 <span class="nav-item">Attendance</span>
                             </a>
                         </li>
-                       
+
                         <li>
                             <a href="logout" class="logout">
                                 <i class="fas fa-sign-out-alt"></i>
@@ -63,13 +63,14 @@
                         <i class="fas fa-user-cog"></i>
                     </div>
                     <form action="statics" method="GET" id="filterForm">
-                    <label for="statusFilter">Filter by Status:</label>
-                    <select name="statusFilter" id="statusFilter">
-                        <option value="0">All</option>
-                        <option value="1">Attended</option>
-                        <option value="2">Absent</option>
-                    </select>
-                    <input type="submit" value="Apply">
+                        <label for="statusFilter">Filter by Status:</label>
+                        <select name="statusFilter" id="statusFilter">
+                            <option value="0">All</option>
+                            <option value="1">Attended</option>
+                            <option value="2">Absent</option>
+                        </select>
+                        <input type="submit" value="Apply">
+                        <input type="hidden" name="id" value="${id}">
                 </form>
                 <section class="attendance">
                     <div class="attendance-list">
@@ -88,34 +89,48 @@
                                 </tr>
                             </thead>
                             <tbody>
-                    <%-- Initialize counters for attended and absent sessions --%>
-                    <c:set var="attendedCount" value="0"/>
-                    <c:set var="absentCount" value="0"/>
-                    <c:forEach items="${requestScope.listSta}" var="s">
-                        <tr class="active">
-                            <td>${s.slot.slotNumber}</td>
-                            <td>${s.attendance.attendanceDate}</td>
-                            <td><fmt:formatDate value="${s.slot.getSlotStartTime()}" pattern="HH:mm"/></td>
-                            <td><fmt:formatDate value="${s.slot.getSlotEndTime()}" pattern="HH:mm"/></td>
-                            <td>${s.attendance.status}</td>
-                            
-                            <c:choose>
-                                <c:when test="${s.attendance.status == 'Attend'}">
-                                    <c:set var="attendedCount" value="${attendedCount + 1}"/>
-                                </c:when>
-                                <c:when test="${s.attendance.status == 'Absent'}">
-                                    <c:set var="absentCount" value="${absentCount + 1}"/>
-                                </c:when>
-                            </c:choose>
-                        </tr>
-                    </c:forEach>
-                    <tr>
-                        <td colspan="5" style="color : green">Number of attended sessions: ${attendedCount}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="5" style="color : red">Number of absent sessions: ${absentCount}</td>
-                    </tr>
-                </tbody>
+                                <%-- Initialize counters for attended and absent sessions --%>
+                                <c:set var="attendedCount" value="0"/>
+                                <c:set var="absentCount" value="0"/>
+                                <c:forEach items="${requestScope.listSta}" var="s">
+                                    <tr class="active">
+                                        <td>${s.slot.slotNumber}</td>
+                                        <td>${s.attendance.attendanceDate}</td>
+                                        <td><fmt:formatDate value="${s.slot.getSlotStartTime()}" pattern="HH:mm"/></td>
+                                        <td><fmt:formatDate value="${s.slot.getSlotEndTime()}" pattern="HH:mm"/></td>
+                                        <td>${s.attendance.status}</td>
+
+                                        <c:choose>
+                                            <c:when test="${s.attendance.status == 'Attend'}">
+                                                <c:set var="attendedCount" value="${attendedCount + 1}"/>
+                                            </c:when>
+                                            <c:when test="${s.attendance.status == 'Absent'}">
+                                                <c:set var="absentCount" value="${absentCount + 1}"/>
+                                            </c:when>
+                                        </c:choose>
+                                    </tr>
+                                </c:forEach>
+                                <tr>
+                                    <td colspan="5" style="color : green">Number of attended sessions: ${attendedCount}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="color : red">Number of absent sessions: ${absentCount}</td>
+                                </tr>
+                                <tr>
+                                    <c:set var="percent" value="${(absentCount*100)/totalSlot}"></c:set>
+                                    <td colspan="5"> 
+                                    <c:if test="${percent <= 20}">
+                                            <p style="color: green">Total Absent: ${percent} %</p>
+                                        </c:if>
+                                        <c:if test="${percent > 20}">
+                                            <p style="color: red">Total Absent: ${percent} %
+                                                <br>
+                                            Attend Fail
+                                            </p>
+                                        </c:if>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>    
                     </div>
                 </section>

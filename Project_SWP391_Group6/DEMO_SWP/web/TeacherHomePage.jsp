@@ -42,6 +42,8 @@
                             <!--<a class="nav-link" href="viewApplication">View Application</a>-->
                             <a class="nav-link" href="attendReportdd">Attendance Report</a>
                             <a class="nav-link" href="listFeedTeacher">FeedBack From Students</a>
+                            <a class="nav-link" href="news">News</a>
+                            <a class="nav-link" href="viewAppTeacher">View Application</a>
                         </div>
                     </div>
                 </nav>

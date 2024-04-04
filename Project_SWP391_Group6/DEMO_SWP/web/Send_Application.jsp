@@ -162,9 +162,14 @@
                     <textarea id="transferReason" name="content" rows="5" ></textarea>
                 </div>
                 <input type="file" name="file" size="60" accept=".pdf,.doc,.docx,.rar,.zip,.xlsx,.xls" required="" class="form-control">
+                <br>
+                <br>
                 <input type="submit" value="Gửi Đơn">
                 <p>${msg}</p>
             </form>
+            <a href="https://drive.google.com/drive/folders/1ovaDRADflJvyalcj7VTCP42tW-soqvQW">
+                <button>Xem Mẫu Đơn</button>
+            </a>
         </div>
         <a class="nav-link" href="viewStudentAppli">View Application</a>
         <script>

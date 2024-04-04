@@ -25,7 +25,15 @@
                 <div class="header">
                     <a href="#default" class="logo">FPT University</a>
                     <div class="header-right">
-                        <a class="active" href="StudentHomepage.jsp">Home</a>
+                        <c:if test="${sessionScope.student ne null}">
+                            <a class="active" href="StudentHomepage.jsp">Home</a>
+                        </c:if>
+                        <c:if test="${sessionScope.teacher ne null}">
+                            <a class="active" href="TeacherHomePage.jsp">Home</a>
+                        </c:if>
+                        <c:if test="${sessionScope.office ne null}">
+                            <a class="active" href="phongdaotao.jsp">Home</a>
+                        </c:if>
                         <a href="#contact">Contact</a>
                         <a href="#about">Log out</a>
                     </div>

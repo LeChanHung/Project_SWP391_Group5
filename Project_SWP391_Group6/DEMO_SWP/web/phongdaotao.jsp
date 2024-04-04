@@ -71,6 +71,13 @@
                 </a>    
             </li>
 
+            <li>
+                <a href="news">
+                    <i class="fas fa-blog"></i>
+                    <span>View News</span>
+                </a>    
+            </li>
+
 
             <li>
                 <a href="manage_news">

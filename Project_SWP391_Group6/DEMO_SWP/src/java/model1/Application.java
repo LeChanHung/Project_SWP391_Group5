@@ -19,6 +19,7 @@ public class Application {
     private int status;
     private String comment;
     private String filePath;
+    private Teachers teacherId;
 
     public Application() {
     }
@@ -30,6 +31,14 @@ public class Application {
         this.createdAt = createdAt;
     }
 
+    public Teachers getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Teachers teacherId) {
+        this.teacherId = teacherId;
+    }
+
     public String getFilePath() {
         return filePath;
     }
@@ -38,8 +47,6 @@ public class Application {
         this.filePath = filePath;
     }
 
-    
-    
     public String getComment() {
         return comment;
     }

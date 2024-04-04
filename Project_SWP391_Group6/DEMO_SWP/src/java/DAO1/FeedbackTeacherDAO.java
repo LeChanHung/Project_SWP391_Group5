@@ -84,16 +84,17 @@ public class FeedbackTeacherDAO extends DBContext {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-
+                FeedBackTeacher findBy = findByTeacherIdAndSubjectIdAndStudentId(rs.getInt("TeacherID"), rs.getInt("SubjectID"), studentId);
+                if (findBy != null) {
+                    feedBackTeachers.add(findBy);
+                    continue;
+                }
                 FeedBackTeacher fbt = new FeedBackTeacher();
                 TeacherDAO dbTeacher = new TeacherDAO();
                 SubjectDAO dbSubject = new SubjectDAO();
                 fbt.setTeacherId(dbTeacher.get(rs.getInt("TeacherID")));
                 fbt.setSubjectId(dbSubject.get(rs.getInt("SubjectID")));
                 feedBackTeachers.add(fbt);
-                if (findByTeacherIdAndSubjectIdAndStudentId(rs.getInt("TeacherID"), rs.getInt("SubjectID"), studentId) != null) {
-                    feedBackTeachers.remove(feedBackTeachers.size() - 1);
-                }
             }
             return feedBackTeachers;
         } catch (SQLException e) {
@@ -126,6 +127,26 @@ public class FeedbackTeacherDAO extends DBContext {
         return null;
     }
 
+    public FeedBackTeacher get(int id) {
+        try {
+            String query = """
+                          SELECT * FROM [Feedback_Teacher] 
+                           where id = ?""";
+//            conn = DBContext.getConnect();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                return toFeedBackTeacher(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public void insert(FeedBackTeacher model) {
         try {
             String query = "insert into Feedback_Teacher(proRate, teachRate, comment,StudentID, SubjectID, TeacherID,createdAt) values"
@@ -141,6 +162,22 @@ public class FeedbackTeacherDAO extends DBContext {
             Date today = new Date();
             java.sql.Date dateSql = new java.sql.Date(today.getTime());
             ps.setDate(7, dateSql);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void update(FeedBackTeacher model) {
+        try {
+            String query = "update Feedback_Teacher set proRate = ?, teachRate = ?, comment = ? where id = ?";
+//            conn = DBContext.getConnect();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, model.getProRate());
+            ps.setInt(2, model.getTeachRate());
+            ps.setString(3, model.getComment());
+            ps.setInt(4, model.getId());
             ps.executeUpdate();
 
         } catch (SQLException e) {

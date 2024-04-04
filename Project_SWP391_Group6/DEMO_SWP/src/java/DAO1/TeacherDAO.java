@@ -12,7 +12,7 @@ import model1.Teachers;
  * @author admin
  */
 public class TeacherDAO extends DBContext {
-    
+
     public Teachers toTeacher(ResultSet rs) throws SQLException {
         Teachers teachers = new Teachers();
         teachers.setTeacherID(rs.getInt("TeacherID"));
@@ -22,7 +22,7 @@ public class TeacherDAO extends DBContext {
         teachers.setPasswordHash(rs.getString("PasswordHash"));
         return teachers;
     }
-    
+
     public List<Teachers> getAllTeacher(int page, int pageSize) {
         List<Teachers> teacherses = new ArrayList<>();
         int offset = (page - 1) * pageSize;
@@ -65,7 +65,7 @@ public class TeacherDAO extends DBContext {
 
         return teacherses;
     }
-    
+
     public List<Teachers> searchTeachers(String keyword) {
         List<Teachers> teachers = new ArrayList<>();
 
@@ -179,6 +179,7 @@ public class TeacherDAO extends DBContext {
             return false;
         }
     }
+
     public int getTotalTeachersCount() {
         int total = 0;
         try {
@@ -195,6 +196,7 @@ public class TeacherDAO extends DBContext {
         }
         return total;
     }
+
     public Teachers getTeacherByID(int id) {
         Teachers teacher = null;
         try {
@@ -216,10 +218,8 @@ public class TeacherDAO extends DBContext {
                 String passwordHash = resultSet.getString("PasswordHash");
                 boolean isTeaching = resultSet.getBoolean("isTeaching");
                 // Create a Product object with the retrieved data
-                 teacher = new Teachers(teacherID, firstName, lastName, email, passwordHash, isTeaching);
+                teacher = new Teachers(teacherID, firstName, lastName, email, passwordHash, isTeaching);
 
-                
-                
             }
 
             // Đóng các tài nguyên
@@ -238,9 +238,9 @@ public class TeacherDAO extends DBContext {
         }
         return list.subList((pageParam - 1) * size, size * pageParam >= list.size() ? list.size() : size * pageParam);
     }
-    
+
     public Teachers get(int id) {
-        
+
         try {
             String query = "select * from Teachers where TeacherID = ?";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -249,16 +249,34 @@ public class TeacherDAO extends DBContext {
             while (resultSet.next()) {
                 return toTeacher(resultSet);
             }
-            
+
             resultSet.close();
             statement.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         return null;
     }
-   /* 
+
+    public ArrayList<Teachers> list() {
+        ArrayList<Teachers> teachers = new ArrayList<>();
+        try {
+            String query = "select * from Teachers";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                teachers.add(toTeacher(resultSet));
+            }
+            resultSet.close();
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return teachers;
+    }
+    /* 
     public static void main(String[] args) {
         TeacherDAO teacherDAO = new TeacherDAO();
         List<Teachers> teachersList = teacherDAO.getAllTeacher();
@@ -270,5 +288,5 @@ public class TeacherDAO extends DBContext {
             System.out.println("No teachers found.");
         }
     }
-*/
+     */
 }

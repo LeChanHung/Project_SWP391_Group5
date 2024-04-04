@@ -14,29 +14,29 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import model1.Application;
+import model1.Teachers;
 
 /**
  *
- * @author lecha
+ * @author minhdang
  */
-@WebServlet(name = "ViewApplicationController", urlPatterns = {"/viewApplication"})
-public class ViewApplicationController extends HttpServlet {
+@WebServlet(name = "ViewApplicationTeacherController", urlPatterns = {"/viewAppTeacher"})
+public class ViewApplicationTeacherController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        Teachers teacher = (Teachers) req.getSession().getAttribute("teacher");
         ApplicationDAO dbAppli = new ApplicationDAO();
-        TeacherDAO dbTeacher = new TeacherDAO();
         String x = "abc-";
-        ArrayList<Application> applications = dbAppli.list();
-        
+        ArrayList<Application> applications = dbAppli.listByTeacherId(teacher.getTeacherID());
+
         req.setAttribute("applications", applications);
-        req.setAttribute("teachers", dbTeacher.list());
-        req.getRequestDispatcher("View_Application.jsp").forward(req, resp);
+        req.getRequestDispatcher("View_Application_Teacher.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
 
 }

@@ -64,7 +64,6 @@
                     <th>Status</th>
                     <td>Comment</td>
                     <th>Action</th>
-                    <th>Send to teacher</th>
                     <th>Created At</th>
                 </tr>
             </thead>
@@ -95,36 +94,23 @@
                         </td>
                         <td><c:if test="${a.comment ne null}">${a.comment}</c:if></td>
                         <td><a href="updateStatus?id=${a.id}"><button>Detail and Evalute</button></a></td>
-                        <td>
-                            <c:if test="${a.content.split('-')[0].equals('Đơn xin điểm danh ')}">
-                                <c:if test="${a.teacherId eq null}">
-                                    <form method="post" action="sendAppTeacher">
-                                        <select name="teacherId">
-                                            <c:forEach items="${teachers}" var="t">
-                                                <option value="${t.teacherID}">${t.firstName} ${t.lastName}</option>
-                                            </c:forEach>
-                                        </select>
-                                        <button>Send</button>
-                                        <input type="hidden" name="id" value="${a.id}">
-                                    </form>
-                                </c:if>
-                                <c:if test="${a.teacherId ne null}">
-                                    <p style="color: green">Sent</p>
-                                </c:if>
-                            </c:if>
-                        </td>
                         <td>${a.createdAt}</td>
                     </tr>
                 </c:forEach>
-                <!-- Thêm các hàng dữ liệu khác tại đây nếu cần -->
-                <c:if test="${sessionScope.student ne null}">
+            </tbody>
+            <c:if test="${sessionScope.office ne null}">
+                <a class="nav-link" href="phongdaotao.jsp">Homepage</a>
+            </c:if>
+            <!-- Thêm các hàng dữ liệu khác tại đây nếu cần -->
+            <c:if test="${sessionScope.student ne null}">
                 <a class="nav-link" href="StudentHomepage.jsp">Homepage</a>
             </c:if>
-            <c:if test="${sessionScope.office ne null}">
-                <a class="nav-link" href="index">Homepage</a>
+            <c:if test="${sessionScope.teacher ne null}">
+                <a class="nav-link" href="TeacherHomePage.jsp">Homepage</a>
             </c:if>
-        </tbody>
-    </table>
-</body>
+
+
+        </table>
+    </body>
 </html>
 

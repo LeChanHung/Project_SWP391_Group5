@@ -48,15 +48,17 @@ public class DAO extends DBContext {
     public List<Report> stuReport(int StudentID, int status, int SubjectID) {
         List<Report> list = new ArrayList<>();
         String sql = """
-                     select distinct ts.SlotNumber, a.AttendanceDate,ts.SlotStartTime,ts.SlotEndTime, a.Status from WeeklySchedules ws
-                                                     inner join Attendance a on ws.ScheduleID = a.ScheduleID
-                                                     inner join TimeSlots ts on ws.SlotID = ts.SlotID
-                                     \t\t\twhere ws.StudentID = ? AND ws.SubjectID = ? """;
+                     SELECT ts.SlotNumber, a.AttendanceDate, ts.SlotStartTime, ts.SlotEndTime, a.Status
+                                       FROM [Attendance] a
+                                       inner join StudentEnrollments se on se.EnrollmentID = a.EnrollmentID
+                                       inner join WeeklySchedules ws on ws.ScheduleID = a.ScheduleID
+                                       inner join TimeSlots ts on ts.SlotID = ws.SlotID
+                                       where se.StudentID = ? and ws.SubjectID = ?""";
         try {
             if (status == 1) {
-                sql += "AND a.Status='Attend'";
+                sql += " AND a.Status='Attend'";
             } else if (status == 2) {
-                sql += "AND a.Status='Absent'";
+                sql += " AND a.Status='Absent'";
             }
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, StudentID);
@@ -81,16 +83,37 @@ public class DAO extends DBContext {
         return list;
     }
 
-    public DetailClass detailSlot(String ScheduleID) {
-        
-        String sql = "select ws.ScheduleID, ts.SlotNumber,ts.SlotStartTime,ts.SlotEndTime,t.FirstName,t.LastName,sub.SubjectName,c.ClassName from WeeklySchedules ws \n" +
-"                join TimeSlots ts on ws.SlotID = ts.SlotID\n" +
-"                join Teachers t on ws.TeacherID = t.TeacherID\n" +
-"                join Subjects sub on ws.SubjectID = sub.SubjectID\n" +
-"                join Classes c on ws.ClassID = c.ClassID\n" +
-"                where ws.ScheduleID = ?";
+    public int countSlots(int StudentID, int SubjectID) {
+        String sql = """
+                    SELECT COUNT(*) as 'cnt' FROM 
+                                          WeeklySchedules ws 
+                                         where StudentID = ? and ws.SubjectID = ?
+                                         """;
         try {
-            
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, StudentID);
+            ps.setInt(2, SubjectID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("cnt");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public DetailClass detailSlot(String ScheduleID) {
+
+        String sql = "select ws.ScheduleID, ts.SlotNumber,ts.SlotStartTime,ts.SlotEndTime,t.FirstName,t.LastName,sub.SubjectName,c.ClassName from WeeklySchedules ws \n"
+                + "                join TimeSlots ts on ws.SlotID = ts.SlotID\n"
+                + "                join Teachers t on ws.TeacherID = t.TeacherID\n"
+                + "                join Subjects sub on ws.SubjectID = sub.SubjectID\n"
+                + "                join Classes c on ws.ClassID = c.ClassID\n"
+                + "                where ws.ScheduleID = ?";
+        try {
+
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, ScheduleID);
             ResultSet rs = ps.executeQuery();
@@ -123,14 +146,13 @@ public class DAO extends DBContext {
     public static void main(String[] args) {
 
         DAO dao = new DAO();
-        
+
         DetailClass dc = dao.detailSlot("1");
-        
-            System.out.println("Slot Number: " + dc.getSlot().getSlotNumber());  
-            System.out.println("Slot Start Time: " + dc.getSlot().getSlotStartTime());
-            System.out.println("Slot End Time: " + dc.getSlot().getSlotEndTime());
-            System.out.println();
-        
+
+        System.out.println("Slot Number: " + dc.getSlot().getSlotNumber());
+        System.out.println("Slot Start Time: " + dc.getSlot().getSlotStartTime());
+        System.out.println("Slot End Time: " + dc.getSlot().getSlotEndTime());
+        System.out.println();
 
 //        List<Report> resultList = dao.stuReport(16, 0);
 //

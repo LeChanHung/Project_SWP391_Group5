@@ -80,7 +80,7 @@ public class AttendanceAdmin extends DBContext {
                 String email = resultSet.getString("Email");
                 int total = resultSet.getInt("total");
                 float percent = (float) 0.0;
-                if (status.equals("0")) {
+                if (status.equals("Absent")) {
                     percent = (float) ((total / 20.0) * 100);
                 }
                 // 

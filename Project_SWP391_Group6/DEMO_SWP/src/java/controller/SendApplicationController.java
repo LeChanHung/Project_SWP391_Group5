@@ -47,7 +47,7 @@ public class SendApplicationController extends HttpServlet {
                 String strCon = str;
                 switch (type) {
                     case "diemdanh":
-                        strCon = "Đơn miễn điểm danh - " + strCon;
+                        strCon = "Đơn xin điểm danh - " + strCon;
                         break;
                     case "thoihoc":
                         strCon = "Đơn xin thôi học - " + strCon;

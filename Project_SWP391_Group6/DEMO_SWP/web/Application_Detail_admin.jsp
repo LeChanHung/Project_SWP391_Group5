@@ -76,21 +76,23 @@
                     <p><strong>Content:</strong>${app.content}</p>
                     <!-- Thêm các phần tử khác cho chi tiết đơn hàng tại đây -->
                 </div>
-                <c:if test="${app.status eq 0}">
-                    <p>Status: <input type="radio" name="status" value="1" checked>Accept <input type="radio" name="status" value="-1">Deny 
+                <%--<c:if test="${app.status eq 0}">--%>
+                <p>Status:
+                    <input type="radio" name="status" value="1" <c:if test="${app.status eq 1}">checked</c:if> required>Accept
+                    <input type="radio" name="status" value="-1" <c:if test="${app.status eq -1}">checked</c:if> required>Deny 
                     </p>
                     <p><strong>Comment:</strong><textarea name="comment" rows="5" cols="10">${app.comment}</textarea></p>
                     <button>Evalute</button>
-                </c:if>
-                <c:if test="${app.status ne 0}">
-                    <c:if test="${app.status eq 1}">
-                        <p>Status: Accepted</p>
-                    </c:if>
-                    <c:if test="${app.status ne -1}">
-                        <p>Status: Denied</p>
-                    </c:if>
-                    <p><strong>Comment:</strong><c:if test="${app.comment ne null}">${app.comment}</c:if></p>
-                </c:if>
+                <%--</c:if>--%>
+                <%--<c:if test="${app.status ne 0}">--%>
+                    <%--<c:if test="${app.status eq 1}">--%>
+                        <!--<p style="color: green">Status: Accepted</p>-->
+                    <%--</c:if>--%>
+                    <%--<c:if test="${app.status ne -1}">--%>
+                        <!--<p style="color: red">Status: Denied</p>-->
+                    <%--</c:if>--%>
+                    <!--<p><strong>Comment:</strong><c:if test="${app.comment ne null}">${app.comment}</c:if></p>-->
+                <%--</c:if>--%>
                 <input type="hidden" value="${id}" name="id">
             </form>
             <button onclick="downloadFile('${app.filePath}')">Download File Attached</button>

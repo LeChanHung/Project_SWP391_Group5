@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import model1.Application;
+import model1.Teachers;
 
 /**
  *
@@ -49,7 +50,13 @@ public class UpdateStatusController extends HttpServlet {
         model.setStatus(status);
         model.setComment(comment);
         dbApp.updateStatus(model);
-        resp.sendRedirect("viewApplication");
+
+        Teachers teacher = (Teachers) req.getSession().getAttribute("teacher");
+        if (teacher == null) {
+            resp.sendRedirect("viewApplication");
+        }else{
+            resp.sendRedirect("viewAppTeacher");
+        }
     }
 
 }
