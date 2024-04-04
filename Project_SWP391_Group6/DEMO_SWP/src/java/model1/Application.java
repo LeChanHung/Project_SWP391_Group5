@@ -11,11 +11,14 @@ import java.util.Date;
  * @author lecha
  */
 public class Application {
+
     private int id;
     private String content;
     private Students studentId;
     private Date createdAt;
     private int status;
+    private String comment;
+    private String filePath;
 
     public Application() {
     }
@@ -27,6 +30,24 @@ public class Application {
         this.createdAt = createdAt;
     }
 
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    
+    
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public int getStatus() {
         return status;
     }
@@ -35,8 +56,6 @@ public class Application {
         this.status = status;
     }
 
-    
-    
     public int getId() {
         return id;
     }
@@ -68,6 +87,5 @@ public class Application {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-    
-    
+
 }

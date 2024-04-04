@@ -44,6 +44,12 @@ public class AttendReportSubjectController extends HttpServlet {
             ArrayList<Schedule> stus = dbSchedule.listSchedulesStuSub(teachers.getTeacherID(), classId, stu.getStudentID(), subjectId);
             listAllStu.add(stus);
         }
+        ArrayList<Schedule> allSlot = new ArrayList<>();
+        for (ArrayList<Schedule> arrayList : listAllStu) {
+            allSlot = arrayList;
+            break;
+        }
+        req.setAttribute("allSlot", allSlot);
         req.setAttribute("listAllStu", listAllStu);
         req.setAttribute("students", students);
         req.setAttribute("classId", classId);

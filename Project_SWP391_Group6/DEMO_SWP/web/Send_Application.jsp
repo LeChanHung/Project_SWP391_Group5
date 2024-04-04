@@ -75,7 +75,7 @@
 
         <div class="container">
             <h2>Send an application</h2>
-            <form action="sendApplication" method="post" id="mainForm">
+            <form action="sendApplication" method="post" id="mainForm" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="type">Loại Đơn:</label>
                     <select id="type" name="type" onchange="showForm()">
@@ -161,12 +161,12 @@
                     <label for="transferReason">Lý Do Xin Nhập Học:</label>
                     <textarea id="transferReason" name="content" rows="5" ></textarea>
                 </div>
-
+                <input type="file" name="file" size="60" accept=".pdf,.doc,.docx,.rar,.zip,.xlsx,.xls" required="" class="form-control">
                 <input type="submit" value="Gửi Đơn">
                 <p>${msg}</p>
             </form>
         </div>
-        <a class="nav-link" href="viewApplication">View Application</a>
+        <a class="nav-link" href="viewStudentAppli">View Application</a>
         <script>
             document.getElementById("diemdanhForm").style.display = "none";
             document.getElementById("thoihocForm").style.display = "none";

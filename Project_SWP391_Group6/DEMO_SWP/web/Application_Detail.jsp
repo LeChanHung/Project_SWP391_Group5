@@ -1,4 +1,4 @@
-<%-- 
+ <%-- 
     Document   : Application_Detail
     Created on : Mar 10, 2024, 2:19:59 PM
     Author     : lecha
@@ -102,7 +102,8 @@
                     </c:if>
                 </c:if>
             </c:if>
-            <a class="nav-link" href="viewApplication">View Application</a>
+            <p><strong>Comment:</strong><c:if test="${app.comment ne null}">${app.comment}</c:if></p>
+            <a class="nav-link" href="viewStudentAppli">View Application</a>
         </div>
     </body>
 </body>

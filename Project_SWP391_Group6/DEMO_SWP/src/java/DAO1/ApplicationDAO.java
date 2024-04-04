@@ -26,6 +26,9 @@ public class ApplicationDAO extends DBContext {
         application.setContent(rs.getString("content"));
         application.setStatus(rs.getInt("status"));
         application.setCreatedAt(rs.getDate("createdAt"));
+        application.setComment(rs.getString("comment"));
+        application.setFilePath(rs.getString("filePath"));
+        System.out.println(rs.getString("comment"));
         StudentDAO dbStudent = new StudentDAO();
         Students students = dbStudent.getStudentByStudentID(rs.getInt("studentId"));
         System.out.println(students.getStudentID());
@@ -36,9 +39,29 @@ public class ApplicationDAO extends DBContext {
     public ArrayList<Application> list() {
         ArrayList<Application> applications = new ArrayList<>();
         try {
-            String query = "SELECT * FROM [Application]";
+            String query = "SELECT * FROM [Application] order by createdAt desc";
 //            conn = DBContext.getConnect();
             PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                applications.add(toApplication(rs));
+            }
+            return applications;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return applications;
+    }
+    
+    public ArrayList<Application> listByStudentId(int studentId) {
+        ArrayList<Application> applications = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM [Application] where studentId = ? order by createdAt desc";
+//            conn = DBContext.getConnect();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, studentId);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -72,8 +95,8 @@ public class ApplicationDAO extends DBContext {
 
     public void insert(Application model) {
         try {
-            String query = "insert into Application(content, studentId, status, createdAt) values"
-                    + "(?,?,0,?)";
+            String query = "insert into Application(content, studentId, status, createdAt, filePath) values"
+                    + "(?,?,0,?,?)";
 //            conn = DBContext.getConnect();
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, model.getContent());
@@ -81,8 +104,9 @@ public class ApplicationDAO extends DBContext {
             Date today = new Date();
             java.sql.Date dateSql = new java.sql.Date(today.getTime());
             ps.setDate(3, dateSql);
+            ps.setString(4, model.getFilePath());
             ps.executeUpdate();
-
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -90,11 +114,12 @@ public class ApplicationDAO extends DBContext {
 
     public void updateStatus(Application model) {
         try {
-            String query = "update Application set status = ? where id = ?";
+            String query = "update Application set status = ?, comment = ? where id = ?";
 //            conn = DBContext.getConnect();
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, model.getStatus());
-            ps.setInt(2, model.getId());
+            ps.setString(2, model.getComment());
+            ps.setInt(3, model.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

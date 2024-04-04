@@ -51,6 +51,7 @@ public class LoginDAO extends DBContext{
                 Students s = new Students();
                 s.setStudentID(rs.getInt("StudentID"));
                 s.setFirstName(rs.getString("FirstName"));
+                s.setMSV(rs.getString("MSV"));
                 s.setLastName(rs.getString("LastName"));
                 s.setEmail(rs.getString("Email"));
                 s.setPasswordHash(rs.getString("PasswordHash"));

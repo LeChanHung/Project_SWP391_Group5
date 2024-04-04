@@ -62,7 +62,7 @@
                     <th>Application Type</th>
                     <th>Content</th>
                     <th>Status</th>
-                    <td>Comment</td>
+                    <th>Comment</th>
                     <th>Action</th>
                     <th>Created At</th>
                 </tr>
@@ -80,20 +80,39 @@
                             </c:forEach>
                         </td>
                         <td>
-                            <c:if test="${a.status eq 0}">
-                                <p>Status: Not Yet</p>
-                            </c:if>
-                            <c:if test="${a.status ne 0}">
-                                <c:if test="${a.status eq 1}">
-                                    <p>Status: Accepted</p>
+                            <c:if test="${sessionScope.office ne null}">
+                                <c:if test="${a.status eq 0}">
+                                    <a href="updateStatus?id=${a.id}&status=1" class="button" style="background-color: #45a049">Accept</a>
+                                    <a href="updateStatus?id=${a.id}&status=0" class="button" style="background-color: red">Deny</a>
                                 </c:if>
-                                <c:if test="${a.status eq -1}">
-                                    <p>Status: Denied</p>
+                                <c:if test="${a.status ne 0}">
+                                    <c:if test="${a.status eq 1}">
+                                        <p>Status: Accepted</p>
+                                    </c:if>
+                                    <c:if test="${a.status eq -1}">
+                                        <p>Status: Denied</p>
+                                    </c:if>
                                 </c:if>
                             </c:if>
+                            <c:if test="${sessionScope.student ne null}">
+                                <c:if test="${a.status eq 0}">
+                                    <p>Status: Not Yet</p>
+                                </c:if>
+                                <c:if test="${a.status ne 0}">
+                                    <c:if test="${a.status eq 1}">
+                                        <p>Status: Accepted</p>
+                                    </c:if>
+                                    <c:if test="${a.status eq -1}">
+                                        <p>Status: Denied</p>
+                                    </c:if>
+                                </c:if>
+                            </c:if>
+
                         </td>
-                        <td><c:if test="${a.comment ne null}">${a.comment}</c:if></td>
-                        <td><a href="updateStatus?id=${a.id}">Detail and Evalute</a></td>
+                        <td>
+                            <c:if test="${a.comment ne null}">${a.comment}</c:if>
+                        </td>
+                        <td><a href="detailAppli?id=${a.id}">Detail</a></td>
                         <td>${a.createdAt}</td>
                     </tr>
                 </c:forEach>
@@ -101,7 +120,7 @@
                 <c:if test="${sessionScope.student ne null}">
                 <a class="nav-link" href="StudentHomepage.jsp">Homepage</a>
             </c:if>
-            <c:if test="${sessionScope.office ne null}">
+                <c:if test="${sessionScope.office ne null}">
                 <a class="nav-link" href="index">Homepage</a>
             </c:if>
         </tbody>

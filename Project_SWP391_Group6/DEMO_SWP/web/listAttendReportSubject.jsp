@@ -13,7 +13,25 @@
         <title>FPT University</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/homepage.css">
+        <style>
+            /* CSS for the table */
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
 
+            /* CSS for table cells */
+            th, td {
+                border: 1px solid black;
+                padding: 8px;
+                text-align: left;
+            }
+
+            /* Alternate row background color */
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+        </style>
     </head>
     <body>
         <header class="header">
@@ -34,48 +52,81 @@
 
         <div class="container-fluid">
             <div class="row">
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>MSV</th>
-                                <c:forEach begin="1" step="1" end="30" varStatus="i">
-                                <th>${i.index}
-                                    <br>
-                                    <a href="attendance?classId=${sc.getClassID().getClassID()}&scId=${sc.getScheduleID()}"></a>
-                                </th>
-                            </c:forEach>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${students}" var="s" varStatus="loop">
-                            <tr>
-                                <td>${s.MSV}</td>
-                                <c:forEach items="${listAllStu.get(loop.index)}" var="sc">
-                                    <td>
-                                        <c:if test="${sc.attendance.status eq null}">NOT YET</c:if>
-                                        <c:if test="${sc.attendance.status ne null}">
-                                            <a href="attendance?scId=${sc.scheduleID}&classId=${classId}">
-                                                ${sc.attendance.status}
-                                            </a>
-                                            </c:if>
-                                        <br>
-                                        <!--<a href="attendance?classId=${sc.getClassID().getClassID()}&scId=${sc.getScheduleID()}">Update</a>-->
-                                    </td>
-                                </c:forEach>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                     <div id="content">
                         <!-- Nội dung sẽ được hiển thị ở đây khi người dùng nhấp vào các phần -->
-
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <th>MSV</th>
+                                        <%--<c:forEach begin="1" step="1" end="30" varStatus="i">--%>
+                                    <!--                                <th>${i.index}
+                                                                        <br>
+                                                                        <a href="attendance?classId=${sc.getClassID().getClassID()}&scId=${sc.getScheduleID()}"></a>
+                                                                    </th>-->
+                                    <%--</c:forEach>--%>
+                                    <c:forEach items="${allSlot}" var="as" varStatus="i">
+                                        <th>${i.index+1}</th>
+                                        </c:forEach>
+                                    <th>Absent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${students}" var="s" varStatus="loop">
+                                    <tr>
+                                        <td>${s.MSV}</td>
+                                        <c:set var="size" value="0"></c:set>
+                                        <c:set var="countAttend" value="0"></c:set>
+                                        <c:set var="countAbsent" value="0"></c:set>
+                                        <c:forEach items="${listAllStu.get(loop.index)}" var="sc">
+                                            <td>
+                                                <c:if test="${sc.attendance.status eq null}">-</c:if>
+                                                <c:if test="${sc.attendance.status ne null}">
+        <!--                                            <a href="attendance?scId=${sc.scheduleID}&classId=${classId}">
+                                                    ${sc.attendance.status}
+                                                </a>-->
+                                                    <c:if test="${sc.attendance.status eq 'Attend'}">
+                                                        <p style="color: green">P</p>
+                                                        <c:set var="countAttend" value="${countAttend+1}"></c:set>
+                                                    </c:if>
+                                                    <c:if test="${sc.attendance.status eq 'Absent'}">
+                                                        <p style="color: red">A</p>
+                                                        <c:set var="countAbsent" value="${countAbsent+1}"></c:set>
+                                                    </c:if>
+                                                </c:if>
+                                                <c:set var="size" value="${size+1}"></c:set>
+        <!--<a href="attendance?classId=${sc.getClassID().getClassID()}&scId=${sc.getScheduleID()}">Update</a>-->
+                                            </td>
+                                        </c:forEach>
+                                        <c:set var="percent" value="${(countAbsent*100)/size}"></c:set>
+                                            <td>
+                                            <c:if test="${percent <= 20}">
+                                                <p style="color: green">${percent}</p>
+                                            </c:if>
+                                            <c:if test="${percent > 20}">
+                                                <p style="color: red">${percent}</p>
+                                            </c:if>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                <tr>
+                                    <td>Action</td>
+                                    <c:forEach items="${allSlot}" var="as" varStatus="i">
+                                        <td>
+                                            <a href="attendance?scId=${as.scheduleID}&classId=${classId}" target="target">
+                                                <button class="btn-primary">Update</button>
+                                            </a> 
+                                        </td>
+                                    </c:forEach>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </main>
             </div>
         </div>
-        <footer class="footer">
+        <div style="margin-bottom: 10em"></div>
+        <footer class="footer" >
             &copy; 2024 Đại học FPT. All rights reserved.
             <p>Địa chỉ:KM29 Đại lộ Thăng Long,Thạch Hòa,Thạch Thất,Hà Nội</p>
         </footer>

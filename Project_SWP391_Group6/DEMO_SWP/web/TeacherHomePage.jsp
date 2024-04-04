@@ -41,6 +41,7 @@
                             <a class="nav-link" href="tchTimeTable">Schedule</a>
                             <!--<a class="nav-link" href="viewApplication">View Application</a>-->
                             <a class="nav-link" href="attendReportdd">Attendance Report</a>
+                            <a class="nav-link" href="listFeedTeacher">FeedBack From Students</a>
                         </div>
                     </div>
                 </nav>
