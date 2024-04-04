@@ -19,13 +19,13 @@ import model1.Subjects;
  */
 public class SubjectDAO extends DBContext {
 
-    public Subjects toSubjects(ResultSet rs) throws SQLException{
+    public Subjects toSubjects(ResultSet rs) throws SQLException {
         Subjects subjects = new Subjects();
         subjects.setSubjectID(rs.getInt("SubjectID"));
         subjects.setSubjectName(rs.getString("SubjectName"));
         return subjects;
     }
-    
+
     public List<Subjects> getAllSubject() {
         List<Subjects> subjectses = new ArrayList<>();
 
@@ -62,6 +62,7 @@ public class SubjectDAO extends DBContext {
 
         return subjectses;
     }
+
     public Subjects getSubjectByID(int id) {
         Subjects subject = null;
         try {
@@ -93,6 +94,7 @@ public class SubjectDAO extends DBContext {
 
         return subject;
     }
+
     public int getTotalSubjetcsCount() {
         int total = 0;
         try {
@@ -119,7 +121,7 @@ public class SubjectDAO extends DBContext {
 
             // Iterate over the result set
             while (resultSet.next()) {
-               return toSubjects(resultSet);
+                return toSubjects(resultSet);
             }
             // Close the resources
             resultSet.close();
@@ -130,8 +132,8 @@ public class SubjectDAO extends DBContext {
 
         return null;
     }
-    
-     public ArrayList<Subjects> getAllSubjectTeacher(int teacherId, int classId) {
+
+    public ArrayList<Subjects> getAllSubjectTeacher(int teacherId, int classId) {
         ArrayList<Subjects> subjectses = new ArrayList<>();
         try {
             Set<Integer> disSubject = new HashSet<>();
@@ -166,7 +168,41 @@ public class SubjectDAO extends DBContext {
 
         return subjectses;
     }
-     
+
+    public ArrayList<Subjects> getAllSubjectStudent(int studentId) {
+        ArrayList<Subjects> subjectses = new ArrayList<>();
+        try {
+            Set<Integer> disSubject = new HashSet<>();
+            String query = "SELECT [ScheduleID]\n"
+                    + "      ,[ClassID]\n"
+                    + "      ,[TeacherID]\n"
+                    + "      ,[SubjectID]\n"
+                    + "      ,[DayOfWeek]\n"
+                    + "      ,[SlotID]\n"
+                    + "  FROM [WeeklySchedules] where StudentID = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, studentId);
+            ResultSet resultSet = statement.executeQuery();
+
+            // Iterate over the result set
+            while (resultSet.next()) {
+                int subjectID = resultSet.getInt("SubjectID");
+                disSubject.add(subjectID);
+            }
+
+            for (Integer integer : disSubject) {
+                subjectses.add(get(integer));
+            }
+            // Close the resources
+            resultSet.close();
+            statement.close();
+            return subjectses;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return subjectses;
+    }
 
     public static void main(String[] args) {
         SubjectDAO c = new SubjectDAO();
