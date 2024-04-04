@@ -94,7 +94,24 @@
                             </c:if>
                         </td>
                         <td><c:if test="${a.comment ne null}">${a.comment}</c:if></td>
-                        <td><a href="updateStatus?id=${a.id}"><button>Detail and Evalute</button></a></td>
+                            <td>
+                            <c:if test="${!a.content.split('-')[0].equals('Đơn xin điểm danh ')}">
+                                <a href="updateStatus?id=${a.id}"><button>Detail and Evalute</button></a>
+                            </c:if>
+                            <c:if test="${a.content.split('-')[0].equals('Đơn xin điểm danh ')}">
+                                <c:if test="${a.teacherId ne null}">
+                                    <c:if test="${a.status eq 0}">
+                                        <a href="detailAppli?id=${a.id}"><button>Detail</button></a>
+                                    </c:if>
+                                    <c:if test="${a.status ne 0}">
+                                        <a href="updateStatus?id=${a.id}"><button>Detail and Evalute</button></a>
+                                    </c:if>
+                                </c:if>
+                                <c:if test="${a.teacherId eq null}">
+
+                                </c:if>
+                            </c:if>
+                        </td>
                         <td>
                             <c:if test="${a.content.split('-')[0].equals('Đơn xin điểm danh ')}">
                                 <c:if test="${a.teacherId eq null}">

@@ -81,10 +81,10 @@
                         </td>
                         <td>
                             <c:if test="${sessionScope.office ne null}">
-                                <c:if test="${a.status eq 0}">
-                                    <a href="updateStatus?id=${a.id}&status=1" class="button" style="background-color: #45a049">Accept</a>
-                                    <a href="updateStatus?id=${a.id}&status=0" class="button" style="background-color: red">Deny</a>
-                                </c:if>
+                                <%--<c:if test="${a.status eq 0}">--%>
+                                    <!--<a href="updateStatus?id=${a.id}&status=1" class="button" style="background-color: #45a049">Accept</a>-->
+                                    <!--<a href="updateStatus?id=${a.id}&status=0" class="button" style="background-color: red">Deny</a>-->
+                                <%--</c:if>--%>
                                 <c:if test="${a.status ne 0}">
                                     <c:if test="${a.status eq 1}">
                                         <p style="color: green">Status: Accepted</p>

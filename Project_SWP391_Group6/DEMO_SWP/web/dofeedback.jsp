@@ -110,8 +110,9 @@
 
 
                 <div style="margin: 30px 0px;">
-                    <input placeholder="Write your feedback here" 
-                           style="width:100%; height: 100px;direction: rtr;" name="comment" required>
+<!--                    <input placeholder="Write your feedback here" 
+                           style="width:100%; height: 100px;direction: rtr;" name="comment" required>-->
+                    <textarea placeholder="Write your feedback here just 255 characters"  style="width:100%; height: 10em" name="comment"  maxlength="255" required>${fbt.comment}</textarea>
                 </div>
 
                 <div style="margin: 30px 0px;display: flex;justify-content: center;">

@@ -94,7 +94,9 @@
                     <!--<p><strong>Comment:</strong><c:if test="${app.comment ne null}">${app.comment}</c:if></p>-->
                 <%--</c:if>--%>
                 <input type="hidden" value="${id}" name="id">
+                <br>
             </form>
+                <br>
             <button onclick="downloadFile('${app.filePath}')">Download File Attached</button>
             <a class="nav-link" href="viewApplication">View Application</a>
         </div>

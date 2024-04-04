@@ -101,10 +101,10 @@
                                         <c:set var="percent" value="${(countAbsent*100)/size}"></c:set>
                                             <td>
                                             <c:if test="${percent <= 20}">
-                                                <p style="color: green">${percent}</p>
+                                                <p style="color: green">${percent} %</p>
                                             </c:if>
                                             <c:if test="${percent > 20}">
-                                                <p style="color: red">${percent}</p>
+                                                <p style="color: red">${percent} %</p>
                                             </c:if>
                                         </td>
                                     </tr>

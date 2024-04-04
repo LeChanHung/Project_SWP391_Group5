@@ -28,8 +28,8 @@
                 <h2>List of feedbacks for ${sessionScope.student.firstName} ${sessionScope.student.lastName} (${sessionScope.student.MSV})</h2>
 
                 <div style="margin: 30px 0px;">
-                    <p>Lecturer: ${teacher.firstName} ${teacher.lastName}</p>
-                    <p>Subject: ${subject.subjectName}</p>
+                    <p>Lecturer: ${fbt.teacherId.firstName} ${fbt.teacherId.lastName}</p>
+                    <p>Subject: ${fbt.subjectId.subjectName}</p>
                 </div>
 
                 <div style="margin: 30px 0px;">
@@ -135,10 +135,11 @@
 
 
                     <div style="margin: 30px 0px;">
-                        <input placeholder="Write your feedback here" 
-                               style="width:100%; height: 100px;direction: rtr;" name="comment"
+<!--                        <input placeholder="Write your feedback here" 
+                               style="width:100%; height: 100px" name="comment"
                                value="${fbt.comment}"
-                               required>
+                               required>-->
+                    <textarea placeholder="Write your feedback here just 255 characters"  style="width:100%; height: 10em" name="comment"  maxlength="255" required>${fbt.comment}</textarea>
                     </div>
 
                     <div style="margin: 30px 0px;display: flex;justify-content: center;">
