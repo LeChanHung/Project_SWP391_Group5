@@ -48,6 +48,15 @@ public class Students {
         this.gender = gender;
         this.MSV = MSV;
     }
+    public Students(int studentID, String firstName, String lastName, String MSV, String email, String gender,java.sql.Date dob) {
+        this.studentID = studentID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.MSV = MSV;
+        this.email = email;
+        this.gender = gender;
+        this.dob = dob;  
+    }
 
     public Students(int studentID, String firstName, String lastName, String email, String passwordHash, java.sql.Date dob, String gender,
             String MSV, int status) {
@@ -68,6 +77,10 @@ public class Students {
         this.lastName = lastName;
         this.MSV = MSV;
 
+    }
+      public Students(int studentID, String MSV) {
+        this.studentID = studentID;
+        this.MSV = MSV;
     }
 
     public List<Classes> getListC() {

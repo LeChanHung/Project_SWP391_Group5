@@ -37,7 +37,7 @@ public class ClassDAO extends DBContext {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-               return toClasses(rs);
+                return toClasses(rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,7 +45,7 @@ public class ClassDAO extends DBContext {
 
         return null;
     }
-    
+
     public List<Students> getCLassforStudent(int classID) {
         List<Students> listS = new ArrayList<>();
 
@@ -53,7 +53,7 @@ public class ClassDAO extends DBContext {
             // Calculate the offset based on the page number and page size
 
             // Create SQL query with LIMIT and OFFSET clauses
-            String query = "select s.StudentID, s.FirstName, s.MSV, s.LastName, c.ClassID, c.ClassName from\n"
+            String query = "select s.StudentID, s.FirstName, s.MSV, s.LastName,s.Email,s.dob,s.gender, c.ClassID, c.ClassName from\n"
                     + "StudentEnrollments se join Classes c on se.ClassID = c.ClassID\n"
                     + "join Students s on se.StudentID = s.StudentID\n"
                     + "where c.ClassID= ? ";
@@ -72,9 +72,11 @@ public class ClassDAO extends DBContext {
                 String msv = resultSet.getString(3);
                 String firstName = resultSet.getString(2);
                 String lastName = resultSet.getString(4);
-
+                String email = resultSet.getString(5);
+                String gender = resultSet.getString(7);
+                Date dob = resultSet.getDate(6);
                 // Create a Product object with the retrieved data
-                Students s = new Students(studentID, firstName, lastName, msv);
+                Students s = new Students(studentID, firstName, lastName, msv, email, gender, dob);
 
                 // Add the product to the list
                 listS.add(s);
@@ -168,7 +170,7 @@ public class ClassDAO extends DBContext {
         List<Students> studentsList = new ArrayList<>();
 
         try {
-            String query = "select s.StudentID, s.FirstName, s.MSV, s.LastName, c.ClassID, c.ClassName from\n"
+            String query = "select s.StudentID, s.FirstName, s.MSV, s.LastName,s.email,s.gender,s.dob, c.ClassID, c.ClassName from\n"
                     + "StudentEnrollments se join Classes c on se.ClassID = c.ClassID\n"
                     + "join Students s on se.StudentID = s.StudentID\n"
                     + "where c.ClassID= ? AND ( FirstName LIKE ? OR LastName LIKE ?)";
@@ -184,8 +186,11 @@ public class ClassDAO extends DBContext {
                 String firstName = resultSet.getString("FirstName");
                 String lastName = resultSet.getString("LastName");
                 String MSV = resultSet.getString("MSV");
+                String email = resultSet.getString(5);
+                String gender = resultSet.getString(6);
+                Date dob = resultSet.getDate(7);
                 // Create a Product object with the retrieved data
-                Students student = new Students(studentID, firstName, lastName, MSV);
+                Students student = new Students(studentID, firstName, lastName, MSV, email, gender, dob);
                 studentsList.add(student);
             }
 
@@ -209,7 +214,6 @@ public class ClassDAO extends DBContext {
             // Set parameters for the prepared statement
             statement.setInt(1, studentID);
             statement.setInt(2, classID);
-           
 
             // Execute the insert query
             int rowsAffected = statement.executeUpdate();
@@ -221,11 +225,10 @@ public class ClassDAO extends DBContext {
             return false;
         }
     }
-    
+
     public int getStudentIDbyMSV(String msv) {
-        int n =0 ;
-        
-        
+        int n = 0;
+
         try {
             // Calculate the offset based on the page number and page size
 
@@ -235,7 +238,7 @@ public class ClassDAO extends DBContext {
             // Create prepared statement
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, msv);
-            
+
             // Execute the query
             ResultSet resultSet = statement.executeQuery();
 
@@ -253,15 +256,13 @@ public class ClassDAO extends DBContext {
             System.out.println(ex.getMessage());
         }
 
-        
         return n;
-                
+
     }
-    
+
     public int getClassIDbyName(String className) {
-        int n =0 ;
-        
-        
+        int n = 0;
+
         try {
             // Calculate the offset based on the page number and page size
 
@@ -271,7 +272,7 @@ public class ClassDAO extends DBContext {
             // Create prepared statement
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, className);
-            
+
             // Execute the query
             ResultSet resultSet = statement.executeQuery();
 
@@ -289,14 +290,13 @@ public class ClassDAO extends DBContext {
             System.out.println(ex.getMessage());
         }
 
-        
         return n;
-                
+
     }
-    
+
     public List<Students> getAllStudent() {
         List<Students> studentses = new ArrayList<>();
-        
+
         try {
             // Calculate the offset based on the page number and page size
 
@@ -305,7 +305,7 @@ public class ClassDAO extends DBContext {
 
             // Create prepared statement
             PreparedStatement statement = connection.prepareStatement(query);
-            
+
             // Execute the query
             ResultSet resultSet = statement.executeQuery();
 
@@ -320,9 +320,9 @@ public class ClassDAO extends DBContext {
                 Date dob = resultSet.getDate("dob");
                 String gender = resultSet.getString("gender");
                 String MSV = resultSet.getString("MSV");
-                int status  = resultSet.getInt("status");
+                int status = resultSet.getInt("status");
                 // Create a Product object with the retrieved data
-                Students student = new Students(studentID, firstName, lastName, email, passwordHash, dob, gender, MSV,status);
+                Students student = new Students(studentID, firstName, lastName, email, passwordHash, dob, gender, MSV, status);
 
                 // Add the product to the list
                 studentses.add(student);
@@ -337,7 +337,7 @@ public class ClassDAO extends DBContext {
 
         return studentses;
     }
-    
+
     public boolean delete(int erID) {
         try {
             // Create SQL query to delete a teacher by ID
@@ -362,7 +362,7 @@ public class ClassDAO extends DBContext {
             return false;
         }
     }
-    
+
     public int getErID(int studentID, int classID) {
         int n = 0;
         try {
@@ -375,7 +375,7 @@ public class ClassDAO extends DBContext {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, studentID);
             statement.setInt(2, classID);
-            
+
             // Execute the query
             ResultSet resultSet = statement.executeQuery();
 
@@ -394,8 +394,31 @@ public class ClassDAO extends DBContext {
         }
         return n;
     }
-    
-        public ArrayList<Classes> getClassTeacher(int teacherId) {
+
+    public boolean addClass(String className) {
+        try {
+            // Create SQL query to insert a new teacher
+            String query = "INSERT INTO Classes (ClassName) VALUES (?)";
+
+            // Create prepared statement with the query
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            // Set parameters for the prepared statement
+            statement.setString(1, className);
+
+            // Execute the insert query
+            int rowsAffected = statement.executeUpdate();
+
+            // Check if the insert was successful
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            System.out.println("Error adding teacher: " + ex.getMessage());
+            return false;
+        }
+
+    }
+
+    public ArrayList<Classes> getClassTeacher(int teacherId) {
         ArrayList<Classes> classes = new ArrayList<>();
         Set<Integer> disClass = new HashSet<>();
         try {

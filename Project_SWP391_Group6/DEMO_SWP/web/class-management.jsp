@@ -17,11 +17,11 @@
         <body>
             <div class="container">
                 <h1>Class Management</h1>
-                <h2 style="text-align: center">Student List</h2>
-
+                <h2 style="text-align: center">Class List</h2>
+  <!--
                 <div class="row mb-3">
                     <div class="col-md-6 offset-md-3">
-                        <form action="${pageContext.request.contextPath}/class_manager" method="GET" class="d-flex">
+                        <form action="\\${pageContext.request.contextPath}/class_manager" method="GET" class="d-flex">
                         <input type="text" class="form-control" name="searchKeyword" placeholder="Search by name">
                         <button type="submit" class="btn btn-outline-secondary">Search</button>
                     </form>
@@ -29,18 +29,18 @@
             </div>
 
             <div class="mb-3">
-                <form id="classForm" action="${pageContext.request.contextPath}/class_manager" method="GET" class="d-flex">
+                <form id="classForm" action="\\${pageContext.request.contextPath}/class_manager" method="GET" class="d-flex">
                     <label for="gender" class="form-label">Class Name</label>
                     <select  class="form-select" id="gender" name="class" required">
-                        <c:forEach var="c" items="${listclass}">
-                            <option value="${c.classID}">${c.className}</option>
-                        </c:forEach>
+                        <\\c:forEach var="c" items="\\${listclass}">
+                            <option value="\\${c.classID}">\\${c.className}</option>
+                        <\\/c:forEach>
                     </select>
                     <div><button type="submit" class="btn btn-outline-secondary">Filter</button></div>
                 </form>
             </div>
 
-            
+            -->
 
             <div class="row">
                 <div class="col-md-12">
@@ -49,37 +49,31 @@
                         
 
                         <!-- Button to open the modal for adding a new student -->
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentModal">Enroll Student</button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addClassModal">Add Class</button>
                     </div>
 
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Student ID</th>
-                                <th>MSV</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>ClassName</th>                               
+                                <th>Class ID</th>                           
+                                <th>Class Name</th>                            
                                 <th>Action</th> <!-- Added Action column -->
                             </tr>
                         </thead>
                         <tbody>
                            
-                            <c:forEach var="s" items="${liststudent}">
+                            <c:forEach var="s" items="${listclass}">
                                 <!-- Check if the current student matches the search criteria -->
                                 <c:if test="${empty param.searchKeyword or fn:containsIgnoreCase(s.firstName, param.searchKeyword) or fn:containsIgnoreCase(s.lastName, param.searchKeyword)}">
                                     <tr>
-                                        <td>${s.studentID}</td>
-                                        <td>${s.MSV}</td>
-                                        <td>${s.firstName}</td>
-                                        <td>${s.lastName}</td>
-                                        <td>${name.className}</td>
+                                        <td>${s.classID}</td>
+                                        
+                                        <td>${s.className}</td>
 
                                         <td>
                                             <!-- Add buttons or links for edit and delete actions -->
-
-                                            <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete('${pageContext.request.contextPath}', '${s.MSV}','${name.className}')">Delete</button>
-                                        </td>
+                                            <a class="btn btn-success" href="classstudent?cid=${s.classID}">View Student</a>
+                                        </td> 
                                     </tr>
                                 </c:if>
                             </c:forEach>
@@ -89,33 +83,31 @@
             </div>
         </div>
 
-        <!-- Modal for adding a new student -->
-        <div class="modal fade" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+          <!-- Modal for adding a new student -->
+        <div class="modal fade" id="addClassModal" tabindex="-1" role="dialog" aria-labelledby="addStudentModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addStudentModalLabel">Enroll Student</h5>
+                        <h5 class="modal-title" id="addStudentModalLabel">Add New Class</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <!-- Form for adding a new student -->
-                        <form action="${pageContext.request.contextPath}/class_manager" method="POST">
-                            <div class="mb-3">
-                                <label for="firstName" class="form-label">MSV</label>
-                                <input type="text" class="form-control" id="firstName" name="msv" required>
-                            </div>
+                        <form action="${pageContext.request.contextPath}/classstudent" method="POST">
+                           
                             
                             <div class="mb-3">
                                 <label for="MSV" class="form-label">Class Name</label>
                                 <input type="text" class="form-control" id="MSV" name="className" required>
                             </div>
                             <div id="errorMessage" style="display: none; color: red;">${err}</div>
-                            <button type="submit" class="btn btn-primary">Enroll</button>
+                            <button type="submit" class="btn btn-primary">SUBMIT</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+          
 
         <!-- Modal for editing a student -->
         <c:forEach var="s" items="${liststudent}">
