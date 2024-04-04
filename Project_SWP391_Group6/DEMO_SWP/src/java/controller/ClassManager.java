@@ -63,7 +63,7 @@ public class ClassManager extends HttpServlet {
             throws ServletException, IOException {
         String searchKeyword = request.getParameter("searchKeyword");
         String classID_raw = request.getParameter("class");
-        HttpSession session = request.getSession();
+        StudentDAO sDao = new StudentDAO();
         ClassDAO dao = new ClassDAO();
         int classID;
         if (classID_raw == null) {
@@ -80,8 +80,9 @@ public class ClassManager extends HttpServlet {
         } else {
              studentsList = dao.getCLassforStudent(classID);
         }
-       
-
+        List<Students> studentStudying = sDao.getStudentStudying(classID);
+        
+        request.setAttribute("listStudying",studentStudying);
         request.setAttribute("liststudent", studentsList);
         request.setAttribute("listclass", listC);
         request.setAttribute("name", c);
@@ -100,7 +101,8 @@ public class ClassManager extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-
+        String cid_raw = request.getParameter("cid");
+        int cid = Integer.parseInt(cid_raw);
     if (action != null && action.equals("delete")) {
         // Xử lý xóa sinh viên
         String msv = request.getParameter("msv1");
@@ -112,7 +114,7 @@ public class ClassManager extends HttpServlet {
         int erID = classDAO.getErID(studentID, classID);
         boolean success = classDAO.delete(erID);
         if (success) {
-            response.sendRedirect(request.getContextPath() + "/class_manager");
+            response.sendRedirect(request.getContextPath() + "/classstudent?cid="+cid);
         } else {
             response.getWriter().println("Failed to delete student.");
         }
@@ -143,7 +145,7 @@ public class ClassManager extends HttpServlet {
         }
         boolean success = classDAO.studentErollment(studentID, classID);
          if (success) {
-            response.sendRedirect(request.getContextPath() + "/class_manager");
+            response.sendRedirect(request.getContextPath() + "/classstudent?cid="+cid);
         } 
         
         

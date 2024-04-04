@@ -390,4 +390,43 @@ public class StudentDAO extends DBContext {
 
         return studentses;
     }
+    
+    public List<Students> getStudentStudying(int cid) {
+        List<Students> student = new ArrayList<>();
+        try {
+            // Tạo câu truy vấn SQL để lấy thông tin của một sinh viên bằng MSV
+            String query = " with t as(\n"
+                    + "  select s.StudentID,s.MSV from Students s join StudentEnrollments se on s.StudentID = se.StudentID\n"
+                    + "  where se.ClassID = ?\n"
+                    + "  ) \n"
+                    + "  select StudentID, MSV from Students where Status = 1\n"
+                    + "  except\n"
+                    + "  select * from t";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, cid);
+            // Thực thi truy vấn
+            ResultSet resultSet = statement.executeQuery();
+
+            // Kiểm tra xem có sinh viên nào được tìm thấy hay không
+            while (resultSet.next()) {
+                // Lấy thông tin của sinh viên từ kết quả truy vấn
+                int id = resultSet.getInt("StudentID");
+                
+                String MSV = resultSet.getString("MSV");
+               
+                // Tạo đối tượng Students từ thông tin lấy được
+                Students s = new Students(id, MSV);
+                student.add(s);
+            }
+
+            // Đóng các tài nguyên
+            resultSet.close();
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return student;
+    }
+
 }

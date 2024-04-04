@@ -5,9 +5,8 @@
 
 package controller;
 
-import DAO1.AttendanceAdmin;
 import DAO1.ClassDAO;
-import DAO1.SubjectDAO;
+import DAO1.StudentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,19 +14,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
-import model1.AttendanceReport;
 import model1.Classes;
 import model1.Students;
-import model1.Subjects;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name="AttendanceAdmin", urlPatterns={"/AttendanceAdmin"})
-public class AttendanceAdminController extends HttpServlet {
+@WebServlet(name="ClassStudentManager", urlPatterns={"/classstudent"})
+public class ClassStudentManager extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -44,10 +40,10 @@ public class AttendanceAdminController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AttendanceAdmin</title>");  
+            out.println("<title>Servlet ClassStudentManager</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AttendanceAdmin at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ClassStudentManager at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,66 +60,32 @@ public class AttendanceAdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        AttendanceAdmin dao = new  AttendanceAdmin();
-        SubjectDAO sDao = new SubjectDAO();
-        List<AttendanceReport> list = new ArrayList<>();
         String searchKeyword = request.getParameter("searchKeyword");
-        String cid = request.getParameter("cid");
-         String sid = request.getParameter("sid");
-        String classID_raw = request.getParameter("class");
-        String subjectID_raw = request.getParameter("subject");
-        String pageStr = request.getParameter("page"); // Thêm tham số trang
-        int page = pageStr != null ? Integer.parseInt(pageStr) : 1; // Mặc định là trang 1
-        int pageSize = 5; // Kích thước trang
-        ClassDAO cDao = new ClassDAO();
+        String classID_raw = request.getParameter("cid");
+        StudentDAO sDao = new StudentDAO();
+        ClassDAO dao = new ClassDAO();
         int classID;
-        int subjectID;
-        if(cid=="") {
-                classID = 0;
-            }
-       else if (cid!=null) { 
-            
-            classID = Integer.parseInt(cid); 
-        } else if(classID_raw == null) 
-        {
-            classID = 0;
-        } 
-        else {
-            classID = Integer.parseInt(classID_raw);           
+        if (classID_raw == null) {
+            classID = 2;
+        } else {
+            classID = Integer.parseInt(classID_raw);
         }
-        
-        if(sid=="") {
-                subjectID = 0;
-            }
-       else if (cid!=null) { 
-            
-            subjectID = Integer.parseInt(sid); 
-        } else if(subjectID_raw == null) 
-        {
-            subjectID = 0;
-        } 
-        else {
-            subjectID = Integer.parseInt(subjectID_raw);           
-        }
-      
-        List<Classes> listC = cDao.getAllClass();
-        List<Subjects> listS = sDao.getAllSubject();
-        Classes c = cDao.getClassByID(classID); 
-        Subjects s = sDao.getSubjectByID(subjectID);
-        list = dao.getAttendanceReport(classID,subjectID, searchKeyword, page, pageSize);
-        
-        request.setAttribute("listclass", listC);
-        request.setAttribute("listsubject", listS);
-        request.setAttribute("name", c);
-        request.setAttribute("nameS", s);
-        request.setAttribute("currentPage", page);
-        int totalTeachers = dao.getTotalWeeklySchedulesCount(classID);
-        int totalPages = (int) Math.ceil((double) totalTeachers / pageSize);
-        request.setAttribute("totalPages", totalPages);
 
-       
-        request.setAttribute("listReport", list);
-        request.getRequestDispatcher("AttendanceReportAdmin.jsp").forward(request, response);
+        List<Students> studentsList;
+        List<Classes> listC = dao.getAllClass();
+        Classes c = dao.getClassByID(classID);
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            studentsList = dao.searchStudentsofClass(searchKeyword,classID);
+        } else {
+             studentsList = dao.getCLassforStudent(classID);
+        }
+        List<Students> studentStudying = sDao.getStudentStudying(classID);
+        
+        request.setAttribute("listStudying",studentStudying);
+        request.setAttribute("liststudent", studentsList);
+        request.setAttribute("listclass", listC);
+        request.setAttribute("name", c);
+        request.getRequestDispatcher("classStudent.jsp").forward(request, response);
     } 
 
     /** 
@@ -136,7 +98,12 @@ public class AttendanceAdminController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        ClassDAO dao = new ClassDAO();
+        String className = request.getParameter("className");
+        boolean success = dao.addClass(className);
+         if (success) {
+            response.sendRedirect(request.getContextPath() + "/class_manager");
+        } 
     }
 
     /** 

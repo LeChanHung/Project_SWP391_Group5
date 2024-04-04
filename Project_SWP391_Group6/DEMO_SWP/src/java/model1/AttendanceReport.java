@@ -14,28 +14,21 @@ public class AttendanceReport {
     private Subjects subject;
     private Teachers teacher;
     private String status;
+    private String email;
     private float percent;
 
     public AttendanceReport() {
     }
 
-    public AttendanceReport(Students student, Classes classes, Subjects subject, Teachers teacher, String status, float percent) {
+    public AttendanceReport(Students student, Classes classes, Subjects subject, Teachers teacher, String status, String email, float percent) {
         this.student = student;
         this.classes = classes;
         this.subject = subject;
         this.teacher = teacher;
         this.status = status;
+        this.email = email;
         this.percent = percent;
     }
-
-    public float getPercent() {
-        return percent;
-    }
-
-    public void setPercent(float percent) {
-        this.percent = percent;
-    }
-
 
     public Students getStudent() {
         return student;
@@ -76,6 +69,23 @@ public class AttendanceReport {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public float getPercent() {
+        return percent;
+    }
+
+    public void setPercent(float percent) {
+        this.percent = percent;
+    }
+
     
     
 
